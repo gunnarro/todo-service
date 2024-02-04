@@ -38,6 +38,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<mariadb.version>2.5.3</mariadb.version>
+		<sonar.organization>gunnarro</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 
 	<!-- Run integration test only: -->
