@@ -27,7 +27,8 @@ jobs:
           cache: maven
 
       - name: install
-        run: mvn -B clean install --file pom.xml -P github -s settings-github.xml
+#        run: mvn -B clean install --file pom.xml -P github -s settings-github.xml
+        run: mvn -B clean install --file pom.xml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}
