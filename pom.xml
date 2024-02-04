@@ -14,7 +14,7 @@
 	<packaging>jar</packaging>
 
 	<name>todo-service-v2</name>
-	<description>Spring Boot Microservice Template</description>
+	<description>Service to create and manage todo lists</description>
 
 	<organization>
 		<name>gunnarro as</name>
