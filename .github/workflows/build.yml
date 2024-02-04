@@ -1,10 +1,13 @@
 name: build and analyse
+
 on:
   push:
-    branches:
-      - master
+    branches: [ "main" ]
   pull_request:
-    types: [opened, synchronize, reopened]
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
 jobs:
   build:
     name: Build and analyze
