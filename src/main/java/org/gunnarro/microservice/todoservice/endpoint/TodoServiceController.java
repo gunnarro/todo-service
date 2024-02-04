@@ -12,10 +12,8 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.gunnarro.microservice.todoservice.domain.dto.ErrorResponse;
-import org.gunnarro.microservice.todoservice.domain.dto.todo.ToDoDto;
-import org.gunnarro.microservice.todoservice.service.ToDoService;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
+import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoDto;
+import org.gunnarro.microservice.todoservice.service.TodoService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -50,9 +48,9 @@ import java.util.UUID;
 public class TodoServiceController {
     private static final String REST_SERVICE_METRIC_NAME = "todo.service.api";
 
-    private final ToDoService toDoService;
+    private final TodoService toDoService;
 
-    public TodoServiceController(ToDoService toDoService) {
+    public TodoServiceController(TodoService toDoService) {
         this.toDoService = toDoService;
     }
 
@@ -61,7 +59,7 @@ public class TodoServiceController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "a live",
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = ToDoDto.class))})
+                            schema = @Schema(implementation = TodoDto.class))})
     })
     @GetMapping(path = "/todos/ping", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
     public ResponseEntity<String> ping() {
@@ -73,10 +71,10 @@ public class TodoServiceController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found todos for user",
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = ToDoDto.class))})
+                            schema = @Schema(implementation = TodoDto.class))})
     })
     @GetMapping(path = "/todos/user/{user}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
-    public @ResponseBody List<ToDoDto> getTodosForUser(@PathVariable("user") @NotNull String user) {
+    public @ResponseBody List<TodoDto> getTodosForUser(@PathVariable("user") @NotNull String user) {
         return toDoService.getTodosForUser(user);
     }
 
@@ -85,10 +83,10 @@ public class TodoServiceController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the todo",
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = ToDoDto.class))})
+                            schema = @Schema(implementation = TodoDto.class))})
     })
     @GetMapping(path = "/todos/{uuid}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
-    public @ResponseBody ToDoDto getTodoById(@PathVariable("uuid") String uuid) {
+    public @ResponseBody TodoDto getTodoById(@PathVariable("uuid") String uuid) {
     /*    HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "http://localhost:3000");
         responseHeaders.set(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, "GET, PUT, POST, DELETE, OPTIONS");
@@ -105,10 +103,10 @@ public class TodoServiceController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Created todo",
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = ToDoDto.class))})
+                            schema = @Schema(implementation = TodoDto.class))})
     })
     @PostMapping(path = "/todos/{uuid}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ToDoDto createTodo(@PathVariable("uuid") String uuid, @RequestBody @Valid ToDoDto toDoDto) {
+    public @ResponseBody TodoDto createTodo(@PathVariable("uuid") String uuid, @RequestBody @Valid TodoDto toDoDto) {
         return toDoService.addTodo(toDoDto);
     }
 
@@ -117,10 +115,10 @@ public class TodoServiceController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "updated todo",
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = ToDoDto.class))})
+                            schema = @Schema(implementation = TodoDto.class))})
     })
     @PutMapping(path = "/todos/{uuid}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ToDoDto updateTodo(@PathVariable("uuid") String uuid, @RequestBody @Valid ToDoDto toDoDto) {
+    public @ResponseBody TodoDto updateTodo(@PathVariable("uuid") String uuid, @RequestBody @Valid TodoDto toDoDto) {
         return toDoService.updateTodo(toDoDto);
     }
 

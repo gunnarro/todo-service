@@ -1,13 +1,13 @@
 package org.gunnarro.microservice.todoservice.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.gunnarro.microservice.todoservice.domain.dto.todo.ToDoDto;
+import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoDto;
 import org.gunnarro.microservice.todoservice.domain.mapper.TodoMapper;
 import org.gunnarro.microservice.todoservice.exception.ApplicationException;
 import org.gunnarro.microservice.todoservice.exception.RestInputValidationException;
 import org.gunnarro.microservice.todoservice.repository.TodoRepository;
 import org.gunnarro.microservice.todoservice.repository.entity.Todo;
-import org.gunnarro.microservice.todoservice.service.ToDoService;
+import org.gunnarro.microservice.todoservice.service.TodoService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -16,16 +16,16 @@ import java.util.UUID;
 
 @Slf4j
 @Service
-public class ToDoServiceImpl implements ToDoService {
+public class TodoServiceImpl implements TodoService {
 
     private final TodoRepository todoRepository;
 
-    public ToDoServiceImpl(TodoRepository todoRepository) {
+    public TodoServiceImpl(TodoRepository todoRepository) {
         this.todoRepository = todoRepository;
     }
 
     @Override
-    public List<ToDoDto> getTodosForUser(String user) {
+    public List<TodoDto> getTodosForUser(String user) {
         log.debug("");
         return TodoMapper.toTodoDtoList(todoRepository.getTodosForUser(user));
 
@@ -51,7 +51,7 @@ public class ToDoServiceImpl implements ToDoService {
     }
 
     @Override
-    public ToDoDto getTodo(UUID uuid) {
+    public TodoDto getTodo(UUID uuid) {
         log.debug("uuid={}", uuid.toString());
         return TodoMapper.toTodoDto(todoRepository.getTodoByUuid(uuid));
 
@@ -71,7 +71,7 @@ public class ToDoServiceImpl implements ToDoService {
     }
 
     @Override
-    public ToDoDto updateTodo(ToDoDto toDoDto) {
+    public TodoDto updateTodo(TodoDto toDoDto) {
         try {
             Todo updateTodo = todoRepository.getTodoByUuid(toDoDto.getUuid());
             TodoMapper.updateTodo(updateTodo, toDoDto);
@@ -86,7 +86,7 @@ public class ToDoServiceImpl implements ToDoService {
 
     // @Mapper(componentModel = "spring") may also use mapstruct
     @Override
-    public ToDoDto addTodo(ToDoDto toDoDto) {
+    public TodoDto addTodo(TodoDto toDoDto) {
         try {
             Todo todo = todoRepository.save(TodoMapper.fromTodoDto(toDoDto));
             return TodoMapper.toTodoDto(todo);

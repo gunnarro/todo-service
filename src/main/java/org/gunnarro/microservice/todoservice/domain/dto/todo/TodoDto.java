@@ -19,7 +19,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Builder
-public class ToDoDto {
+public class TodoDto {
     @Schema(description = "Unique identifier of the todo.")
     @NotNull
     private UUID uuid;
@@ -41,5 +41,5 @@ public class ToDoDto {
     @Pattern(regexp = "[\\w\\s]{1,100}", message = "Can only contain lower and uppercase alphabetic chars. Min 1 char, max 100 chars.")
     private String description;
     @Schema(description = "List of task/item/action this todo list contains")
-    private List<ToDoItemDto> toDoItemDtoList;
+    private List<TodoItemDto> toDoItemDtoList;
 }

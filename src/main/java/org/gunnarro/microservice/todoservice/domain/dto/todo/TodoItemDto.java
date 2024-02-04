@@ -12,7 +12,7 @@ import java.util.UUID;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Getter
 @Builder
-public class ToDoItemDto {
+public class TodoItemDto {
     @Schema(description = "Unique identifier of the todo item.")
     @NotNull
     private UUID uuid;

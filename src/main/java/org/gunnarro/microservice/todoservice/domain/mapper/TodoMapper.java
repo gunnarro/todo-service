@@ -1,6 +1,6 @@
 package org.gunnarro.microservice.todoservice.domain.mapper;
 
-import org.gunnarro.microservice.todoservice.domain.dto.todo.ToDoDto;
+import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoDto;
 import org.gunnarro.microservice.todoservice.repository.entity.Todo;
 
 import java.util.List;
@@ -8,19 +8,19 @@ import java.util.stream.Collectors;
 
 public class TodoMapper {
 
-    public static List<ToDoDto> toTodoDtoList(List<Todo> todoList) {
+    public static List<TodoDto> toTodoDtoList(List<Todo> todoList) {
         return todoList.stream().map(TodoMapper::toTodoDto).collect(Collectors.toList());
     }
 
-    public static ToDoDto toTodoDto(Todo todo) {
+    public static TodoDto toTodoDto(Todo todo) {
         if (todo == null) {
             return null;
         }
-        return ToDoDto.builder()
-                .uuid(null)
+        return TodoDto.builder()
+                .uuid(todo.getUuid())
                 .name(todo.getName())
                 .status(todo.getStatus())
-                .description(todo.getName())
+                .description(todo.getDescription())
                 .createdDate(todo.getCreatedDate())
                 .lastModifiedDate(todo.getLastModifiedDate())
                 .createdByUser(todo.getCreatedByUser())
@@ -28,7 +28,7 @@ public class TodoMapper {
                 .build();
     }
 
-    public static Todo fromTodoDto(ToDoDto toDoDto) {
+    public static Todo fromTodoDto(TodoDto toDoDto) {
         if (toDoDto == null) {
             return null;
         }
@@ -36,7 +36,7 @@ public class TodoMapper {
                 .uuid(toDoDto.getUuid())
                 .name(toDoDto.getName())
                 .status(toDoDto.getStatus())
-                .description(toDoDto.getName())
+                .description(toDoDto.getDescription())
                 .createdDate(toDoDto.getCreatedDate())
                 .lastModifiedDate(toDoDto.getLastModifiedDate())
                 .createdByUser(toDoDto.getCreatedByUser())
@@ -44,7 +44,7 @@ public class TodoMapper {
                 .build();
     }
 
-    public static void updateTodo(Todo todo, ToDoDto toDoDto) {
+    public static void updateTodo(Todo todo, TodoDto toDoDto) {
         todo.setName(toDoDto.getName());
         todo.setDescription(toDoDto.getDescription());
         todo.setStatus(toDoDto.getStatus());
