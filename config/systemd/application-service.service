@@ -1,0 +1,15 @@
+[Unit]
+Description=todo-service
+After=syslog.target
+ 
+[Service]
+User=spring
+EnvironmentFile=-/microservices/todo-service/current-application.conf
+WorkingDirectory=/microservices/todo-service
+ExecStart=/usr/lib/jvm/java-openjdk/bin/java $JAVA_OPTS $LOGGING -jar -Dname=${APP_NAME} current-application
+RestartSec=10
+Restart=on-failure
+SuccessExitStatus=143
+ 
+[Install]
+WantedBy=multi-user.target
