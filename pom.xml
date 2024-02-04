@@ -6,7 +6,7 @@
 		<groupId>org.gunnarro.microservice</groupId>
 		<artifactId>spring-boot-microservice-common-pom</artifactId>
 		<version>3.3.0-SNAPSHOT</version>
-		<relativePath/>
+		<relativePath>./pom-parent.xml</relativePath>
 	</parent>
 
 	<artifactId>todo-service</artifactId>
