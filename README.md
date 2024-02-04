@@ -1,3 +1,5 @@
+[![build and analyse](https://github.com/gunnarro/todo-service/actions/workflows/build.yml/badge.svg)](https://github.com/gunnarro/todo-service/actions/workflows/build.yml)
+
 # todoservice
 Service description
 

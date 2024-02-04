@@ -74,7 +74,7 @@ public class TodoServiceController {
                             schema = @Schema(implementation = TodoDto.class))})
     })
     @GetMapping(path = "/todos/user/{user}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
-    public @ResponseBody List<TodoDto> getTodosForUser(@PathVariable("user") @NotNull String user) {
+    public List<TodoDto> getTodosForUser(@PathVariable("user") @NotNull String user) {
         return toDoService.getTodosForUser(user);
     }
 
@@ -86,7 +86,7 @@ public class TodoServiceController {
                             schema = @Schema(implementation = TodoDto.class))})
     })
     @GetMapping(path = "/todos/{uuid}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
-    public @ResponseBody TodoDto getTodoById(@PathVariable("uuid") String uuid) {
+    public TodoDto getTodoById(@PathVariable("uuid") String uuid) {
     /*    HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "http://localhost:3000");
         responseHeaders.set(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, "GET, PUT, POST, DELETE, OPTIONS");
@@ -106,7 +106,7 @@ public class TodoServiceController {
                             schema = @Schema(implementation = TodoDto.class))})
     })
     @PostMapping(path = "/todos/{uuid}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody TodoDto createTodo(@PathVariable("uuid") String uuid, @RequestBody @Valid TodoDto toDoDto) {
+    public TodoDto createTodo(@PathVariable("uuid") String uuid, @RequestBody @Valid TodoDto toDoDto) {
         return toDoService.addTodo(toDoDto);
     }
 
@@ -118,7 +118,7 @@ public class TodoServiceController {
                             schema = @Schema(implementation = TodoDto.class))})
     })
     @PutMapping(path = "/todos/{uuid}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody TodoDto updateTodo(@PathVariable("uuid") String uuid, @RequestBody @Valid TodoDto toDoDto) {
+    public TodoDto updateTodo(@PathVariable("uuid") String uuid, @RequestBody @Valid TodoDto toDoDto) {
         return toDoService.updateTodo(toDoDto);
     }
 
