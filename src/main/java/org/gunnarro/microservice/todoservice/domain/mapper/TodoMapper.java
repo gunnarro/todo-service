@@ -1,9 +1,12 @@
 package org.gunnarro.microservice.todoservice.domain.mapper;
 
 import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoDto;
+import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoItemDto;
 import org.gunnarro.microservice.todoservice.repository.entity.Todo;
+import org.gunnarro.microservice.todoservice.repository.entity.TodoItem;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class TodoMapper {
@@ -17,7 +20,7 @@ public class TodoMapper {
             return null;
         }
         return TodoDto.builder()
-                .uuid(todo.getUuid())
+                .id(todo.getUuid().toString())
                 .name(todo.getName())
                 .status(todo.getStatus())
                 .description(todo.getDescription())
@@ -33,7 +36,7 @@ public class TodoMapper {
             return null;
         }
         return Todo.builder()
-                .uuid(toDoDto.getUuid())
+                .uuid(UUID.fromString(toDoDto.getId()))
                 .name(toDoDto.getName())
                 .status(toDoDto.getStatus())
                 .description(toDoDto.getDescription())
@@ -49,5 +52,30 @@ public class TodoMapper {
         todo.setDescription(toDoDto.getDescription());
         todo.setStatus(toDoDto.getStatus());
         todo.setLastModifiedByUser(toDoDto.getLastModifiedByUser());
+    }
+
+
+    public static TodoItemDto todoItemDto(TodoItem todoItem) {
+        return TodoItemDto.builder()
+                .id(todoItem.getId().toString())
+                .todoId(todoItem.getFkTodoId().toString())
+                .name(todoItem.getName())
+                .description(todoItem.getDescription())
+                .status(todoItem.getStatus())
+                .action(todoItem.getAction())
+                .assignedTo(todoItem.getAssignedTo())
+                .build();
+    }
+
+    public static TodoItem fromTodoItemDto(TodoItemDto todoItemDto) {
+        return TodoItem.builder()
+               // .id(todoItemDto.getId().toString())
+               // .todoId(todoItemDto.getTodoId())
+                .name(todoItemDto.getName())
+                .description(todoItemDto.getDescription())
+                .status(todoItemDto.getStatus())
+                .action(todoItemDto.getAction())
+                .assignedTo(todoItemDto.getAssignedTo())
+                .build();
     }
 }

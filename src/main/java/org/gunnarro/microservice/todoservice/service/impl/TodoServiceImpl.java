@@ -2,15 +2,19 @@ package org.gunnarro.microservice.todoservice.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoDto;
+import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoItemDto;
 import org.gunnarro.microservice.todoservice.domain.mapper.TodoMapper;
 import org.gunnarro.microservice.todoservice.exception.ApplicationException;
+import org.gunnarro.microservice.todoservice.exception.NotFoundException;
 import org.gunnarro.microservice.todoservice.exception.RestInputValidationException;
 import org.gunnarro.microservice.todoservice.repository.TodoRepository;
 import org.gunnarro.microservice.todoservice.repository.entity.Todo;
+import org.gunnarro.microservice.todoservice.repository.entity.TodoItem;
 import org.gunnarro.microservice.todoservice.service.TodoService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,44 +30,14 @@ public class TodoServiceImpl implements TodoService {
 
     @Override
     public List<TodoDto> getTodosForUser(String user) {
-        log.debug("");
         return TodoMapper.toTodoDtoList(todoRepository.getTodosForUser(user));
-
-        /*
-        List<ToDoItemDto> b39ToDoItemDtoList = List.of(ToDoItemDto.builder().uuid(UUID.randomUUID()).build());
-        List<ToDoItemDto> stv35ToDoItemDtoList = List.of(ToDoItemDto.builder().uuid(UUID.randomUUID()).build());
-        return List.of(ToDoDto.builder()
-                        .name("B39")
-                        .uuid(UUID.randomUUID())
-                        .createdDate(LocalDateTime.now())
-                        .lastModifiedDate(LocalDateTime.now())
-                        .lastModifiedByUser("adm")
-                        .toDoItemDtoList(b39ToDoItemDtoList)
-                        .build(),
-                ToDoDto.builder()
-                        .name("STV35")
-                        .uuid(UUID.randomUUID())
-                        .createdDate(LocalDateTime.now())
-                        .lastModifiedDate(LocalDateTime.now())
-                        .lastModifiedByUser("adm")
-                        .toDoItemDtoList(stv35ToDoItemDtoList)
-                        .build());*/
     }
 
     @Override
     public TodoDto getTodo(UUID uuid) {
         log.debug("uuid={}", uuid.toString());
-        return TodoMapper.toTodoDto(todoRepository.getTodoByUuid(uuid));
-
-        /*
-        List<ToDoItemDto> toDoItemDtoList = List.of(ToDoItemDto.builder().uuid(UUID.randomUUID()).build());
-        return ToDoDto.builder()
-                .uuid(uuid)
-                .createdDate(LocalDateTime.now())
-                .lastModifiedDate(LocalDateTime.now())
-                .lastModifiedBy("adm")
-                .toDoItemDtoList(toDoItemDtoList)
-                .build();*/
+        return createTodoTestData().stream().filter(t -> t.getId().equals(uuid.toString())).findFirst().orElseThrow();
+        // return TodoMapper.toTodoDto(todoRepository.getTodoByUuid(uuid));
     }
 
     @Override
@@ -73,7 +47,7 @@ public class TodoServiceImpl implements TodoService {
     @Override
     public TodoDto updateTodo(TodoDto toDoDto) {
         try {
-            Todo updateTodo = todoRepository.getTodoByUuid(toDoDto.getUuid());
+            Todo updateTodo = todoRepository.getTodoByUuid(UUID.fromString(toDoDto.getId()));
             TodoMapper.updateTodo(updateTodo, toDoDto);
             Todo todo = todoRepository.save(updateTodo);
             return TodoMapper.toTodoDto(todo);
@@ -95,5 +69,57 @@ public class TodoServiceImpl implements TodoService {
         } catch (Exception e) {
             throw new ApplicationException("error saving todo", e.getCause());
         }
+    }
+
+    @Override
+    public TodoDto addTodoItem(UUID todoUuid, TodoItem todoItem) {
+        return null;
+    }
+
+    @Override
+    public TodoDto updateTodoItem(UUID todoUuid, TodoItem todoItem) {
+        return null;
+    }
+
+    @Override
+    public TodoDto deleteTodoItem(UUID todoUuid, TodoItem todoItemUuid) {
+        return null;
+    }
+
+    List<TodoDto> createTodoTestData() {
+        String b39TodoId = UUID.randomUUID().toString();
+        String stvgt35TodoId = UUID.randomUUID().toString();
+        List<TodoItemDto> b39ToDoItemDtoList = List.of(createItem(b39TodoId, "tv", "Active"));
+        List<TodoItemDto> stv35ToDoItemDtoList = List.of(createItem(stvgt35TodoId, "fryser", "Active"), createItem(stvgt35TodoId, "stol", "Finished"));
+        return List.of(TodoDto.builder()
+                        .name("B39")
+                        .id(b39TodoId)
+                        .createdDate(LocalDateTime.now())
+                        .lastModifiedDate(LocalDateTime.now())
+                        .lastModifiedByUser("adm")
+                        .status("Active")
+                        .toDoItemDtoList(b39ToDoItemDtoList)
+                        .build(),
+                TodoDto.builder()
+                        .name("STV35")
+                        .id(stvgt35TodoId)
+                        .createdDate(LocalDateTime.now())
+                        .lastModifiedDate(LocalDateTime.now())
+                        .lastModifiedByUser("adm")
+                        .status("Finished")
+                        .toDoItemDtoList(stv35ToDoItemDtoList)
+                        .build());
+    }
+
+    TodoItemDto createItem(String todoId, String name, String status) {
+        return TodoItemDto.builder()
+                .id(UUID.randomUUID().toString())
+                .todoId(todoId)
+                .name(name)
+                .description("stue")
+                .action("selges")
+                .status(status)
+                .assignedTo("guro")
+                .build();
     }
 }

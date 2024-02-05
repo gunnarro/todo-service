@@ -34,7 +34,7 @@ public class Todo extends BaseEntity {
     private String description;
 
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ID")
+    @JoinColumn(name = "FK_TODO_ID")
     private List<TodoItem> todoItemList;
 
 }

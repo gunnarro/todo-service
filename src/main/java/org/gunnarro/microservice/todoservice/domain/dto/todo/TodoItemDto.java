@@ -15,19 +15,18 @@ import java.util.UUID;
 public class TodoItemDto {
     @Schema(description = "Unique identifier of the todo item.")
     @NotNull
-    private UUID uuid;
-    @Schema(description = "doc me")
-    private String location;
+    private String id;
+    @Schema(description = "Unique identifier of the todo that this item belongs to.")
+    @NotNull
+    private String todoId;
     @Schema(description = "doc me")
     private String name;
+    @Schema(description = "doc me")
+    private String description;
     @Schema(description = "doc me")
     private String status;
     @Schema(description = "doc me")
     private String action;
     @Schema(description = "doc me")
-    private String participant1;
-    @Schema(description = "doc me")
-    private String participant2;
-    @Schema(description = "doc me")
-    private String participant3;
+    private String assignedTo;
 }

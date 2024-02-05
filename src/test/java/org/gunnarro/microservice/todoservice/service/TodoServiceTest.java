@@ -18,12 +18,8 @@ import java.util.UUID;
 @Disabled
 @SqlGroup({
         @Sql(statements = {
-                "DROP TABLE IF EXISTS SUBSCRIPTION;",
-                "DROP TABLE IF EXISTS CUSTOMER;",
-                "DROP TABLE IF EXISTS PERSON;",
-                "DROP TABLE IF EXISTS ADDRESS;",
-                "DROP TABLE IF EXISTS CUSTOMER_PROFILE;",
-                "DROP TABLE IF EXISTS FIELD_TYPE;"}),
+                "DROP TABLE IF EXISTS TODO;",
+                "DROP TABLE IF EXISTS TODO_ITEM;"}),
         @Sql({"/db/schema-h2.sql", "/db/data-h2.sql"})
 })
 @DataJpaTest(excludeAutoConfiguration = {EnableAutoConfiguration.class})

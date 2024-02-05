@@ -24,9 +24,9 @@ import java.util.UUID;
 
 /**
  * NB! GET method should use consume = MediaType.ALL_VALUE, in order to accept empty Content-Type HTTP Header, which my be sent by clients. Normally GET do not have a Request Body.
- *
+ * <p>
  * curl -X 'GET' 'https://localhost:9999/todoservice/v1/todos/ac67ae12-69f6-444e-8d57-5499692691f1'  -H 'Content-Type: application/json' --insecure -v -u 'my-service-name:change-me'
- *
+ * <p>
  * preflight request:
  * curl -v -H "Access-Control-Request-Method: GET" -H "Origin: http://localhost:3000" -X OPTIONS https://localhost:9999/todoservice/v1/todos/ping --insecur
  */
@@ -35,22 +35,22 @@ import java.util.UUID;
 //@CrossOrigin(origins = "https//localhost:9999, http//localhost:3000", maxAge = 3600)
 @Tag(name = "Todo Service", description = "Rest API for Todo services")
 @ApiResponses(value = {
-        @ApiResponse(responseCode = HttpStatusMsg.HTTP_400_CODE, description = HttpStatusMsg.HTTP_400_MSG, content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,schema = @Schema(implementation = ErrorResponse.class))}),
+        @ApiResponse(responseCode = HttpStatusMsg.HTTP_400_CODE, description = HttpStatusMsg.HTTP_400_MSG, content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class))}),
         @ApiResponse(responseCode = HttpStatusMsg.HTTP_401_CODE, description = HttpStatusMsg.HTTP_401_MSG, content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class))}),
         @ApiResponse(responseCode = HttpStatusMsg.HTTP_403_CODE, description = HttpStatusMsg.HTTP_403_MSG, content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class))}),
         @ApiResponse(responseCode = HttpStatusMsg.HTTP_404_CODE, description = HttpStatusMsg.HTTP_404_MSG, content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class))}),
         @ApiResponse(responseCode = HttpStatusMsg.HTTP_429_CODE, description = HttpStatusMsg.HTTP_429_MSG, content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class))}),
         @ApiResponse(responseCode = HttpStatusMsg.HTTP_500_CODE, description = HttpStatusMsg.HTTP_500_MSG, content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class))}),
-        @ApiResponse(responseCode = HttpStatusMsg.HTTP_503_CODE, description = HttpStatusMsg.HTTP_503_MSG, content = {@Content(mediaType =MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class))})
+        @ApiResponse(responseCode = HttpStatusMsg.HTTP_503_CODE, description = HttpStatusMsg.HTTP_503_MSG, content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorResponse.class))})
 })
 @RestController
 @RequestMapping(path = "/todoservice/v1", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-public class TodoServiceController {
+public class TodoController {
     private static final String REST_SERVICE_METRIC_NAME = "todo.service.api";
 
     private final TodoService toDoService;
 
-    public TodoServiceController(TodoService toDoService) {
+    public TodoController(TodoService toDoService) {
         this.toDoService = toDoService;
     }
 
@@ -74,8 +74,8 @@ public class TodoServiceController {
                             schema = @Schema(implementation = TodoDto.class))})
     })
     @GetMapping(path = "/todos/user/{user}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
-    public List<TodoDto> getTodosForUser(@PathVariable("user") @NotNull String user) {
-        return toDoService.getTodosForUser(user);
+    public  ResponseEntity<List<TodoDto>> getTodosForUser(@PathVariable("user") @NotNull String user) {
+        return ResponseEntity.ok(toDoService.getTodosForUser(user));
     }
 
     @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
@@ -87,14 +87,6 @@ public class TodoServiceController {
     })
     @GetMapping(path = "/todos/{uuid}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
     public TodoDto getTodoById(@PathVariable("uuid") String uuid) {
-    /*    HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "http://localhost:3000");
-        responseHeaders.set(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, "GET, PUT, POST, DELETE, OPTIONS");
-        responseHeaders.set(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "*");
-        responseHeaders.set(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
-        ToDoDto todoDto = toDoService.getTodo(UUID.fromString(uuid));;
-        return new ResponseEntity<>(todoDto, responseHeaders, HttpStatus.OK);
-     */
         return toDoService.getTodo(UUID.fromString(uuid));
     }
 
@@ -105,7 +97,7 @@ public class TodoServiceController {
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = TodoDto.class))})
     })
-    @PostMapping(path = "/todos/{uuid}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/todos/{uuid}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
     public TodoDto createTodo(@PathVariable("uuid") String uuid, @RequestBody @Valid TodoDto toDoDto) {
         return toDoService.addTodo(toDoDto);
     }
@@ -117,7 +109,7 @@ public class TodoServiceController {
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = TodoDto.class))})
     })
-    @PutMapping(path = "/todos/{uuid}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(path = "/todos/{uuid}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
     public TodoDto updateTodo(@PathVariable("uuid") String uuid, @RequestBody @Valid TodoDto toDoDto) {
         return toDoService.updateTodo(toDoDto);
     }

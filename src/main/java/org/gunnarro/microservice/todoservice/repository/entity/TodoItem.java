@@ -24,4 +24,20 @@ public class TodoItem extends BaseEntity {
     @Column(name = "STATUS", nullable = false)
     private String status;
 
+    @Column(name = "DESCRIPTION", nullable = false)
+    private String description;
+
+    @Column(name = "ACTION", nullable = false)
+    private String action;
+
+    @Column(name = "ASSIGNED_TO", nullable = false)
+    private String assignedTo;
+
+    @Column(name = "FK_TODO_ID", nullable = false, insertable = false, updatable = false)
+    private Long fkTodoId;
+
+    @ManyToOne
+    @JoinColumn(name = "FK_TODO_ID")
+    private Todo todo;
+
 }

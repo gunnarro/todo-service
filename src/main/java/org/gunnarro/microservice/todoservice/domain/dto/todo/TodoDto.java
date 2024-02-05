@@ -22,7 +22,7 @@ import java.util.UUID;
 public class TodoDto {
     @Schema(description = "Unique identifier of the todo.")
     @NotNull
-    private UUID uuid;
+    private String id;
     @Schema(description = "date when todo was created")
     private LocalDateTime createdDate;
     @Schema(description = "date when todo was last modified")

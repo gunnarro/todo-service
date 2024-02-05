@@ -1,22 +1,28 @@
 
 --
--- add person data
+-- add todo data
 --
-insert into person(PERSON_ID, FIRST_NAME, MIDDLE_NAME, LAST_NAME, SOCIAL_SECURITY_NUMBER, BIRTH_DATE, FK_ADDRESS_ID) values(1,'gunnar', null, 'ronneberg', 1107196922222, CURRENT_DATE, null);
+insert into todo(ID, UUID, CREATED_DATE, LAST_MODIFIED_DATE, CREATED_BY_USER, LAST_MODIFIED_BY_USER, NAME, DESCRIPTION, STATUS) values(1, '1fa31ddc-a692-41b9-9b6a-1ca172269fa9', CURRENT_DATE, CURRENT_DATE, 'guro', 'guro'. 'b39', 'todo list for bergslia 39', 'open');
 
 --
--- add address data
+-- add todo_item data
 --
+insert into todo_item(ID, UUID, CREATED_DATE, LAST_MODIFIED_DATE, CREATED_BY_USER, LAST_MODIFIED_BY_USER, NAME, DESCRIPTION, STATUS) values(1, '1fa31ddc-a692-41b9-9b6a-1ca172269fa9', CURRENT_DATE, CURRENT_DATE, 'guro', 'guro'. 'b39', 'todo list for bergslia 39', 'open');
 
 
---
--- add customer data
---
-insert into customer(CUSTOMER_ID, FK_PERSON_ID) values (1,1);
+-- mysql
+-- insert data into TODO
+INSERT INTO `todo`.`todo`
+(`id`,`uuid`,`created_date`,`last_modified_date`,`created_by_user`,`last_modified_by_user`,`name`,`description`,`status`)
+VALUES(10,UUID_TO_BIN(UUID(), 1),CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'guro','guro-2','b39','todo list for bergslia 39','Open');
 
---
--- add subscription data
---
-insert into subscription(SUBSCRIPTION_ID, FK_CUSTOMER_ID, NAME, TYPE, STATUS, START_DATE, END_DATE) values (100, 1, 'mobile 4G', 'mobile', 'ACTIVE', CURRENT_DATE, CURRENT_DATE);
-insert into subscription(SUBSCRIPTION_ID, FK_CUSTOMER_ID, NAME, TYPE, STATUS, START_DATE, END_DATE) values (200, 1, 'tv package 2', 'tv', 'TERMINATED', CURRENT_DATE, CURRENT_DATE);
+INSERT INTO `todo`.`todo`
+(`id`,`uuid`,`created_date`,`last_modified_date`,`created_by_user`,`last_modified_by_user`,`name`,`description`,`status`)
+VALUES(11,UUID_TO_BIN(UUID(), 1),CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'guro','guro-2','stvgt35','todo list for stavangergata 35','Open');
 
+-- insert data into TODO_ITEM
+INSERT INTO `todo`.`todo_item`(`id`,`uuid`,`created_date`,`last_modified_date`,`created_by_user`,`last_modified_by_user`,`name`,`description`,`action`,`status`,`assigned_to`,`fk_todo_id`)
+VALUES(100,UUID_TO_BIN(UUID(), 1),CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'guro','guro','tv','stue','selges','Open','guro',10);
+
+INSERT INTO `todo`.`todo_item`(`id`,`uuid`,`created_date`,`last_modified_date`,`created_by_user`,`last_modified_by_user`,`name`,`description`,`action`,`status`,`assigned_to`,`fk_todo_id`)
+VALUES(101,UUID_TO_BIN(UUID(), 1),CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'guro','guro','sofa','stue','selges','Open','guro',10);
