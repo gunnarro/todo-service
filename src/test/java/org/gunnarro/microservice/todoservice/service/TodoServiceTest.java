@@ -37,7 +37,7 @@ public class TodoServiceTest {
 
     @Test
     void getTodoByUuid() {
-        toDoService.getTodo(UUID.randomUUID());
+        toDoService.getTodo(UUID.randomUUID().toString());
     }
 
 }

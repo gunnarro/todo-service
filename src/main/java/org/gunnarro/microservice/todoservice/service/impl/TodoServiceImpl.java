@@ -5,11 +5,9 @@ import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoDto;
 import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoItemDto;
 import org.gunnarro.microservice.todoservice.domain.mapper.TodoMapper;
 import org.gunnarro.microservice.todoservice.exception.ApplicationException;
-import org.gunnarro.microservice.todoservice.exception.NotFoundException;
 import org.gunnarro.microservice.todoservice.exception.RestInputValidationException;
 import org.gunnarro.microservice.todoservice.repository.TodoRepository;
 import org.gunnarro.microservice.todoservice.repository.entity.Todo;
-import org.gunnarro.microservice.todoservice.repository.entity.TodoItem;
 import org.gunnarro.microservice.todoservice.service.TodoService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -34,9 +32,9 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
-    public TodoDto getTodo(UUID uuid) {
-        log.debug("uuid={}", uuid.toString());
-        return createTodoTestData().stream().filter(t -> t.getId().equals(uuid.toString())).findFirst().orElseThrow();
+    public TodoDto getTodo(String todoId) {
+        log.debug("todoId={}", todoId);
+        return createTodoTestData().stream().filter(t -> t.getId().equals(todoId)).findFirst().orElseThrow();
         // return TodoMapper.toTodoDto(todoRepository.getTodoByUuid(uuid));
     }
 
@@ -72,18 +70,18 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
-    public TodoDto addTodoItem(UUID todoUuid, TodoItem todoItem) {
+    public TodoItemDto addTodoItem(TodoItemDto todoItemDto) {
         return null;
     }
 
     @Override
-    public TodoDto updateTodoItem(UUID todoUuid, TodoItem todoItem) {
+    public TodoItemDto updateTodoItem(TodoItemDto todoItemDto) {
         return null;
     }
 
     @Override
-    public TodoDto deleteTodoItem(UUID todoUuid, TodoItem todoItemUuid) {
-        return null;
+    public void deleteTodoItem(String todoId, String todoItemId) {
+
     }
 
     List<TodoDto> createTodoTestData() {

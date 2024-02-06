@@ -13,13 +13,13 @@ import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.gunnarro.microservice.todoservice.domain.dto.ErrorResponse;
 import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoDto;
+import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoItemDto;
 import org.gunnarro.microservice.todoservice.service.TodoService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 
 /**
@@ -85,9 +85,9 @@ public class TodoController {
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = TodoDto.class))})
     })
-    @GetMapping(path = "/todos/{uuid}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
-    public TodoDto getTodoById(@PathVariable("uuid") String uuid) {
-        return toDoService.getTodo(UUID.fromString(uuid));
+    @GetMapping(path = "/todos/{todoId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
+    public TodoDto getTodoById(@PathVariable("todoId") String todoId) {
+        return toDoService.getTodo(todoId);
     }
 
     @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
@@ -97,9 +97,9 @@ public class TodoController {
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = TodoDto.class))})
     })
-    @PostMapping(path = "/todos/{uuid}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
-    public TodoDto createTodo(@PathVariable("uuid") String uuid, @RequestBody @Valid TodoDto toDoDto) {
-        return toDoService.addTodo(toDoDto);
+    @PostMapping(path = "/todos/{todoId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
+    public TodoDto createTodo(@PathVariable("todoId") String todoId, @RequestBody @Valid TodoDto todoDto) {
+        return toDoService.addTodo(todoDto);
     }
 
     @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
@@ -109,9 +109,9 @@ public class TodoController {
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = TodoDto.class))})
     })
-    @PutMapping(path = "/todos/{uuid}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
-    public TodoDto updateTodo(@PathVariable("uuid") String uuid, @RequestBody @Valid TodoDto toDoDto) {
-        return toDoService.updateTodo(toDoDto);
+    @PutMapping(path = "/todos/{todoId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
+    public TodoDto updateTodo(@PathVariable("todoId") String todoId, @RequestBody @Valid TodoDto todoDto) {
+        return toDoService.updateTodo(todoDto);
     }
 
     @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
@@ -121,10 +121,52 @@ public class TodoController {
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = String.class))})
     })
-    @DeleteMapping(path = "/todos/{uuid}")
-    public ResponseEntity<String> deleteTodo(@PathVariable @NotNull String uuid) {
-        log.info("delete: {} ", uuid);
-        toDoService.deleteTodo(uuid);
-        return ResponseEntity.ok(uuid);
+    @DeleteMapping(path = "/todos/{todoId}")
+    public ResponseEntity<String> deleteTodo(@PathVariable("todoId") @NotNull String todoId) {
+        log.info("delete: todoId={} ", todoId);
+        toDoService.deleteTodo(todoId);
+        return ResponseEntity.ok(todoId);
+    }
+
+    // ---------------------------------------------------------
+    // todo items
+    // ---------------------------------------------------------
+
+    @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
+    @Operation(summary = "Add new todo item to the todo list", description = "return created todo item")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Created todo item",
+                    content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = TodoItemDto.class))})
+    })
+    @PostMapping(path = "/todos/{todoId}/items/{todoItemId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
+    public TodoItemDto createTodoItem(@PathVariable("todoId") String todoId, @PathVariable("todoItemId") String todoItemId, @RequestBody @Valid TodoItemDto todoItemDto) {
+        return toDoService.addTodoItem(todoItemDto);
+    }
+
+    @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
+    @Operation(summary = "update todo item in the todo list", description = "return updated todo item")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "updated todo item",
+                    content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = TodoItemDto.class))})
+    })
+    @PutMapping(path = "/todos/{todoId}/items/{todoItemId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
+    public TodoItemDto updateTodoItem(@PathVariable("todoId") String todoId, @RequestBody @Valid TodoItemDto toDoItemDto) {
+        return toDoService.updateTodoItem(toDoItemDto);
+    }
+
+    @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
+    @Operation(summary = "delete todo item", description = "todo item id to delete")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "todo item is deleted",
+                    content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = String.class))})
+    })
+    @DeleteMapping(path = "/todos/{todoId}/items/{todoItemId}")
+    public ResponseEntity<String> deleteTodoItem(@PathVariable @NotNull String todoId, @PathVariable @NotNull String todoItemId) {
+        log.info("delete: todoId={}, todoItemId={}", todoId, todoItemId);
+        toDoService.deleteTodoItem(todoId, todoItemId);
+        return ResponseEntity.ok(todoItemId);
     }
 }

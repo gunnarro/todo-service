@@ -6,8 +6,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.util.UUID;
-
 @Schema(description = "Holds information about a todo item")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Getter

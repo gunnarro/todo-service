@@ -1,6 +1,7 @@
 package org.gunnarro.microservice.todoservice.service;
 
 import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoDto;
+import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoItemDto;
 import org.gunnarro.microservice.todoservice.repository.entity.TodoItem;
 import org.springframework.stereotype.Service;
 
@@ -12,17 +13,17 @@ public interface TodoService {
 
     List<TodoDto> getTodosForUser(String user);
 
-    TodoDto getTodo(UUID uuid);
+    TodoDto getTodo(String todoId);
 
-    void deleteTodo(String uuid);
+    void deleteTodo(String todoId);
 
     TodoDto updateTodo(TodoDto toDoDto);
 
     TodoDto addTodo(TodoDto toDoDto);
 
-    TodoDto addTodoItem(UUID todoUuid, TodoItem todoItem);
+    TodoItemDto addTodoItem(TodoItemDto todoItemDto);
 
-    TodoDto updateTodoItem(UUID todoUuid, TodoItem todoItem);
+    TodoItemDto updateTodoItem(TodoItemDto todoItemDto);
 
-    TodoDto deleteTodoItem(UUID todoUuid, TodoItem todoItemUuid);
+    void deleteTodoItem(String todoId, String todoItemUuid);
 }

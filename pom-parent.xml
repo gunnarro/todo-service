@@ -353,7 +353,7 @@
                             <!--Configure severities that fail the build. Default is MUST, SHOULD -->
                             <failOn>MUST</failOn>
                             <!-- The input file to validate -->
-                            <source>doc/openapi/rest-service-api.yaml</source>
+                            <source>docs/openapi/todo-service-api.yaml</source>
                             <!--Ignore certain rules. Default is none -->
                             <skipRules>
                                 <skipRule>CommonFieldTypesRule</skipRule>
@@ -371,7 +371,7 @@
                             <!-- Alternatively rules can be configured with configuration file -->
                             <rulesConfigLocation>reference.conf</rulesConfigLocation>
                             <!-- Write the result of the validation to file. Optional-->
-                            <resultFile>target/rest-service-api_validation_result.yaml</resultFile>
+                            <resultFile>target/todo-service-api_validation_result.yaml</resultFile>
                         </configuration>
                         <executions>
                             <execution>

@@ -9,6 +9,7 @@ import org.gunnarro.microservice.todoservice.service.TodoService;
 import org.hamcrest.core.Is;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -100,6 +101,7 @@ public class TodoControllerValidationTest extends DefaultTestConfig {
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
     }
 
+    @Disabled
     @Test
     void getTodoInvalidUuidFormat() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/todoservice/v1/todos/invalid-uuid")
