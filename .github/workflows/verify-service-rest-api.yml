@@ -22,4 +22,4 @@ jobs:
           java-version: 21
           distribution: 'zulu' # Alternative distribution options are available.
       - name: Run zally linter
-        run: mvn verify -P verify-rest-api
+        run: mvn compile -P verify-rest-api

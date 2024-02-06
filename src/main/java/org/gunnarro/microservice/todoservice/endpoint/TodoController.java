@@ -118,7 +118,7 @@ public class TodoController {
     @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
     @Operation(summary = "delete todo", description = "id of deleted todo")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "todo is deleted",
+            @ApiResponse(responseCode = "204", description = "todo is deleted",
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema())})
     })
@@ -160,7 +160,7 @@ public class TodoController {
     @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
     @Operation(summary = "delete todo item", description = "todo item id to delete")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "todo item is deleted",
+            @ApiResponse(responseCode = "204", description = "todo item is deleted",
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema())})
     })

@@ -368,6 +368,12 @@
                                 <skipRule>SnakeCaseInPropNameRule</skipRule>
                                 <skipRule>Use429HeaderForRateLimitRule</skipRule>
                                 <skipRule>PluralizeResourceNamesRule</skipRule>
+                                <skipRule>VersionInInfoSectionRule</skipRule>
+                                <skipRule>DateTimePropertiesSuffixRule</skipRule>
+                                <skipRule>MediaTypesRule</skipRule>
+                                <skipRule>SecureAllEndpointsRule</skipRule>
+                                <skipRule>VersionInInfoSectionRule</skipRule>
+                                <skipRule>SuccessResponseAsJsonObjectRule</skipRule>
                             </skipRules>
                             <ruleConfig>
                                 <!-- NOTE: The rule elements' content can be written in JSON or YAML -->

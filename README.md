@@ -1,10 +1,10 @@
 [![build and analyse](https://github.com/gunnarro/todo-service/actions/workflows/build.yml/badge.svg)](https://github.com/gunnarro/todo-service/actions/workflows/build.yml)
 [![verify rest api](https://github.com/gunnarro/todo-service/actions/workflows/verify-service-rest-api.yml/badge.svg)](https://github.com/gunnarro/todo-service/actions/workflows/verify-service-rest-api.yml)
 
-# todoservice
-Service description
+# Todo Rest Service
+Service for create and handle todo lists.
 
-| Name      | Firm     | Mobile              | Email           
+| Name      | Firm     | Mobile              | Email           |
 |-----------|----------|---------------------|-----------------|
 | developer | Company  | myname@company.com  | +47 00 00 00 00 |
 
