@@ -1,11 +1,11 @@
 openapi: 3.0.1
 info:
-  title: Spring Boot Microservice
-  description: Spring Boot Microservice Rest Service Template
+  title: Todo Service
+  description: Rest Api for todo services
   contact:
-    name: maintainer@organization.org
-    url: 'https://my-orgainzation.org'
-    email: maintainer@organization.com
+    name: gunnarro@gunnarroas.org
+    url: 'https://gunnarroas.org'
+    email: gunnarro@gunnarroas.org
   version: V1
 servers:
   - url: 'https://localhost:9999'
@@ -89,7 +89,7 @@ paths:
             type: string
       requestBody:
         content:
-          '*/*':
+          application/json:
             schema:
               $ref: '#/components/schemas/TodoDto'
         required: true
@@ -156,7 +156,7 @@ paths:
             type: string
       requestBody:
         content:
-          '*/*':
+          application/json:
             schema:
               $ref: '#/components/schemas/TodoDto'
         required: true
@@ -222,12 +222,8 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        '204':
           description: todo is deleted
-          content:
-            application/json:
-              schema:
-                type: string
         '400':
           description: Bad Request
           content:
@@ -285,7 +281,7 @@ paths:
             type: string
       requestBody:
         content:
-          '*/*':
+          application/json:
             schema:
               $ref: '#/components/schemas/TodoItemDto'
         required: true
@@ -357,7 +353,7 @@ paths:
             type: string
       requestBody:
         content:
-          '*/*':
+          application/json:
             schema:
               $ref: '#/components/schemas/TodoItemDto'
         required: true
@@ -418,12 +414,8 @@ paths:
       operationId: deleteTodoItem
       parameters: []
       responses:
-        '200':
+        '204':
           description: todo item is deleted
-          content:
-            application/json:
-              schema:
-                type: string
         '400':
           description: Bad Request
           content:

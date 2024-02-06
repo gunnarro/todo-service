@@ -359,7 +359,6 @@
                                 <skipRule>ApiAudienceRule</skipRule>
                                 <skipRule>ApiIdentifierRule</skipRule>
                                 <skipRule>ApiMetaInformationRule</skipRule>
-                                <skipRule>CommonFieldTypesRule</skipRule>
                                 <skipRule>SecureAllEndpointsWithScopesRule</skipRule>
                                 <skipRule>NoVersionInUriRule</skipRule>
                                 <skipRule>PluralizeNamesForArraysRule</skipRule>
@@ -370,10 +369,8 @@
                                 <skipRule>PluralizeResourceNamesRule</skipRule>
                                 <skipRule>VersionInInfoSectionRule</skipRule>
                                 <skipRule>DateTimePropertiesSuffixRule</skipRule>
-                                <skipRule>MediaTypesRule</skipRule>
                                 <skipRule>SecureAllEndpointsRule</skipRule>
                                 <skipRule>VersionInInfoSectionRule</skipRule>
-                                <skipRule>SuccessResponseAsJsonObjectRule</skipRule>
                             </skipRules>
                             <ruleConfig>
                                 <!-- NOTE: The rule elements' content can be written in JSON or YAML -->

@@ -75,7 +75,7 @@ public class TodoController {
                             schema = @Schema(implementation = TodoDto.class))})
     })
     @GetMapping(path = "/todos/user/{user}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
-    public  ResponseEntity<List<TodoDto>> getTodosForUser(@PathVariable("user") @NotNull String user) {
+    public ResponseEntity<List<TodoDto>> getTodosForUser(@PathVariable("user") @NotNull String user) {
         return ResponseEntity.ok(toDoService.getTodosForUser(user));
     }
 
@@ -118,9 +118,7 @@ public class TodoController {
     @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
     @Operation(summary = "delete todo", description = "id of deleted todo")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "todo is deleted",
-                    content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema())})
+            @ApiResponse(responseCode = "204", description = "todo is deleted")
     })
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(path = "/todos/{todoId}")
@@ -160,9 +158,7 @@ public class TodoController {
     @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
     @Operation(summary = "delete todo item", description = "todo item id to delete")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "todo item is deleted",
-                    content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema())})
+            @ApiResponse(responseCode = "204", description = "todo item is deleted")
     })
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(path = "/todos/{todoId}/items/{todoItemId}")
