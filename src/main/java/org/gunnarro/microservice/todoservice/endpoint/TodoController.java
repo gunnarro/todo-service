@@ -15,6 +15,7 @@ import org.gunnarro.microservice.todoservice.domain.dto.ErrorResponse;
 import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoDto;
 import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoItemDto;
 import org.gunnarro.microservice.todoservice.service.TodoService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -97,7 +98,7 @@ public class TodoController {
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = TodoDto.class))})
     })
-    @PostMapping(path = "/todos/{todoId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
+    @PostMapping(path = "/todos/{todoId}", produces = MediaType.APPLICATION_PROBLEM_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public TodoDto createTodo(@PathVariable("todoId") String todoId, @RequestBody @Valid TodoDto todoDto) {
         return toDoService.addTodo(todoDto);
     }
@@ -109,7 +110,7 @@ public class TodoController {
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = TodoDto.class))})
     })
-    @PutMapping(path = "/todos/{todoId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
+    @PutMapping(path = "/todos/{todoId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public TodoDto updateTodo(@PathVariable("todoId") String todoId, @RequestBody @Valid TodoDto todoDto) {
         return toDoService.updateTodo(todoDto);
     }
@@ -119,13 +120,13 @@ public class TodoController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "todo is deleted",
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = String.class))})
+                            schema = @Schema())})
     })
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(path = "/todos/{todoId}")
-    public ResponseEntity<String> deleteTodo(@PathVariable("todoId") @NotNull String todoId) {
+    public void deleteTodo(@PathVariable("todoId") @NotNull String todoId) {
         log.info("delete: todoId={} ", todoId);
         toDoService.deleteTodo(todoId);
-        return ResponseEntity.ok(todoId);
     }
 
     // ---------------------------------------------------------
@@ -139,7 +140,7 @@ public class TodoController {
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = TodoItemDto.class))})
     })
-    @PostMapping(path = "/todos/{todoId}/items/{todoItemId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
+    @PostMapping(path = "/todos/{todoId}/items/{todoItemId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public TodoItemDto createTodoItem(@PathVariable("todoId") String todoId, @PathVariable("todoItemId") String todoItemId, @RequestBody @Valid TodoItemDto todoItemDto) {
         return toDoService.addTodoItem(todoItemDto);
     }
@@ -151,7 +152,7 @@ public class TodoController {
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = TodoItemDto.class))})
     })
-    @PutMapping(path = "/todos/{todoId}/items/{todoItemId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
+    @PutMapping(path = "/todos/{todoId}/items/{todoItemId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public TodoItemDto updateTodoItem(@PathVariable("todoId") String todoId, @RequestBody @Valid TodoItemDto toDoItemDto) {
         return toDoService.updateTodoItem(toDoItemDto);
     }
@@ -161,12 +162,12 @@ public class TodoController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "todo item is deleted",
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = String.class))})
+                            schema = @Schema())})
     })
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(path = "/todos/{todoId}/items/{todoItemId}")
-    public ResponseEntity<String> deleteTodoItem(@PathVariable @NotNull String todoId, @PathVariable @NotNull String todoItemId) {
+    public void deleteTodoItem(@PathVariable @NotNull String todoId, @PathVariable @NotNull String todoItemId) {
         log.info("delete: todoId={}, todoItemId={}", todoId, todoItemId);
         toDoService.deleteTodoItem(todoId, todoItemId);
-        return ResponseEntity.ok(todoItemId);
     }
 }

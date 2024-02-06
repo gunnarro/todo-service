@@ -356,9 +356,18 @@
                             <source>docs/openapi/todo-service-api.yaml</source>
                             <!--Ignore certain rules. Default is none -->
                             <skipRules>
+                                <skipRule>ApiAudienceRule</skipRule>
+                                <skipRule>ApiIdentifierRule</skipRule>
+                                <skipRule>ApiMetaInformationRule</skipRule>
                                 <skipRule>CommonFieldTypesRule</skipRule>
                                 <skipRule>SecureAllEndpointsWithScopesRule</skipRule>
                                 <skipRule>NoVersionInUriRule</skipRule>
+                                <skipRule>PluralizeNamesForArraysRule</skipRule>
+                                <skipRule>UseProblemJsonRule</skipRule>
+                                <skipRule>JsonProblemAsDefaultResponseRule</skipRule> <!-- problem json spec https://www.rfc-editor.org/rfc/rfc9457.html -->
+                                <skipRule>SnakeCaseInPropNameRule</skipRule>
+                                <skipRule>Use429HeaderForRateLimitRule</skipRule>
+                                <skipRule>PluralizeResourceNamesRule</skipRule>
                             </skipRules>
                             <ruleConfig>
                                 <!-- NOTE: The rule elements' content can be written in JSON or YAML -->

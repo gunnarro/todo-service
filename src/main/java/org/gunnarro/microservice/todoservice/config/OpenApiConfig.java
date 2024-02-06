@@ -10,13 +10,13 @@ import io.swagger.v3.oas.annotations.servers.Server;
 
 @OpenAPIDefinition(
         info = @Info(
-                title = "Spring Boot Microservice",
-                description = "Spring Boot Microservice Rest Service Template",
+                title = "Todo Service",
+                description = "Rest Api for todo services",
                 version = "V1",
                 contact = @Contact(
-                        name = "maintainer@organization.org",
-                        url = "https://my-orgainzation.org",
-                        email = "maintainer@organization.com"
+                        name = "gunnarro@gunnarroas.org",
+                        url = "https://gunnarroas.org",
+                        email = "gunnarro@gunnarroas.org"
                 )),
         servers = @Server(url = "https://localhost:9999")
 )
