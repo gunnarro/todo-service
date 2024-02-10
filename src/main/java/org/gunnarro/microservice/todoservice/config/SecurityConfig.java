@@ -19,6 +19,8 @@ import java.util.List;
 
 
 /**
+ * For CORS Http Headers see <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Headers">preflight request</a>
+ *
  * Security configuration for Rest API and endpoints
  */
 @Slf4j
@@ -64,11 +66,13 @@ public class SecurityConfig {
     protected CorsConfigurationSource corsConfigurationSource() {
         //     org.springframework.security.web.csrf.CsrfFilter csrf;
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://127.0.0.1:3000", "http://localhost:3000"));
+       // configuration.setAllowedOriginPatterns(List.of("*"));
+        configuration.setAllowedOrigins(List.of("http://localhost:3000/"));
         configuration.setAllowedMethods(List.of(HttpMethod.GET.name(), HttpMethod.POST.name(), HttpMethod.PATCH.name(), HttpMethod.PUT.name(), HttpMethod.DELETE.name(), HttpMethod.OPTIONS.name(), HttpMethod.HEAD.name()));
         configuration.setAllowCredentials(true);
-        configuration.setAllowedHeaders(List.of("Authorization", "Requestor-Type"));
-        configuration.setExposedHeaders(List.of("X-Get-Header"));
+        // The Access-Control-Allow-Headers response header is used in response to a preflight request
+        configuration.setAllowedHeaders(List.of("authorization", "cache-control"));
+      //  configuration.setExposedHeaders(List.of("X-Get-Header"));
         configuration.setMaxAge(3600L);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

@@ -23,6 +23,7 @@ public class TodoMapper {
         }
         return TodoDto.builder()
                 .id(todo.getId())
+                .idStr(todo.getId().toString())
                 .name(todo.getName())
                 .status(todo.getStatus())
                 .description(todo.getDescription())

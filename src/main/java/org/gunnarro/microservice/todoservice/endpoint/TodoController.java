@@ -121,7 +121,7 @@ public class TodoController {
             @ApiResponse(responseCode = "204", description = "todo is deleted")
     })
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping(path = "/todos/{todoId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(path = "/todos/{todoId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
     public void deleteTodo(@PathVariable("todoId") @NotNull Long todoId) {
         log.info("delete: todoId={} ", todoId);
         toDoService.deleteTodo(todoId);
@@ -161,7 +161,7 @@ public class TodoController {
             @ApiResponse(responseCode = "204", description = "todo item is deleted")
     })
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping(path = "/todos/{todoId}/items/{todoItemId}")
+    @DeleteMapping(path = "/todos/{todoId}/items/{todoItemId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void deleteTodoItem(@PathVariable("todoId") @NotNull Long todoId, @PathVariable("todoItemId") @NotNull Long todoItemId) {
         log.info("delete: todoId={}, todoItemId={}", todoId, todoItemId);
         toDoService.deleteTodoItem(todoId, todoItemId);
