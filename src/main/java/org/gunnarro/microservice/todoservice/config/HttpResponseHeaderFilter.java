@@ -1,20 +1,13 @@
 package org.gunnarro.microservice.todoservice.config;
 
-import java.io.IOException;
-import java.util.Optional;
-import java.util.UUID;
-
-import jakarta.servlet.Filter;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.FilterConfig;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
+import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import org.apache.logging.log4j.ThreadContext;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.ThreadContext;
+
+import java.io.IOException;
+import java.util.UUID;
 
 /**
  * Filter for setting common HTTP Headers for all rest request and responses.

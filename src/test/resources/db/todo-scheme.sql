@@ -29,14 +29,13 @@ SET FOREIGN_KEY_CHECKS=0;
 
 -- Table: todo
 DROP TABLE IF EXISTS todo;
-CREATE TABLE todo(id 						INTEGER PRIMARY KEY AUTO_INCREMENT,
-                   uuid BINARY(16)          DEFAULT (UUID_TO_BIN(UUID(), 1)),
+CREATE TABLE todo(id 						BIGINT PRIMARY KEY AUTO_INCREMENT,
                    created_date       	    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                    last_modified_date 	    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                    created_by_user          VARCHAR(100) NOT NULL,
                    last_modified_by_user    VARCHAR(100) NOT NULL,
                    name    	        	    VARCHAR(100) NOT NULL,
-                   description    	        VARCHAR(500) NOT NULL,
+                   description    	        VARCHAR(500),
                    status		           	VARCHAR(100) NOT NULL,
                    UNIQUE(name))
 CHARACTER SET 'utf8'
@@ -44,19 +43,18 @@ COLLATE 'utf8_unicode_ci';
 
 -- Table: todo_item
 DROP TABLE IF EXISTS todo_item;
-CREATE TABLE todo_item(id 				    INTEGER PRIMARY KEY AUTO_INCREMENT,
-                   uuid BINARY(16)          DEFAULT (UUID_TO_BIN(UUID(), 1)),
+CREATE TABLE todo_item(id 				    BIGINT PRIMARY KEY AUTO_INCREMENT,
                    created_date            	TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                    last_modified_date    	TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                    created_by_user          VARCHAR(100) NOT NULL,
                    last_modified_by_user    VARCHAR(100) NOT NULL,
-                   name    	        	    VARCHAR(100),
+                   name    	        	    VARCHAR(100) NOT NULL,
                    description    	        VARCHAR(200),
                    action       	        VARCHAR(200),
-                   status		           	VARCHAR(100),
+                   status		           	VARCHAR(100) NOT NULL,
                    assigned_to              VARCHAR(100),
                    FOREIGN KEY (fk_todo_id) REFERENCES todo(id) ON DELETE SET NULL ON UPDATE CASCADE,
-                   fk_todo_id    	        INTEGER,
+                   fk_todo_id    	        BIGINT,
                    UNIQUE(name, fk_todo_id))
 CHARACTER SET 'utf8'
 COLLATE 'utf8_unicode_ci';

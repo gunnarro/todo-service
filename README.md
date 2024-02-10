@@ -46,5 +46,9 @@ See result at
 target/rest-service-api_validation_result.yaml
 ```
 
-curl -v -H "Access-Control-Request-Method: GET" -H "Origin: http://localhost:3000" -X OPTIONS https://localhost:9999/todoservice/v1/todos/ping --insecure
+curl -v -H "Access-Control-Request-Method: GET" -H "Origin: http://localhost:3000" -X OPTIONS https://localhost:9999/todoservice/v1/todos/guro --insecure
+curl -X DELETE https://localhost:9999/todoservice/v1/todos/11eec40c-c279-03fd-b266-cc2f713aeb66 -H accept: */* 
+
+# Resources
+[TSID](https://vladmihalcea.com/tsid-identifier-jpa-hibernate/)
 

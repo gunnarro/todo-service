@@ -6,12 +6,14 @@ import org.gunnarro.microservice.todoservice.repository.entity.Todo;
 import org.gunnarro.microservice.todoservice.repository.entity.TodoItem;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class TodoMapper {
 
     public static List<TodoDto> toTodoDtoList(List<Todo> todoList) {
+        if (todoList == null) {
+            return List.of();
+        }
         return todoList.stream().map(TodoMapper::toTodoDto).collect(Collectors.toList());
     }
 
@@ -20,7 +22,7 @@ public class TodoMapper {
             return null;
         }
         return TodoDto.builder()
-                .id(todo.getUuid().toString())
+                .id(todo.getId())
                 .name(todo.getName())
                 .status(todo.getStatus())
                 .description(todo.getDescription())
@@ -28,6 +30,7 @@ public class TodoMapper {
                 .lastModifiedDate(todo.getLastModifiedDate())
                 .createdByUser(todo.getCreatedByUser())
                 .lastModifiedByUser(todo.getLastModifiedByUser())
+                .toDoItemDtoList(todoItemDtoList(todo.getTodoItemList()))
                 .build();
     }
 
@@ -36,7 +39,7 @@ public class TodoMapper {
             return null;
         }
         return Todo.builder()
-                .uuid(UUID.fromString(toDoDto.getId()))
+                .id(toDoDto.getId())
                 .name(toDoDto.getName())
                 .status(toDoDto.getStatus())
                 .description(toDoDto.getDescription())
@@ -55,27 +58,44 @@ public class TodoMapper {
     }
 
 
-    public static TodoItemDto todoItemDto(TodoItem todoItem) {
+    public static List<TodoItemDto> todoItemDtoList(List<TodoItem> todoItemList) {
+        if (todoItemList == null) {
+            return List.of();
+        }
+        return todoItemList.stream().map(TodoMapper::toTodoItemDto).collect(Collectors.toList());
+    }
+
+    public static TodoItemDto toTodoItemDto(TodoItem todoItem) {
+        if (todoItem == null) {
+            return null;
+        }
         return TodoItemDto.builder()
-                .id(todoItem.getId().toString())
-                .todoId(todoItem.getFkTodoId().toString())
+                .id(todoItem.getId())
+                .todoId(todoItem.getFkTodoId())
                 .name(todoItem.getName())
                 .description(todoItem.getDescription())
                 .status(todoItem.getStatus())
                 .action(todoItem.getAction())
                 .assignedTo(todoItem.getAssignedTo())
+                .createdByUser(todoItem.getCreatedByUser())
+                .lastModifiedByUser(todoItem.getLastModifiedByUser())
                 .build();
     }
 
     public static TodoItem fromTodoItemDto(TodoItemDto todoItemDto) {
+        if (todoItemDto == null) {
+            return null;
+        }
         return TodoItem.builder()
-               // .id(todoItemDto.getId().toString())
-               // .todoId(todoItemDto.getTodoId())
+                .id(todoItemDto.getId())
+                .fkTodoId(todoItemDto.getTodoId())
                 .name(todoItemDto.getName())
                 .description(todoItemDto.getDescription())
                 .status(todoItemDto.getStatus())
                 .action(todoItemDto.getAction())
                 .assignedTo(todoItemDto.getAssignedTo())
+                .createdByUser(todoItemDto.getCreatedByUser())
+                .lastModifiedByUser(todoItemDto.getLastModifiedByUser())
                 .build();
     }
 }

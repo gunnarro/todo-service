@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
+import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -34,7 +34,7 @@ public class TodoControllerTest {
     @Test
     void getTodosForUser() {
         TodoDto todoDto = TodoDto.builder()
-                .id(UUID.randomUUID().toString())
+                .id(new Random().nextLong())
                 .name("guro")
                 .status("Active")
                 .description("my todo list")

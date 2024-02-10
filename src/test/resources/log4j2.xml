@@ -90,7 +90,12 @@
 		<logger name="${PACKAGE_NAME}.aspect" level="INFO" additivity="false">
 			<appender-ref ref="performanceLogAppender" />
 		</logger>
-		
+
+		<Logger name="org.springframework.security" level="TRACE" additivity="false">
+			<AppenderRef ref="debugFileAppender" />
+			<AppenderRef ref="consoleAppender" />
+		</Logger>
+
 		<Root level="INFO">
 			<AppenderRef ref="consoleAppender" />
 			<AppenderRef ref="debugFileAppender" />

@@ -75,7 +75,12 @@
 			<AppenderRef ref="debugFileAppender" />
 			<AppenderRef ref="consoleAppender" />
 		</Logger>
-		
+
+		<Logger name="org.springframework.security" level="TRACE" additivity="false">
+			<AppenderRef ref="debugFileAppender" />
+			<AppenderRef ref="consoleAppender" />
+		</Logger>
+
 		<!-- Turn request logging off as default, set level=DEGBUG in order to turn request logging on -->
 		<logger name="org.springframework.web.filter.CommonsRequestLoggingFilter" level="DEBUG" additivity="false">
 			<appender-ref ref="requestLogAppender" />

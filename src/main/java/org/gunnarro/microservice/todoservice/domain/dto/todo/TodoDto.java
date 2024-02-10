@@ -12,16 +12,15 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Schema(description = "Holds information about a todo list")
+@Schema(description = "Holds information about a todo")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Builder
 public class TodoDto {
-    @Schema(description = "Unique identifier of the todo.")
-    @NotNull
-    private String id;
+    @Schema(description = "Unique identifier of the todo. Should not be set for new Todo.")
+    private Long id;
     @Schema(description = "date when todo was created")
     private LocalDateTime createdDate;
     @Schema(description = "date when todo was last modified")
@@ -31,7 +30,7 @@ public class TodoDto {
     @Schema(description = "user that last modified the todo")
     private String lastModifiedByUser;
     @Schema(description = "Name of todo")
-    @Pattern(regexp = "[\\w\\s]{1,50}", message = "Can only contain lower and uppercase alphabetic chars. Min 1 char, max 50 chars.")
+    @Pattern(regexp = "[\\w\\s[-,_]]{1,50}", message = "Can only contain lower and uppercase alphabetic chars. Min 1 char, max 50 chars.")
     private String name;
     @Schema(description = "Status of todo, ACTIVE or FINISHED")
     @NotNull

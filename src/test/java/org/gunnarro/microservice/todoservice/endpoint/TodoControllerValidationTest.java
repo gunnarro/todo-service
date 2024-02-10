@@ -24,6 +24,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.time.LocalDateTime;
+import java.util.Random;
 import java.util.UUID;
 
 @WebMvcTest
@@ -64,7 +65,7 @@ public class TodoControllerValidationTest extends DefaultTestConfig {
     @Test
     void createTodoInputValidationError() throws Exception {
         TodoDto todoDto = TodoDto.builder()
-                .id(UUID.randomUUID().toString())
+                .id(new Random().nextLong())
                 .name("guro*#/")
                 .status("Active")
                 .description("my todo list")
@@ -84,7 +85,7 @@ public class TodoControllerValidationTest extends DefaultTestConfig {
     @Test
     void updateTodoInputValidationError() throws Exception {
         TodoDto todoDto = TodoDto.builder()
-                .id(UUID.randomUUID().toString())
+                .id(new Random().nextLong())
                 .name("guro*#/")
                 .status("Active")
                 .description("my todo list")

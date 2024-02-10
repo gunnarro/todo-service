@@ -118,6 +118,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .httpStatus(HttpStatus.NOT_FOUND.value())
                 .httpMessage(HttpStatus.NOT_FOUND.getReasonPhrase())
+                .description(exception.getMessage())
                 .build();
         logException(exception, errorResponse);
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);

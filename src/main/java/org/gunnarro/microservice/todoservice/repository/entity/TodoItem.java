@@ -1,22 +1,22 @@
 package org.gunnarro.microservice.todoservice.repository.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Table(name = "TODO_ITEM", schema = "todo")
 @Entity
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 public class TodoItem extends BaseEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-  //  @SequenceGenerator(name = "todos_gen", sequenceName = "todos_seq")
-    @Column(name = "ID", nullable = false)
-    private Long id;
 
     @Column(name = "NAME", nullable = false)
     private String name;
@@ -33,11 +33,7 @@ public class TodoItem extends BaseEntity {
     @Column(name = "ASSIGNED_TO", nullable = false)
     private String assignedTo;
 
-    @Column(name = "FK_TODO_ID", nullable = false, insertable = false, updatable = false)
+    @Column(name = "FK_TODO_ID", nullable = false)
     private Long fkTodoId;
-
-    @ManyToOne
-    @JoinColumn(name = "FK_TODO_ID")
-    private Todo todo;
 
 }

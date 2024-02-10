@@ -13,7 +13,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 
-import java.util.UUID;
+import java.util.Random;
 
 @Disabled
 @SqlGroup({
@@ -37,7 +37,7 @@ public class TodoServiceTest {
 
     @Test
     void getTodoByUuid() {
-        toDoService.getTodo(UUID.randomUUID().toString());
+        toDoService.getTodo(new Random().nextLong());
     }
 
 }

@@ -12,9 +12,13 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@Configuration
 @Slf4j
+@EnableTransactionManagement
+@Configuration
 public class DatabaseConfig {
     @Bean
     @Primary
@@ -38,5 +42,4 @@ public class DatabaseConfig {
         log.debug("microserviceJdbcTemplate dataSource:{}", microserviceDataSource);
         return new JdbcTemplate(microserviceDataSource);
     }
-
 }

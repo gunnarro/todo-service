@@ -1,5 +1,8 @@
-package  org.gunnarro.microservice.todoservice.handler;
+package org.gunnarro.microservice.todoservice.handler;
 
+import org.gunnarro.microservice.todoservice.domain.dto.ErrorResponse;
+import org.gunnarro.microservice.todoservice.exception.ApplicationException;
+import org.gunnarro.microservice.todoservice.exception.RestInputValidationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -7,17 +10,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.client.HttpClientErrorException;
 
-import org.gunnarro.microservice.todoservice.domain.dto.ErrorResponse;
-import org.gunnarro.microservice.todoservice.exception.ApplicationException;
-import org.gunnarro.microservice.todoservice.exception.RestInputValidationException;
-
 class RestExceptionHandlerTest {
 
     @Test
     void handleApplicationException() {
         RestExceptionHandler handler = new RestExceptionHandler();
         ResponseEntity<ErrorResponse> errorResponse = handler
-                .handleApplicationException(new ApplicationException("internal application error!", new RuntimeException("stactrace for root casue")));
+                .handleApplicationException(new ApplicationException("internal application error!", new RuntimeException("stacktrace for root cause")));
         Assertions.assertEquals(500, errorResponse.getStatusCode().value());
         Assertions.assertEquals(500, errorResponse.getBody().getHttpStatus());
         Assertions.assertEquals("Internal Server Error", errorResponse.getBody().getHttpMessage());
@@ -57,7 +56,7 @@ class RestExceptionHandlerTest {
         Assertions.assertEquals(404, errorResponse.getStatusCode().value());
         Assertions.assertEquals(404, errorResponse.getBody().getHttpStatus());
         Assertions.assertEquals("Not Found", errorResponse.getBody().getHttpMessage());
-        Assertions.assertNull(errorResponse.getBody().getDescription());
+        Assertions.assertEquals("400 BAD_REQUEST", errorResponse.getBody().getDescription());
         Assertions.assertNull(errorResponse.getBody().getErrorCode());
     }
 }

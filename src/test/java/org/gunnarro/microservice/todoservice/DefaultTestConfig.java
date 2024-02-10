@@ -3,6 +3,7 @@ package org.gunnarro.microservice.todoservice;
 import java.util.UUID;
 
 import org.apache.logging.log4j.ThreadContext;
+import org.hibernate.boot.MetadataSources;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,4 +31,5 @@ public abstract class DefaultTestConfig {
     public void after() {
         ThreadContext.clearAll();
     }
+
 }

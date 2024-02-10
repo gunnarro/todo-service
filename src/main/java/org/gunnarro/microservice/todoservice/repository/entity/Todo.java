@@ -18,12 +18,6 @@ import java.util.List;
 @AllArgsConstructor
 public class Todo extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //  @SequenceGenerator(name = "todos_gen", sequenceName = "todos_seq")
-    @Column(name = "ID", nullable = false)
-    private Long id;
-
     @Column(name = "NAME", nullable = false)
     private String name;
 
@@ -33,7 +27,7 @@ public class Todo extends BaseEntity {
     @Column(name = "DESCRIPTION", nullable = false)
     private String description;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "FK_TODO_ID")
     private List<TodoItem> todoItemList;
 

@@ -7,7 +7,7 @@ import org.gunnarro.microservice.todoservice.repository.entity.TodoItem;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -16,7 +16,7 @@ public class TodoMapperTest {
     @Test
     void toTodoDto() {
         Todo todo = new Todo();
-        todo.setUuid(UUID.randomUUID());
+        todo.setId(new Random().nextLong());
         todo.setCreatedByUser("guro");
         todo.setLastModifiedByUser("guro-2");
         todo.setCreatedDate(LocalDateTime.of(2024, 2, 1, 10, 0, 0));
@@ -27,7 +27,7 @@ public class TodoMapperTest {
         todo.setStatus("Active");
 
         TodoDto toDoDto = TodoMapper.toTodoDto(todo);
-        assertEquals(todo.getUuid().toString(), toDoDto.getId());
+        assertEquals(todo.getId(), toDoDto.getId());
         assertEquals(todo.getName(), toDoDto.getName());
         assertEquals(todo.getCreatedByUser(), toDoDto.getCreatedByUser());
         assertEquals(todo.getCreatedByUser(), toDoDto.getCreatedByUser());
@@ -35,12 +35,13 @@ public class TodoMapperTest {
         assertEquals(todo.getLastModifiedDate(), toDoDto.getLastModifiedDate());
         assertEquals(todo.getDescription(), toDoDto.getDescription());
         assertEquals(todo.getStatus(), toDoDto.getStatus());
+        assertEquals(0, toDoDto.getToDoItemDtoList().size());
     }
 
     @Test
     void fromTodoDto() {
-        TodoDto todoDto =  TodoDto.builder()
-                .id(UUID.randomUUID().toString())
+        TodoDto todoDto = TodoDto.builder()
+                .id(1234245234634745869L)
                 .name("guro")
                 .status("Active")
                 .description("my todo list")
@@ -51,7 +52,7 @@ public class TodoMapperTest {
                 .build();
 
         Todo toDo = TodoMapper.fromTodoDto(todoDto);
-        assertEquals(todoDto.getId(), toDo.getUuid().toString());
+        assertEquals(todoDto.getId(), toDo.getId());
         assertEquals(todoDto.getName(), toDo.getName());
         assertEquals(todoDto.getCreatedByUser(), toDo.getCreatedByUser());
         assertEquals(todoDto.getCreatedByUser(), toDo.getCreatedByUser());
@@ -63,7 +64,7 @@ public class TodoMapperTest {
 
     @Test
     void toTodoItemDto() {
-        TodoItem todoItem =  TodoItem.builder()
+        TodoItem todoItem = TodoItem.builder()
                 .id(100L)
                 .fkTodoId(10L)
                 .name("tv")
@@ -73,20 +74,23 @@ public class TodoMapperTest {
                 .assignedTo("guro")
                 .build();
 
-        TodoItemDto todoItemDto = TodoMapper.todoItemDto(todoItem);
-        //  assertEquals(todoItemDto.getId(), todoItem.getUuid().toString());
+        TodoItemDto todoItemDto = TodoMapper.toTodoItemDto(todoItem);
+        assertEquals(todoItem.getId(), todoItemDto.getId());
+        assertEquals(todoItem.getFkTodoId(), todoItemDto.getTodoId());
         assertEquals(todoItem.getName(), todoItemDto.getName());
         assertEquals(todoItem.getAction(), todoItemDto.getAction());
         assertEquals(todoItem.getAssignedTo(), todoItemDto.getAssignedTo());
         assertEquals(todoItem.getDescription(), todoItemDto.getDescription());
         assertEquals(todoItem.getStatus(), todoItemDto.getStatus());
+        assertEquals(todoItem.getCreatedByUser(), todoItemDto.getCreatedByUser());
+        assertEquals(todoItem.getLastModifiedByUser(), todoItemDto.getLastModifiedByUser());
     }
 
     @Test
     void fromTodoItemDto() {
-        TodoItemDto todoItemDto =  TodoItemDto.builder()
-                .id(UUID.randomUUID().toString())
-                .todoId(UUID.randomUUID().toString())
+        TodoItemDto todoItemDto = TodoItemDto.builder()
+                .id(new Random().nextLong())
+                .todoId(new Random().nextLong())
                 .name("tv")
                 .status("Active")
                 .description("stue")
@@ -95,11 +99,14 @@ public class TodoMapperTest {
                 .build();
 
         TodoItem todoItem = TodoMapper.fromTodoItemDto(todoItemDto);
-      //  assertEquals(todoItemDto.getId(), todoItem.getUuid().toString());
+        assertEquals(todoItemDto.getId(), todoItem.getId());
+        assertEquals(todoItemDto.getTodoId(), todoItem.getFkTodoId());
         assertEquals(todoItemDto.getName(), todoItem.getName());
         assertEquals(todoItemDto.getAction(), todoItem.getAction());
         assertEquals(todoItemDto.getAssignedTo(), todoItem.getAssignedTo());
         assertEquals(todoItemDto.getDescription(), todoItem.getDescription());
         assertEquals(todoItemDto.getStatus(), todoItem.getStatus());
+        assertEquals(todoItemDto.getCreatedByUser(), todoItem.getCreatedByUser());
+        assertEquals(todoItemDto.getLastModifiedByUser(), todoItem.getLastModifiedByUser());
     }
 }
