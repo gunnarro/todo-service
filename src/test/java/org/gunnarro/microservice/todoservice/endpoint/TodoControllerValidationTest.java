@@ -74,7 +74,7 @@ public class TodoControllerValidationTest extends DefaultTestConfig {
                 .createdByUser("guro")
                 .lastModifiedByUser("guro-2")
                 .build();
-        mockMvc.perform(MockMvcRequestBuilders.post("/todoservice/v1/todos/" + todoDto.getId())
+        mockMvc.perform(MockMvcRequestBuilders.post("/todoservice/v1/todos")
                         .content(objectMapper.writeValueAsString(todoDto))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())

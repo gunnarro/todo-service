@@ -20,7 +20,7 @@ class RestExceptionHandlerTest {
         Assertions.assertEquals(500, errorResponse.getStatusCode().value());
         Assertions.assertEquals(500, errorResponse.getBody().getHttpStatus());
         Assertions.assertEquals("Internal Server Error", errorResponse.getBody().getHttpMessage());
-        Assertions.assertEquals("Application Failure", errorResponse.getBody().getDescription());
+        Assertions.assertEquals("Application Failure, internal application error!", errorResponse.getBody().getDescription());
         Assertions.assertEquals(500100, errorResponse.getBody().getErrorCode());
     }
 
