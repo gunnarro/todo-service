@@ -82,7 +82,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 .httpStatus(HttpStatus.INTERNAL_SERVER_ERROR.value())
                 .httpMessage(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
                 .errorCode(MicroserviceStatus.APPLICATION_FAILURE.getCode())
-                .description(MicroserviceStatus.APPLICATION_FAILURE.getDescription())
+                .description(MicroserviceStatus.APPLICATION_FAILURE.getDescription() + ", " + exception.getMessage())
                 .build();
         logException(exception, errorResponse);
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -148,12 +148,15 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         if (exception instanceof HttpClientErrorException httpClientErrorException) {
             errorCode = httpClientErrorException.getStatusCode().value();
             errorMsg = httpClientErrorException.getResponseBodyAsString();
+        } else {
+            errorMsg = exception.getMessage();
         }
         if (errorResponse.getHttpStatus() >= 500) {
             log.error("ErrorCode={}, ErrorMsg={}, ErrorResponse: {}", errorCode, errorMsg, errorResponse);
             log.error("Exception: ", exception);
         } else {
             log.warn("ErrorCode={}, ErrorMsg={}, ErrorResponse: {}", errorCode, errorMsg, errorResponse);
+            log.error("", exception);
         }
     }
 }

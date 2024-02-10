@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Schema(description = "Holds information about a todo item")
 @JsonIgnoreProperties(ignoreUnknown = true)

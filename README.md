@@ -50,5 +50,8 @@ curl -v -H "Access-Control-Request-Method: GET" -H "Origin: http://localhost:300
 curl -X DELETE https://localhost:9999/todoservice/v1/todos/11eec40c-c279-03fd-b266-cc2f713aeb66 -H accept: */* 
 
 # Resources
-[TSID](https://vladmihalcea.com/tsid-identifier-jpa-hibernate/)
+- [TSID](https://vladmihalcea.com/tsid-identifier-jpa-hibernate/)
+- [Auditing - hibernate envers](https://sunitc.dev/2020/01/21/spring-boot-how-to-add-jpa-hibernate-envers-auditing/)
+- [spring boot - sunitc.dev](https://sunitc.dev/tag/spring-boot/)
+- [docker compose](https://containers.dev/guide/dockerfile)
 

@@ -164,6 +164,11 @@
 			<artifactId>hypersistence-utils-hibernate-60</artifactId>
 			<version>${hypersistence-utils.version}</version>
 		</dependency>
+		<!-- for auditing -->
+		<dependency>
+			<groupId>org.hibernate.orm</groupId>
+			<artifactId>hibernate-envers</artifactId>
+		</dependency>
 		<!-- Micrometer Prometheus registry for monitoring purpose -->
 		<dependency>
 			<groupId>io.micrometer</groupId>

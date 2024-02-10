@@ -29,9 +29,7 @@ SET FOREIGN_KEY_CHECKS=0;
 
 -- Table: todo
 DROP TABLE IF EXISTS todo;
-CREATE TABLE todo(id 						INTEGER PRIMARY KEY AUTO_INCREMENT,
-                   global_unique_id         BIGINT,
-                   uuid BINARY(16)          DEFAULT (UUID_TO_BIN(UUID(), 1)),
+CREATE TABLE todo(id 						BIGINT PRIMARY KEY AUTO_INCREMENT,
                    created_date       	    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                    last_modified_date 	    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                    created_by_user          VARCHAR(100) NOT NULL,
@@ -45,8 +43,7 @@ COLLATE 'utf8_unicode_ci';
 
 -- Table: todo_item
 DROP TABLE IF EXISTS todo_item;
-CREATE TABLE todo_item(id 				    INTEGER PRIMARY KEY AUTO_INCREMENT,
-                   uuid BINARY(16)          DEFAULT (UUID_TO_BIN(UUID(), 1)),
+CREATE TABLE todo_item(id 				    BIGINT PRIMARY KEY AUTO_INCREMENT,
                    created_date            	TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                    last_modified_date    	TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                    created_by_user          VARCHAR(100) NOT NULL,
@@ -54,10 +51,34 @@ CREATE TABLE todo_item(id 				    INTEGER PRIMARY KEY AUTO_INCREMENT,
                    name    	        	    VARCHAR(100),
                    status		           	VARCHAR(100),
                    FOREIGN KEY (fk_todo_id) REFERENCES todo(id) ON DELETE SET NULL ON UPDATE CASCADE,
-                   fk_todo_id    	        INTEGER,
+                   fk_todo_id    	        BIGINT,
                    UNIQUE(name))
 CHARACTER SET 'utf8'
 COLLATE 'utf8_unicode_ci';
+
+
+-- for auditing
+-- needed by hibernate envers
+DROP TABLE IF EXISTS revinfo;
+CREATE TABLE revinfo (
+    rev             INTEGER PRIMARY KEY AUTO_INCREMENT,
+    revtstmp        BIGINT
+)
+
+CREATE TABLE todo_history (
+    id bigint NOT NULL,
+    rev integer NOT NULL,
+    revtype smallint,
+    name character varying(255),
+    description character varying(255),
+    status character varying(255),
+    created_by_user character varying(255),
+    last_modified_by_user character varying(255),
+    CONSTRAINT author_aud_pkey PRIMARY KEY (id, rev),
+    CONSTRAINT author_aud_revinfo FOREIGN KEY (rev)
+    REFERENCES revinfo (rev) MATCH SIMPLE
+    ON UPDATE NO ACTION ON DELETE NO ACTION
+)
 
 -- Turn on fk check
 SET FOREIGN_KEY_CHECKS=1;

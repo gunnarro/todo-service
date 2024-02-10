@@ -98,8 +98,8 @@ public class TodoController {
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = TodoDto.class))})
     })
-    @PostMapping(path = "/todos/{todoId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
-    public @ResponseBody TodoDto createTodo(@PathVariable("todoId") String todoId, @RequestBody @Valid TodoDto todoDto) {
+    @PostMapping(path = "/todos", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
+    public @ResponseBody TodoDto createTodo(@RequestBody @Valid TodoDto todoDto) {
         return toDoService.addTodo(todoDto);
     }
 
@@ -138,8 +138,8 @@ public class TodoController {
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = TodoItemDto.class))})
     })
-    @PostMapping(path = "/todos/{todoId}/items/{todoItemId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
-    public TodoItemDto createTodoItem(@PathVariable("todoId") String todoId, @PathVariable("todoItemId") String todoItemId, @RequestBody @Valid TodoItemDto todoItemDto) {
+    @PostMapping(path = "/todos/{todoId}/items", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
+    public TodoItemDto createTodoItem(@PathVariable("todoId") String todoId, @RequestBody @Valid TodoItemDto todoItemDto) {
         return toDoService.addTodoItem(todoItemDto);
     }
 
@@ -162,7 +162,7 @@ public class TodoController {
     })
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(path = "/todos/{todoId}/items/{todoItemId}")
-    public void deleteTodoItem(@PathVariable @NotNull Long todoId, @PathVariable @NotNull Long todoItemId) {
+    public void deleteTodoItem(@PathVariable("todoId") @NotNull Long todoId, @PathVariable("todoItemId") @NotNull Long todoItemId) {
         log.info("delete: todoId={}, todoItemId={}", todoId, todoItemId);
         toDoService.deleteTodoItem(todoId, todoItemId);
     }
