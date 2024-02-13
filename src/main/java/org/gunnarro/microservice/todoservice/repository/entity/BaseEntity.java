@@ -16,7 +16,7 @@ import org.hibernate.envers.Audited;
 
 import java.time.LocalDateTime;
 
-@Audited
+
 @Getter
 @Setter
 @SuperBuilder

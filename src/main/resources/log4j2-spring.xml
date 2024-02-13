@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="WARN" monitorInterval="120">
+<Configuration status="WARN" monitorInterval="30">
 
 	<!-- 
 	Location information:
@@ -76,7 +76,7 @@
 			<AppenderRef ref="consoleAppender" />
 		</Logger>
 
-		<Logger name="org.springframework.security" level="TRACE" additivity="false">
+		<Logger name="org.springframework.security" level="WARN" additivity="false">
 			<AppenderRef ref="debugFileAppender" />
 			<AppenderRef ref="consoleAppender" />
 		</Logger>

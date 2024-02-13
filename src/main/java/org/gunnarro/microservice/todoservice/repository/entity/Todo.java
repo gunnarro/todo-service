@@ -6,9 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.envers.AuditTable;
-import org.hibernate.envers.Audited;
-import org.hibernate.envers.NotAudited;
+import org.hibernate.envers.*;
 
 import java.util.List;
 
@@ -44,8 +42,9 @@ import java.util.List;
 
 @Table(name = "TODO", schema = "todo")
 @Entity
-
-//@AuditTable(value = "TODO_HISTORY")
+@Audited
+@AuditOverride(forClass=BaseEntity.class)
+@AuditTable(value = "TODO_HISTORY")
 @Getter
 @Setter
 @SuperBuilder
@@ -62,7 +61,9 @@ public class Todo extends BaseEntity {
     @Column(name = "DESCRIPTION", nullable = false)
     private String description;
 
-
+   // @Column(name = "FK_USER_ACCOUNT_ID")
+   // private Long userAccountId;
+    @NotAudited
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "FK_TODO_ID")
     private List<TodoItem> todoItemList;

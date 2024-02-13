@@ -46,12 +46,22 @@ See result at
 target/rest-service-api_validation_result.yaml
 ```
 
+## API definition
+```
+curl -v -u "my-service-name:change-me" --insecure https://localhost:9999/v3/api-docs | json_pp >todo-service-api.yaml
+```
+
+## Service call
+```
 curl -v -H "Access-Control-Request-Method: GET" -H "Origin: http://localhost:3000" -X OPTIONS https://localhost:9999/todoservice/v1/todos/guro --insecure
 curl -X DELETE https://localhost:9999/todoservice/v1/todos/11eec40c-c279-03fd-b266-cc2f713aeb66 -H accept: */* 
+```
 
 # Resources
 - [TSID](https://vladmihalcea.com/tsid-identifier-jpa-hibernate/)
 - [Auditing - hibernate envers](https://sunitc.dev/2020/01/21/spring-boot-how-to-add-jpa-hibernate-envers-auditing/)
+- [Auditing - javers](https://javers.org/documentation/spring-boot-integration/)
+- [Auditing - javers vs envers](https://javers.org/blog/2017/12/javers-vs-envers-comparision.html)
 - [spring boot - sunitc.dev](https://sunitc.dev/tag/spring-boot/)
 - [docker compose](https://containers.dev/guide/dockerfile)
 

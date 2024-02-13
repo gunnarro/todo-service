@@ -72,6 +72,7 @@ public class TodoServiceImpl implements TodoService {
     @Override
     public TodoDto addTodo(TodoDto todoDto) {
         try {
+            log.debug("save todo, {}", todoDto);
             return TodoMapper.toTodoDto(todoRepository.save(TodoMapper.fromTodoDto(todoDto)));
         } catch (DataIntegrityViolationException ex) {
             throw new RestInputValidationException(ex.getMessage());

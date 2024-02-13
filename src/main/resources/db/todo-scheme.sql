@@ -14,7 +14,6 @@
 
 CREATE DATABASE IF NOT EXISTS todo;
 
-
 -- create user and gran access
 -- CREATE USER 'todo-service'@'localhost' IDENTIFIED BY 'ABcd-2o1o';
 -- GRANT SELECT, INSERT, UPDATE, DELETE ON todo.* TO 'todo-service'@'localhost';
@@ -28,6 +27,17 @@ CREATE DATABASE IF NOT EXISTS todo;
 SET FOREIGN_KEY_CHECKS=0;
 
 -- Table: todo
+DROP TABLE IF EXISTS user_account;
+CREATE TABLE user_account(id 				BIGINT PRIMARY KEY AUTO_INCREMENT,
+                   created_date       	    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                   last_modified_date 	    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                   user_name    	        VARCHAR(100) NOT NULL,
+                   status		           	VARCHAR(100) NOT NULL,
+                   UNIQUE(user_name))
+CHARACTER SET 'utf8'
+COLLATE 'utf8_unicode_ci';
+
+-- Table: todo
 DROP TABLE IF EXISTS todo;
 CREATE TABLE todo(id 						BIGINT PRIMARY KEY AUTO_INCREMENT,
                    created_date       	    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -37,6 +47,8 @@ CREATE TABLE todo(id 						BIGINT PRIMARY KEY AUTO_INCREMENT,
                    name    	        	    VARCHAR(100) NOT NULL,
                    description    	        VARCHAR(500) NOT NULL,
                    status		           	VARCHAR(100) NOT NULL,
+                   FOREIGN KEY (fk_user_account_id) REFERENCES user_account(id) ON DELETE SET NULL ON UPDATE CASCADE,
+                    fk_user_account_id    	BIGINT,
                    UNIQUE(name))
 CHARACTER SET 'utf8'
 COLLATE 'utf8_unicode_ci';
@@ -56,7 +68,6 @@ CREATE TABLE todo_item(id 				    BIGINT PRIMARY KEY AUTO_INCREMENT,
 CHARACTER SET 'utf8'
 COLLATE 'utf8_unicode_ci';
 
-
 -- for auditing
 -- needed by hibernate envers
 DROP TABLE IF EXISTS revinfo;
@@ -65,18 +76,25 @@ CREATE TABLE revinfo (
     revtstmp        BIGINT
 )
 
+DROP TABLE IF EXISTS todo_history;
 CREATE TABLE todo_history (
     id bigint NOT NULL,
-    rev integer NOT NULL,
-    revtype smallint,
     name character varying(255),
     description character varying(255),
     status character varying(255),
+    created_date TIMESTAMP,
+    last_modified_date TIMESTAMP,
     created_by_user character varying(255),
     last_modified_by_user character varying(255),
-    CONSTRAINT author_aud_pkey PRIMARY KEY (id, rev),
-    CONSTRAINT author_aud_revinfo FOREIGN KEY (rev)
+    -- used by auditing hibernate envers
+    revision_id integer NOT NULL,
+    revision_end_id integer,
+    revision_type smallint,
+    FOREIGN KEY (revision_end_id) REFERENCES revinfo(rev) ON DELETE SET NULL ON UPDATE CASCADE,
+    CONSTRAINT author_aud_pkey PRIMARY KEY (id, revision_id),
+    CONSTRAINT author_aud_revinfo FOREIGN KEY (revision_id)
     REFERENCES revinfo (rev) MATCH SIMPLE
+    -- end hibernate envers
     ON UPDATE NO ACTION ON DELETE NO ACTION
 )
 

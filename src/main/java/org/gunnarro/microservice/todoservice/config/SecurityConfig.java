@@ -71,7 +71,7 @@ public class SecurityConfig {
         configuration.setAllowedMethods(List.of(HttpMethod.GET.name(), HttpMethod.POST.name(), HttpMethod.PATCH.name(), HttpMethod.PUT.name(), HttpMethod.DELETE.name(), HttpMethod.OPTIONS.name(), HttpMethod.HEAD.name()));
         configuration.setAllowCredentials(true);
         // The Access-Control-Allow-Headers response header is used in response to a preflight request
-        configuration.setAllowedHeaders(List.of("authorization", "cache-control"));
+        configuration.setAllowedHeaders(List.of("authorization", "cache-control", "content-type"));
       //  configuration.setExposedHeaders(List.of("X-Get-Header"));
         configuration.setMaxAge(3600L);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

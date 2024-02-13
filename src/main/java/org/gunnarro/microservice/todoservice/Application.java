@@ -1,20 +1,17 @@
 package org.gunnarro.microservice.todoservice;
 
-import org.gunnarro.microservice.todoservice.exception.ApplicationException;
-
-import java.util.Arrays;
-
+import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
-
 import lombok.extern.slf4j.Slf4j;
+import org.gunnarro.microservice.todoservice.exception.ApplicationException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.ApplicationPidFileWriter;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.core.env.PropertySource;
-import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
+
+import java.util.Arrays;
 
 /**
  * Application start point.

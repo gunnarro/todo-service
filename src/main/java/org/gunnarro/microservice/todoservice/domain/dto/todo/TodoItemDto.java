@@ -3,19 +3,17 @@ package org.gunnarro.microservice.todoservice.domain.dto.todo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.Pattern;
+import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Schema(description = "Holds information about a todo item")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@ToString
 @Builder
 public class TodoItemDto {
     @Schema(description = "Global unique identifier of the todo item. Should not be set for new todo item.")
@@ -32,13 +30,15 @@ public class TodoItemDto {
     @Schema(description = "user that last modified the todo")
     private String lastModifiedByUser;
     @Schema(description = "doc me")
+    @Pattern(regexp = "[\\W\\S]{1,50}", message = "Name can only contain lower and uppercase alphabetic chars. Min 1 char, max 50 chars.")
     private String name;
-    @Schema(description = "doc me")
+    @Schema(description = "description of the task to do")
+    @Pattern(regexp = "[\\W\\S]{1,50}", message = "Description can only contain lower and uppercase alphabetic chars. Min 1 char, max 100 chars.")
     private String description;
-    @Schema(description = "doc me")
+    @Schema(description = "Status of todo, OPEN, IN_PROGRESS or FINISHED")
     private String status;
-    @Schema(description = "doc me")
+    @Schema(description = "The action that should be done for this item")
     private String action;
-    @Schema(description = "doc me")
+    @Schema(description = "the person that is responsible to follow up and fulfill this task")
     private String assignedTo;
 }
