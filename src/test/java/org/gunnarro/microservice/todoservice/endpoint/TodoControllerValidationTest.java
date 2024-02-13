@@ -25,7 +25,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.time.LocalDateTime;
 import java.util.Random;
-import java.util.UUID;
 
 @WebMvcTest
 @AutoConfigureMockMvc
@@ -63,6 +62,24 @@ public class TodoControllerValidationTest extends DefaultTestConfig {
     }
 
     @Test
+    void createTodoInputValidationOk() throws Exception {
+        TodoDto todoDto = TodoDto.builder()
+                .id(new Random().nextLong())
+                .name("todo-task-v22 test")
+                .status("Active")
+                .description("my todo list")
+                .createdDate(LocalDateTime.of(2024, 2, 1, 10, 0, 0))
+                .lastModifiedDate(LocalDateTime.of(2024, 2, 1, 10, 0, 0))
+                .createdByUser("guro")
+                .lastModifiedByUser("guro-2")
+                .build();
+        mockMvc.perform(MockMvcRequestBuilders.post("/todoservice/v1/todos")
+                        .content(objectMapper.writeValueAsString(todoDto))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+    }
+
+    @Test
     void createTodoInputValidationError() throws Exception {
         TodoDto todoDto = TodoDto.builder()
                 .id(new Random().nextLong())
@@ -78,7 +95,7 @@ public class TodoControllerValidationTest extends DefaultTestConfig {
                         .content(objectMapper.writeValueAsString(todoDto))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.description", Is.is("Service Input Validation Error. name Can only contain lower and uppercase alphabetic chars. Min 1 char, max 50 chars.")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.description", Is.is("Service Input Validation Error. name can only contain lower and uppercase alphabetic chars. Min 1 char, max 50 chars.")))
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
     }
 
@@ -86,7 +103,7 @@ public class TodoControllerValidationTest extends DefaultTestConfig {
     void updateTodoInputValidationError() throws Exception {
         TodoDto todoDto = TodoDto.builder()
                 .id(new Random().nextLong())
-                .name("guro*#/")
+                .name("guro*#/&")
                 .status("Active")
                 .description("my todo list")
                 .createdDate(LocalDateTime.of(2024, 2, 1, 10, 0, 0))
@@ -98,7 +115,7 @@ public class TodoControllerValidationTest extends DefaultTestConfig {
                         .content(objectMapper.writeValueAsString(todoDto))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.description", Is.is("Service Input Validation Error. name Can only contain lower and uppercase alphabetic chars. Min 1 char, max 50 chars.")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.description", Is.is("Service Input Validation Error. name can only contain lower and uppercase alphabetic chars. Min 1 char, max 50 chars.")))
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
     }
 

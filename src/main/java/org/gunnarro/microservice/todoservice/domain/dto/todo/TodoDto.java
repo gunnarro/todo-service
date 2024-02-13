@@ -26,18 +26,18 @@ public class TodoDto {
     @Schema(description = "date when todo was last modified")
     private LocalDateTime lastModifiedDate;
     @Schema(description = "user that created the todo")
-    @Pattern(regexp = "[a-zA-Z]{1,50}", message = "Name can only contain lower and uppercase characters from a-z and A-Z.")
+    @Pattern(regexp = "[a-zA-Z]{1,50}", message = "can only contain lower and uppercase characters from a-z and A-Z.")
     private String createdByUser;
     @Schema(description = "user that last modified the todo")
     private String lastModifiedByUser;
     @Schema(description = "Name of todo")
-    @Pattern(regexp = "[\\W\\S]{1,50}", message = "Name can only contain lower and uppercase alphabetic chars. Min 1 char, max 50 chars.")
+    @Pattern(regexp = "[\\w\\s\\d-_]{1,50}", message = "can only contain lower and uppercase alphabetic chars. Min 1 char, max 50 chars.")
     private String name;
     @Schema(description = "Status of todo, OPEN, IN_PROGRESS or FINISHED")
     @NotNull
     private String status;
     @Schema(description = "description of this to do task")
-    @Pattern(regexp = "[\\W\\S]{1,100}", message = "Description can only contain lower and uppercase alphabetic chars. Min 1 char, max 100 chars.")
+    @Pattern(regexp = "[\\w\\s\\d-_]{1,100}", message = "Description can only contain lower and uppercase alphabetic chars. Min 1 char, max 100 chars.")
     private String description;
     @Schema(description = "List of task/item/action this todo list contains")
     private List<TodoItemDto> toDoItemDtoList;
