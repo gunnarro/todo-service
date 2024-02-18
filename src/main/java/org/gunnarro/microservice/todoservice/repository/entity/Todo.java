@@ -23,7 +23,7 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(callSuper = true, includeFieldNames=true)
+@ToString(callSuper = true)
 public class Todo extends BaseEntity {
 
     @Audited(withModifiedFlag = true)

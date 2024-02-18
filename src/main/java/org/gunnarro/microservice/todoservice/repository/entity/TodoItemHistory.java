@@ -3,40 +3,31 @@ package org.gunnarro.microservice.todoservice.repository.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.envers.AuditOverride;
-import org.hibernate.envers.Audited;
+import org.hibernate.annotations.Immutable;
 
-@Table(name = "TODO_ITEM", schema = "todo")
+@Table(name = "TODO_ITEM_HISTORY", schema = "todo")
 @Entity
-@Audited
-@AuditOverride(forClass=BaseEntity.class)
+@Immutable
 @Getter
-@Setter
 @SuperBuilder
 @NoArgsConstructor
-@AllArgsConstructor
-@ToString(callSuper = true)
-public class TodoItem extends BaseEntity {
+public class TodoItemHistory extends AuditBaseEntity {
 
-    @Audited(withModifiedFlag = true)
     @Column(name = "NAME", nullable = false)
     private String name;
 
-    @Audited(withModifiedFlag = true)
     @Column(name = "STATUS", nullable = false)
     private String status;
 
-    @Audited(withModifiedFlag = true)
     @Column(name = "DESCRIPTION", nullable = false)
     private String description;
 
-    @Audited(withModifiedFlag = true)
     @Column(name = "ACTION", nullable = false)
     private String action;
 
-    @Audited(withModifiedFlag = true)
     @Column(name = "ASSIGNED_TO", nullable = false)
     private String assignedTo;
 

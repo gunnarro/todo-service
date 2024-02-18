@@ -28,7 +28,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class AuditBaseEntity {
 
-
     @ToString.Include(rank = 1)
     @Id
     @Column(name = "ID", nullable = false, insertable = false, updatable = false)

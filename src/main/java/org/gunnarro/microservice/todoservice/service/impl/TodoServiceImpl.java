@@ -5,12 +5,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoDto;
 import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoHistoryDto;
 import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoItemDto;
+import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoItemHistoryDto;
 import org.gunnarro.microservice.todoservice.domain.mapper.TodoMapper;
 import org.gunnarro.microservice.todoservice.exception.ApplicationException;
 import org.gunnarro.microservice.todoservice.exception.RestInputValidationException;
 import org.gunnarro.microservice.todoservice.repository.TodoItemRepository;
 import org.gunnarro.microservice.todoservice.repository.TodoRepository;
 import org.gunnarro.microservice.todoservice.repository.entity.Todo;
+import org.gunnarro.microservice.todoservice.repository.entity.TodoItem;
 import org.gunnarro.microservice.todoservice.service.TodoService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.history.Revision;
@@ -115,6 +117,17 @@ public class TodoServiceImpl implements TodoService {
             todoHistoryDtoList.add(TodoMapper.toTodoHistoryDto(rev.getEntity(), null, rev.getMetadata().getRevisionType().name()));
         }
         return todoHistoryDtoList;
+    }
+
+    public List<TodoItemHistoryDto> getTodoItemHistory(Long todoId, Long todoItemId){
+        List<TodoItemHistoryDto> todoItemHistoryDtoList = new ArrayList<>();
+        Revisions<Long, TodoItem> revisions = this.todoItemRepository.findRevisions(todoItemId);
+        Iterator<Revision<Long, TodoItem>> revisionsIterator = revisions.stream().iterator();
+        while (revisionsIterator.hasNext()) {
+            Revision<Long, TodoItem> rev = revisionsIterator.next();
+            todoItemHistoryDtoList.add(TodoMapper.toTodoItemHistoryDto(rev.getEntity(), null, rev.getMetadata().getRevisionType().name()));
+        }
+        return todoItemHistoryDtoList;
     }
 
     // only for testing

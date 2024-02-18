@@ -100,10 +100,42 @@ CREATE TABLE todo_history (
     revision_end_id integer,
     revision_type integer,
     FOREIGN KEY (revision_end_id) REFERENCES revinfo(rev) ON DELETE SET NULL ON UPDATE CASCADE,
-    CONSTRAINT author_aud_pkey PRIMARY KEY (id, revision_id),
-    CONSTRAINT author_aud_revinfo FOREIGN KEY (revision_id)
+    CONSTRAINT todo_author_aud_pkey PRIMARY KEY (id, revision_id),
+    CONSTRAINT todo_author_aud_revinfo FOREIGN KEY (revision_id)
     REFERENCES revinfo (rev) MATCH SIMPLE
     -- end hibernate envers
+)
+CHARACTER SET 'utf8'
+COLLATE 'utf8_unicode_ci';
+
+DROP TABLE IF EXISTS todo_item_history;
+CREATE TABLE todo_item_history(
+                   id 				        BIGINT NOT NULL,
+                   fk_todo_id    	        BIGINT,
+                   name    	        	    character varying(255),
+                   name_mod                 boolean,
+                   description    	        character varying(255),
+                   description_mod          boolean,
+                   status		           	character varying(255),
+                   status_mod               boolean,
+                   action                   character varying(255),
+                   action_mod               boolean,
+                   assigned_to              character varying(255),
+                   assigned_to_mod boolean,
+                   created_date TIMESTAMP,
+                   last_modified_date TIMESTAMP,
+                   created_by_user character varying(255),
+                   last_modified_by_user character varying(255),
+                   last_modified_by_user_mod boolean,
+                    -- used by auditing hibernate envers
+                   revision_id integer NOT NULL,
+                   revision_end_id integer,
+                   revision_type integer,
+                   FOREIGN KEY (revision_end_id) REFERENCES revinfo(rev) ON DELETE SET NULL ON UPDATE CASCADE,
+                   CONSTRAINT todo_item_author_aud_pkey PRIMARY KEY (id, revision_id),
+                   CONSTRAINT todo_item_author_aud_revinfo FOREIGN KEY (revision_id)
+                   REFERENCES revinfo (rev) MATCH SIMPLE
+                   -- end hibernate envers
 )
 CHARACTER SET 'utf8'
 COLLATE 'utf8_unicode_ci';

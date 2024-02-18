@@ -3,6 +3,7 @@ package org.gunnarro.microservice.todoservice.domain.mapper;
 import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoDto;
 import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoHistoryDto;
 import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoItemDto;
+import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoItemHistoryDto;
 import org.gunnarro.microservice.todoservice.repository.entity.Todo;
 import org.gunnarro.microservice.todoservice.repository.entity.TodoHistory;
 import org.gunnarro.microservice.todoservice.repository.entity.TodoItem;
@@ -150,4 +151,25 @@ public class TodoMapper {
                 .build();
     }
 
+    public static TodoItemHistoryDto toTodoItemHistoryDto(TodoItem todoItem, Integer revisionId, String revisionType) {
+        if (todoItem == null) {
+            return null;
+        }
+        return TodoItemHistoryDto.builder()
+                .id(todoItem.getId())
+                .todoId(todoItem.getFkTodoId())
+                //  .idStr(todoItem.getId().toString())
+                .name(todoItem.getName())
+                .status(todoItem.getStatus())
+                .action(todoItem.getAction())
+                .assignedTo(todoItem.getAssignedTo())
+                .description(todoItem.getDescription())
+                .createdDate(todoItem.getCreatedDate())
+                .lastModifiedDate(todoItem.getLastModifiedDate())
+                .createdByUser(todoItem.getCreatedByUser())
+                .lastModifiedByUser(todoItem.getLastModifiedByUser())
+                .revisionType(revisionType)
+                .revisionId(revisionId)
+                .build();
+    }
 }

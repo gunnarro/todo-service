@@ -3,6 +3,7 @@ package org.gunnarro.microservice.todoservice.service;
 import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoDto;
 import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoHistoryDto;
 import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoItemDto;
+import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoItemHistoryDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,4 +28,6 @@ public interface TodoService {
     void deleteTodoItem(Long todoId, Long todoItemUuid);
 
     List<TodoHistoryDto> getTodoHistory(Long todoId);
+
+    List<TodoItemHistoryDto> getTodoItemHistory(Long todoId, Long todoItemId);
 }

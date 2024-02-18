@@ -15,6 +15,7 @@ import org.gunnarro.microservice.todoservice.domain.dto.ErrorResponse;
 import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoDto;
 import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoHistoryDto;
 import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoItemDto;
+import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoItemHistoryDto;
 import org.gunnarro.microservice.todoservice.service.TodoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -185,6 +186,20 @@ public class TodoController {
     public List<TodoHistoryDto> getTodoHistoryById(@PathVariable("todoId") Long todoId) {
         // return auditService.getTodoHistory(todoId);
         return toDoService.getTodoHistory(todoId);
+    }
+
+
+    @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
+    @Operation(summary = "Get todo audit history", description = "return todo audit history")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found the todo history",
+                    content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = TodoHistoryDto.class))})
+    })
+    @GetMapping(path = "/todos/{todoId}/items/{todoItemId}/history", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
+    public List<TodoItemHistoryDto> getTodoItemHistoryById(@PathVariable("todoId") Long todoId, @PathVariable("todoItemId") Long todoItemId) {
+        // return auditService.getTodoHistory(todoId);
+        return toDoService.getTodoItemHistory(todoId, todoItemId);
     }
 
 }
