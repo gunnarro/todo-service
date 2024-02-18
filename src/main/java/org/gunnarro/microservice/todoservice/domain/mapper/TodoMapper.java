@@ -1,8 +1,10 @@
 package org.gunnarro.microservice.todoservice.domain.mapper;
 
 import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoDto;
+import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoHistoryDto;
 import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoItemDto;
 import org.gunnarro.microservice.todoservice.repository.entity.Todo;
+import org.gunnarro.microservice.todoservice.repository.entity.TodoHistory;
 import org.gunnarro.microservice.todoservice.repository.entity.TodoItem;
 
 import java.util.List;
@@ -48,6 +50,7 @@ public class TodoMapper {
                 .lastModifiedDate(toDoDto.getLastModifiedDate())
                 .createdByUser(toDoDto.getCreatedByUser())
                 .lastModifiedByUser(toDoDto.getLastModifiedByUser())
+                .todoItemList(List.of())
                 .build();
     }
 
@@ -99,4 +102,52 @@ public class TodoMapper {
                 .lastModifiedByUser(todoItemDto.getLastModifiedByUser())
                 .build();
     }
+
+
+    public static List<TodoHistoryDto> toTodoHistoryDtoList(List<TodoHistory> todoHistoryList) {
+        if (todoHistoryList == null) {
+            return List.of();
+        }
+        return todoHistoryList.stream().map(TodoMapper::toTodoHistoryDto).collect(Collectors.toList());
+    }
+
+    public static TodoHistoryDto toTodoHistoryDto(TodoHistory todoHistory) {
+        if (todoHistory == null) {
+            return null;
+        }
+        return TodoHistoryDto.builder()
+                .id(todoHistory.getId())
+                .idStr(todoHistory.getId().toString())
+                .name(todoHistory.getName())
+                .status(todoHistory.getStatus())
+                .description(todoHistory.getDescription())
+                .createdDate(todoHistory.getCreatedDate())
+                .lastModifiedDate(todoHistory.getLastModifiedDate())
+                .createdByUser(todoHistory.getCreatedByUser())
+                .lastModifiedByUser(todoHistory.getLastModifiedByUser())
+                .revisionType(TodoHistoryDto.RevisionTypesEnum.getByType(todoHistory.getRevisionType()).name())
+                .revisionId(todoHistory.getRevisionId())
+                .revisionEndId(todoHistory.getRevisionEndId())
+                .build();
+    }
+
+    public static TodoHistoryDto toTodoHistoryDto(Todo todo, Integer revisionId, String revisionType) {
+        if (todo == null) {
+            return null;
+        }
+        return TodoHistoryDto.builder()
+                .id(todo.getId())
+                .idStr(todo.getId().toString())
+                .name(todo.getName())
+                .status(todo.getStatus())
+                .description(todo.getDescription())
+                .createdDate(todo.getCreatedDate())
+                .lastModifiedDate(todo.getLastModifiedDate())
+                .createdByUser(todo.getCreatedByUser())
+                .lastModifiedByUser(todo.getLastModifiedByUser())
+                .revisionType(revisionType)
+                .revisionId(revisionId)
+                .build();
+    }
+
 }

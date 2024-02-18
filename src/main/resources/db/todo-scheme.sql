@@ -45,7 +45,7 @@ CREATE TABLE todo(id 						BIGINT PRIMARY KEY AUTO_INCREMENT,
                    created_by_user          VARCHAR(100) NOT NULL,
                    last_modified_by_user    VARCHAR(100) NOT NULL,
                    name    	        	    VARCHAR(100) NOT NULL,
-                   description    	        VARCHAR(500) NOT NULL,
+                   description    	        VARCHAR(500),
                    status		           	VARCHAR(100) NOT NULL,
                    FOREIGN KEY (fk_user_account_id) REFERENCES user_account(id) ON DELETE SET NULL ON UPDATE CASCADE,
                     fk_user_account_id    	BIGINT,
@@ -60,8 +60,11 @@ CREATE TABLE todo_item(id 				    BIGINT PRIMARY KEY AUTO_INCREMENT,
                    last_modified_date    	TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                    created_by_user          VARCHAR(100) NOT NULL,
                    last_modified_by_user    VARCHAR(100) NOT NULL,
-                   name    	        	    VARCHAR(100),
-                   status		           	VARCHAR(100),
+                   name    	        	    VARCHAR(100) NOT NULL,
+                   description    	        VARCHAR(500),
+                   status		           	VARCHAR(100) NOT NULL,
+                   action                   VARCHAR(50),
+                   assigned_to              VARCHAR(25),
                    FOREIGN KEY (fk_todo_id) REFERENCES todo(id) ON DELETE SET NULL ON UPDATE CASCADE,
                    fk_todo_id    	        BIGINT,
                    UNIQUE(name))
@@ -75,28 +78,35 @@ CREATE TABLE revinfo (
     rev             INTEGER PRIMARY KEY AUTO_INCREMENT,
     revtstmp        BIGINT
 )
+CHARACTER SET 'utf8'
+COLLATE 'utf8_unicode_ci';
 
 DROP TABLE IF EXISTS todo_history;
 CREATE TABLE todo_history (
     id bigint NOT NULL,
     name character varying(255),
+    name_mod boolean,
     description character varying(255),
+    description_mod boolean,
     status character varying(255),
+    status_mod boolean,
     created_date TIMESTAMP,
     last_modified_date TIMESTAMP,
     created_by_user character varying(255),
     last_modified_by_user character varying(255),
-    -- used by auditing hibernate envers
+    last_modified_by_user_mod boolean,
+   -- used by auditing hibernate envers
     revision_id integer NOT NULL,
     revision_end_id integer,
-    revision_type smallint,
+    revision_type integer,
     FOREIGN KEY (revision_end_id) REFERENCES revinfo(rev) ON DELETE SET NULL ON UPDATE CASCADE,
     CONSTRAINT author_aud_pkey PRIMARY KEY (id, revision_id),
     CONSTRAINT author_aud_revinfo FOREIGN KEY (revision_id)
     REFERENCES revinfo (rev) MATCH SIMPLE
     -- end hibernate envers
-    ON UPDATE NO ACTION ON DELETE NO ACTION
 )
+CHARACTER SET 'utf8'
+COLLATE 'utf8_unicode_ci';
 
 -- Turn on fk check
 SET FOREIGN_KEY_CHECKS=1;

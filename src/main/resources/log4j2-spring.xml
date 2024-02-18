@@ -11,8 +11,8 @@
 		<Property name="LOG_PATTERN">
 			%d{ISO8601} SEVERITY="%level" THREAD="%t" UUID="%X{UUID}" CLASS="%c{10}.%M:%L]" %m%n
 		</Property>
-		<Property name="LOG_FILE_NAME" value="mymicroservice" />
-		<Property name="PACKAGE_NAME" value="org.gunnarro.microservice.mymicroservice" />
+		<Property name="LOG_FILE_NAME" value="todo-service" />
+		<Property name="PACKAGE_NAME" value="org.gunnarro.microservice.todoservice" />
 	</Properties>
 
 	<Appenders>

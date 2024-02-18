@@ -3,6 +3,7 @@ package org.gunnarro.microservice.todoservice.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoDto;
+import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoHistoryDto;
 import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoItemDto;
 import org.gunnarro.microservice.todoservice.domain.mapper.TodoMapper;
 import org.gunnarro.microservice.todoservice.exception.ApplicationException;
@@ -12,13 +13,13 @@ import org.gunnarro.microservice.todoservice.repository.TodoRepository;
 import org.gunnarro.microservice.todoservice.repository.entity.Todo;
 import org.gunnarro.microservice.todoservice.service.TodoService;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.history.Revision;
+import org.springframework.data.history.Revisions;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -104,6 +105,19 @@ public class TodoServiceImpl implements TodoService {
         todoItemRepository.deleteById(todoItemId);
     }
 
+
+    public List<TodoHistoryDto> getTodoHistory(Long todoId) {
+        List<TodoHistoryDto> todoHistoryDtoList = new ArrayList<>();
+        Revisions<Long, Todo> revisions = this.todoRepository.findRevisions(todoId);
+        Iterator<Revision<Long, Todo>> revisionsIterator = revisions.stream().iterator();
+        while (revisionsIterator.hasNext()) {
+            Revision<Long, Todo> rev = revisionsIterator.next();
+            todoHistoryDtoList.add(TodoMapper.toTodoHistoryDto(rev.getEntity(), null, rev.getMetadata().getRevisionType().name()));
+        }
+        return todoHistoryDtoList;
+    }
+
+    // only for testing
     List<TodoDto> createTodoTestData() {
         Long b39TodoId = 2000L;
         Long stvgt35TodoId = 3000L;

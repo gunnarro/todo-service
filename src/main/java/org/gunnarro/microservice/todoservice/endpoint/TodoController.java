@@ -13,6 +13,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.gunnarro.microservice.todoservice.domain.dto.ErrorResponse;
 import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoDto;
+import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoHistoryDto;
 import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoItemDto;
 import org.gunnarro.microservice.todoservice.service.TodoService;
 import org.springframework.http.HttpStatus;
@@ -51,8 +52,11 @@ public class TodoController {
 
     private final TodoService toDoService;
 
-    public TodoController(TodoService toDoService) {
+  //  private final AuditService auditService;
+
+    public TodoController(TodoService toDoService) {//}, AuditService auditService) {
         this.toDoService = toDoService;
+    //    this.auditService = auditService;
     }
 
     @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
@@ -166,4 +170,21 @@ public class TodoController {
         log.info("delete: todoId={}, todoItemId={}", todoId, todoItemId);
         toDoService.deleteTodoItem(todoId, todoItemId);
     }
+
+    // ---------------------------------------------------------
+    // todo history
+    // ---------------------------------------------------------
+    @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
+    @Operation(summary = "Get todo audit history", description = "return todo audit history")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found the todo history",
+                    content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = TodoHistoryDto.class))})
+    })
+    @GetMapping(path = "/todos/{todoId}/history", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
+    public List<TodoHistoryDto> getTodoHistoryById(@PathVariable("todoId") Long todoId) {
+        // return auditService.getTodoHistory(todoId);
+        return toDoService.getTodoHistory(todoId);
+    }
+
 }

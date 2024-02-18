@@ -6,17 +6,42 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Arrays;
 
-@Schema(description = "Holds information about a todo")
+@Schema(description = "Holds audit log for Todo")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @ToString
 @Builder
-public class TodoDto {
+public class TodoHistoryDto implements Serializable {
+    /**
+     * Mapped from hibernate envers int values
+     */
+    public enum RevisionTypesEnum {
+        ADDED(0), MODIFIED(1), DELETED(2);
+
+        private final int type;
+
+        RevisionTypesEnum(int type) {
+            this.type = type;
+        }
+
+        public static RevisionTypesEnum getByType(int type) {
+            return Arrays.stream(RevisionTypesEnum.values()).filter(r -> r.type == type).findFirst().orElse(null);
+        }
+    }
+
+    // revision info
+    @Schema(description = "Unique identifier of the revision")
+    private Integer revisionId;
+    private Integer revisionEndId;
+    @Schema(description = "the revision type, update, delete")
+    private String revisionType;
+    // end revision info
     @Schema(description = "Unique identifier of the todo. Should not be set for new Todo.")
     private Long id;
     @Schema(description = "React do not like long very well")
@@ -31,14 +56,13 @@ public class TodoDto {
     @Schema(description = "user that last modified the todo")
     private String lastModifiedByUser;
     @Schema(description = "Name of todo")
-    @Pattern(regexp = "[\\w\\s\\dæÆøØåÅ_-]{1,50}", message = "can only contain lower and uppercase alphabetic chars. Min 1 char, max 50 chars.")
+    @Pattern(regexp = "[\\w\\s\\d-_]{1,50}", message = "can only contain lower and uppercase alphabetic chars. Min 1 char, max 50 chars.")
     private String name;
     @Schema(description = "Status of todo, OPEN, IN_PROGRESS or FINISHED")
     @NotNull
     private String status;
     @Schema(description = "description of this to do task")
-    @Pattern(regexp = "[\\w\\s\\dæÆøØåÅ_-]{1,100}", message = "Description can only contain lower and uppercase alphabetic chars. Min 1 char, max 100 chars.")
+    @Pattern(regexp = "[\\w\\s\\d-_]{1,100}", message = "Description can only contain lower and uppercase alphabetic chars. Min 1 char, max 100 chars.")
     private String description;
-    @Schema(description = "List of task/item/action this todo list contains")
-    private List<TodoItemDto> toDoItemDtoList;
+
 }

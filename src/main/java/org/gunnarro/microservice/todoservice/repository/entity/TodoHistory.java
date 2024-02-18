@@ -3,18 +3,18 @@ package org.gunnarro.microservice.todoservice.repository.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Immutable;
 
-@Table(name = "TODO_ITEM", schema = "todo")
+@Table(name = "TODO_HISTORY", schema = "todo")
 @Entity
+@Immutable
 @Getter
-@Setter
 @SuperBuilder
 @NoArgsConstructor
-@AllArgsConstructor
-@ToString
-public class TodoItem extends BaseEntity {
+public class TodoHistory extends AuditBaseEntity {
 
     @Column(name = "NAME", nullable = false)
     private String name;
@@ -24,14 +24,5 @@ public class TodoItem extends BaseEntity {
 
     @Column(name = "DESCRIPTION", nullable = false)
     private String description;
-
-    @Column(name = "ACTION", nullable = false)
-    private String action;
-
-    @Column(name = "ASSIGNED_TO", nullable = false)
-    private String assignedTo;
-
-    @Column(name = "FK_TODO_ID", nullable = false)
-    private Long fkTodoId;
 
 }

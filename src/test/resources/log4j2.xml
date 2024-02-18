@@ -71,7 +71,7 @@
 			<AppenderRef ref="consoleAppender" />
 		</Logger>
 		 
-		<Logger name="org.springframework" level="ERROR" additivity="false">
+		<Logger name="org.springframework" level="DEBUG" additivity="false">
 			<AppenderRef ref="debugFileAppender" />
 			<AppenderRef ref="consoleAppender" />
 		</Logger>
@@ -91,7 +91,17 @@
 			<appender-ref ref="performanceLogAppender" />
 		</logger>
 
-		<Logger name="org.springframework.security" level="TRACE" additivity="false">
+		<Logger name="org.springframework" level="WARN" additivity="false">
+			<AppenderRef ref="debugFileAppender" />
+			<AppenderRef ref="consoleAppender" />
+		</Logger>
+
+		<Logger name="org.springframework.security" level="WARN" additivity="false">
+			<AppenderRef ref="debugFileAppender" />
+			<AppenderRef ref="consoleAppender" />
+		</Logger>
+
+		<Logger name="org.hibernate" level="WARN" additivity="false">
 			<AppenderRef ref="debugFileAppender" />
 			<AppenderRef ref="consoleAppender" />
 		</Logger>

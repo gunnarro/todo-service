@@ -59,6 +59,7 @@ curl -X DELETE https://localhost:9999/todoservice/v1/todos/11eec40c-c279-03fd-b2
 
 # Resources
 - [TSID](https://vladmihalcea.com/tsid-identifier-jpa-hibernate/)
+- [hibernate envers doc](https://docs.jboss.org/envers/docs/)
 - [Auditing - hibernate envers](https://sunitc.dev/2020/01/21/spring-boot-how-to-add-jpa-hibernate-envers-auditing/)
 - [Auditing - javers](https://javers.org/documentation/spring-boot-integration/)
 - [Auditing - javers vs envers](https://javers.org/blog/2017/12/javers-vs-envers-comparision.html)

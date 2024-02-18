@@ -9,7 +9,6 @@ import org.gunnarro.microservice.todoservice.service.TodoService;
 import org.hamcrest.core.Is;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -65,7 +64,7 @@ public class TodoControllerValidationTest extends DefaultTestConfig {
     void createTodoInputValidationOk() throws Exception {
         TodoDto todoDto = TodoDto.builder()
                 .id(new Random().nextLong())
-                .name("todo-task-v22 test")
+                .name("todo-task-v22 test æøå")
                 .status("Active")
                 .description("my todo list")
                 .createdDate(LocalDateTime.of(2024, 2, 1, 10, 0, 0))
@@ -116,16 +115,6 @@ public class TodoControllerValidationTest extends DefaultTestConfig {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.description", Is.is("Service Input Validation Error. name can only contain lower and uppercase alphabetic chars. Min 1 char, max 50 chars.")))
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
-    }
-
-    @Disabled
-    @Test
-    void getTodoInvalidUuidFormat() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/todoservice/v1/todos/invalid-uuid")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().is4xxClientError())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.description", Is.is("Service Input Validation Error")))
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
     }
 }

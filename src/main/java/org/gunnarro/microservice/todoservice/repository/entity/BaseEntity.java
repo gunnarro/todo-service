@@ -4,15 +4,13 @@ import io.hypersistence.utils.hibernate.id.Tsid;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SourceType;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import java.time.LocalDateTime;
 
@@ -23,7 +21,10 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public abstract class BaseEntity {
+
+    @NotAudited
     @Id
     @Tsid
     @Column(name = "ID")
@@ -40,6 +41,7 @@ public abstract class BaseEntity {
     @Column(name = "CREATED_BY_USER", nullable = false)
     private String createdByUser;
 
+    @Audited(withModifiedFlag = true)
     @Column(name = "LAST_MODIFIED_BY_USER", nullable = false)
     private String lastModifiedByUser;
 }

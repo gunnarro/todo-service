@@ -1,12 +1,16 @@
 package org.gunnarro.microservice.todoservice.domain.mapper;
 
 import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoDto;
+import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoHistoryDto;
 import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoItemDto;
 import org.gunnarro.microservice.todoservice.repository.entity.Todo;
+import org.gunnarro.microservice.todoservice.repository.entity.TodoHistory;
 import org.gunnarro.microservice.todoservice.repository.entity.TodoItem;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -109,4 +113,25 @@ public class TodoMapperTest {
         assertEquals(todoItemDto.getCreatedByUser(), todoItem.getCreatedByUser());
         assertEquals(todoItemDto.getLastModifiedByUser(), todoItem.getLastModifiedByUser());
     }
+
+    @Test
+    void toTodoHistoryDto() {
+        List<TodoHistory> todoHistoryList = new ArrayList<>();
+        TodoHistory todoHistory = TodoHistory.builder()
+                .id(23L)
+                .name("unit-test")
+                .revisionId(2222222)
+                .revisionType(1)
+                .revisionEndId(1111111)
+                .build();
+        todoHistoryList.add(todoHistory);
+        List<TodoHistoryDto> todoHistoryDtoList = TodoMapper.toTodoHistoryDtoList(todoHistoryList);
+        assertEquals(1, todoHistoryDtoList.size());
+        assertEquals(todoHistory.getName(), todoHistoryDtoList.get(0).getName());
+        assertEquals(todoHistory.getRevisionEndId(), todoHistoryDtoList.get(0).getRevisionEndId());
+        assertEquals(todoHistory.getRevisionId(), todoHistoryDtoList.get(0).getRevisionId());
+        assertEquals(TodoHistoryDto.RevisionTypesEnum.getByType(todoHistory.getRevisionType()).name(), todoHistoryDtoList.get(0).getRevisionType());
+        assertEquals(todoHistory.getId(), todoHistoryDtoList.get(0).getId());
+    }
+
 }

@@ -25,7 +25,7 @@ import java.util.Random;
 @DataJpaTest(excludeAutoConfiguration = {EnableAutoConfiguration.class})
 @ContextConfiguration(classes = {TodoService.class})
 @ComponentScan(basePackages = {"org.gunnarro.microservice.mymicroservice"})
-@TestPropertySource("/test-jpa-application.properties")
+@TestPropertySource("/test-jpa-application.properties.disabled")
 // opt uot the auto config of the test in-memory database
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class TodoServiceTest {
