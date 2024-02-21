@@ -1,5 +1,6 @@
 [![build and analyse](https://github.com/gunnarro/todo-service/actions/workflows/build.yml/badge.svg)](https://github.com/gunnarro/todo-service/actions/workflows/build.yml)
 [![verify rest api](https://github.com/gunnarro/todo-service/actions/workflows/verify-service-rest-api.yml/badge.svg)](https://github.com/gunnarro/todo-service/actions/workflows/verify-service-rest-api.yml)
+[![build and deploy image to docker.hub](https://github.com/gunnarro/todo-service/actions/workflows/deploy-docker-hub.yml/badge.svg)](https://github.com/gunnarro/todo-service/actions/workflows/deploy-docker-hub.yml)
 
 # Todo Rest Service
 Service for create and handle todo lists.
@@ -65,4 +66,7 @@ curl -X DELETE https://localhost:9999/todoservice/v1/todos/11eec40c-c279-03fd-b2
 - [Auditing - javers vs envers](https://javers.org/blog/2017/12/javers-vs-envers-comparision.html)
 - [spring boot - sunitc.dev](https://sunitc.dev/tag/spring-boot/)
 - [docker compose](https://containers.dev/guide/dockerfile)
+- [react bootstrap form validation](https://www.abstractapi.com/guides/react-bootstrap-form-validation)
+- [reactstrap](https://www.npmjs.com/package/reactstrap)
+- [openapi-generator](https://github.com/OpenAPITools/openapi-generator)
 
