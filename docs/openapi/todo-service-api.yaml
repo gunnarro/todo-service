@@ -1,675 +1,1394 @@
-openapi: 3.0.1
-info:
-  title: Todo Service
-  description: Rest Api for todo services
-  contact:
-    name: gunnarro@gunnarroas.org
-    url: 'https://gunnarroas.org'
-    email: gunnarro@gunnarroas.org
-  version: V1
-servers:
-  - url: 'https://localhost:9999'
-tags:
-  - name: Todo Service
-    description: Rest API for Todo services
-paths:
-  '/todoservice/v1/todos/{todoId}':
-    get:
-      tags:
-        - Todo Service
-      summary: Get todo
-      description: return todo information
-      operationId: getTodoById
-      parameters:
-        - name: todoId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Found the todo
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TodoDto'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '401':
-          description: You are not authorized to view the resource
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '403':
-          description: Accessing the resource you were trying to reach is forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '429':
-          description: Too Many Requests
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '503':
-          description: Service Unavailable
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-    put:
-      tags:
-        - Todo Service
-      summary: update todo
-      description: return updated todo
-      operationId: updateTodo
-      parameters:
-        - name: todoId
-          in: path
-          required: true
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TodoDto'
-        required: true
-      responses:
-        '200':
-          description: updated todo
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TodoDto'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '401':
-          description: You are not authorized to view the resource
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '403':
-          description: Accessing the resource you were trying to reach is forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '429':
-          description: Too Many Requests
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '503':
-          description: Service Unavailable
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-    post:
-      tags:
-        - Todo Service
-      summary: create a new todo
-      description: return created todo information
-      operationId: createTodo
-      parameters:
-        - name: todoId
-          in: path
-          required: true
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TodoDto'
-        required: true
-      responses:
-        '201':
-          description: Created todo
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TodoDto'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '401':
-          description: You are not authorized to view the resource
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '403':
-          description: Accessing the resource you were trying to reach is forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '429':
-          description: Too Many Requests
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '503':
-          description: Service Unavailable
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-    delete:
-      tags:
-        - Todo Service
-      summary: delete todo
-      description: id of deleted todo
-      operationId: deleteTodo
-      parameters:
-        - name: todoId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '204':
-          description: todo is deleted
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '401':
-          description: You are not authorized to view the resource
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '403':
-          description: Accessing the resource you were trying to reach is forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '429':
-          description: Too Many Requests
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '503':
-          description: Service Unavailable
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  '/todoservice/v1/todos/{todoId}/items/{todoItemId}':
-    put:
-      tags:
-        - Todo Service
-      summary: update todo item in the todo list
-      description: return updated todo item
-      operationId: updateTodoItem
-      parameters:
-        - name: todoId
-          in: path
-          required: true
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TodoItemDto'
-        required: true
-      responses:
-        '200':
-          description: updated todo item
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TodoItemDto'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '401':
-          description: You are not authorized to view the resource
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '403':
-          description: Accessing the resource you were trying to reach is forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '429':
-          description: Too Many Requests
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '503':
-          description: Service Unavailable
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-    post:
-      tags:
-        - Todo Service
-      summary: Add new todo item to the todo list
-      description: return created todo item
-      operationId: createTodoItem
-      parameters:
-        - name: todoId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: todoItemId
-          in: path
-          required: true
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TodoItemDto'
-        required: true
-      responses:
-        '201':
-          description: Created todo item
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TodoItemDto'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '401':
-          description: You are not authorized to view the resource
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '403':
-          description: Accessing the resource you were trying to reach is forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '429':
-          description: Too Many Requests
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '503':
-          description: Service Unavailable
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-    delete:
-      tags:
-        - Todo Service
-      summary: delete todo item
-      description: todo item id to delete
-      operationId: deleteTodoItem
-      parameters: []
-      responses:
-        '204':
-          description: todo item is deleted
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '401':
-          description: You are not authorized to view the resource
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '403':
-          description: Accessing the resource you were trying to reach is forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '429':
-          description: Too Many Requests
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '503':
-          description: Service Unavailable
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  '/todoservice/v1/todos/user/{user}':
-    get:
-      tags:
-        - Todo Service
-      summary: Get todos created by user
-      description: return todos created by user
-      operationId: getTodosForUser
-      parameters:
-        - name: user
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Found todos for user
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TodoDto'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '401':
-          description: You are not authorized to view the resource
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '403':
-          description: Accessing the resource you were trying to reach is forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '429':
-          description: Too Many Requests
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '503':
-          description: Service Unavailable
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  /todoservice/v1/todos/ping:
-    get:
-      tags:
-        - Todo Service
-      summary: ping
-      description: check if service is alive
-      operationId: ping
-      responses:
-        '200':
-          description: a live
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TodoDto'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '401':
-          description: You are not authorized to view the resource
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '403':
-          description: Accessing the resource you were trying to reach is forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '429':
-          description: Too Many Requests
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '503':
-          description: Service Unavailable
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-components:
-  schemas:
-    TodoDto:
-      required:
-        - id
-        - status
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier of the todo.
-        createdDate:
-          type: string
-          description: date when todo was created
-          format: date-time
-        lastModifiedDate:
-          type: string
-          description: date when todo was last modified
-          format: date-time
-        createdByUser:
-          type: string
-          description: user that created the todo
-        lastModifiedByUser:
-          type: string
-          description: user that last modified the todo
-        name:
-          pattern: '[\w\s]{1,50}'
-          type: string
-          description: Name of todo
-        status:
-          type: string
-          description: 'Status of todo, ACTIVE or FINISHED'
-        description:
-          pattern: '[\w\s]{1,100}'
-          type: string
-          description: description of todo
-        toDoItemDtoList:
-          type: array
-          description: List of task/item/action this todo list contains
-          items:
-            $ref: '#/components/schemas/TodoItemDto'
-      description: Holds information about a todo list
-    TodoItemDto:
-      required:
-        - id
-        - todoId
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier of the todo item.
-        todoId:
-          type: string
-          description: Unique identifier of the todo that this item belongs to.
-        name:
-          type: string
-          description: doc me
-        description:
-          type: string
-          description: doc me
-        status:
-          type: string
-          description: doc me
-        action:
-          type: string
-          description: doc me
-        assignedTo:
-          type: string
-          description: doc me
-      description: Holds information about a todo item
-    ErrorResponse:
-      type: object
-      properties:
-        httpStatus:
-          type: integer
-          description: http status code
-          format: int32
-          example: 404
-        httpMessage:
-          type: string
-          description: Http message
-          example: Not Found
-        errorCode:
-          type: integer
-          description: Internal error code
-          format: int32
-          example: 4041001
-        description:
-          type: string
-          description: Description of the error
-          example: Customer not found
-      description: Holds rest service error description
-  securitySchemes:
-    api:
-      type: http
-      in: header
-      scheme: basic
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Todo Service",
+    "description": "Rest Api for todo services",
+    "contact": {
+      "name": "gunnarro@gunnarroas.org",
+      "url": "https://gunnarroas.org",
+      "email": "gunnarro@gunnarroas.org"
+    },
+    "version": "V1"
+  },
+  "servers": [
+    {
+      "url": "https://localhost:9999"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Todo Service",
+      "description": "Rest API for Todo services"
+    }
+  ],
+  "paths": {
+    "/todoservice/v1/todos/{todoId}": {
+      "get": {
+        "tags": [
+          "Todo Service"
+        ],
+        "summary": "Get todo",
+        "description": "return todo information",
+        "operationId": "getTodoById",
+        "parameters": [
+          {
+            "name": "todoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found the todo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TodoDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You are not authorized to view the resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Accessing the resource you were trying to reach is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Todo Service"
+        ],
+        "summary": "update todo",
+        "description": "return updated todo",
+        "operationId": "updateTodo",
+        "parameters": [
+          {
+            "name": "todoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TodoDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "updated todo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TodoDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You are not authorized to view the resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Accessing the resource you were trying to reach is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Todo Service"
+        ],
+        "summary": "delete todo",
+        "description": "id of deleted todo",
+        "operationId": "deleteTodo",
+        "parameters": [
+          {
+            "name": "todoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "todo is deleted"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You are not authorized to view the resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Accessing the resource you were trying to reach is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/todoservice/v1/todos/{todoId}/items": {
+      "put": {
+        "tags": [
+          "Todo Service"
+        ],
+        "summary": "update todo item in the todo list",
+        "description": "return updated todo item",
+        "operationId": "updateTodoItem",
+        "parameters": [
+          {
+            "name": "todoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TodoItemDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "updated todo item",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TodoItemDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You are not authorized to view the resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Accessing the resource you were trying to reach is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Todo Service"
+        ],
+        "summary": "Add new todo item to the todo list",
+        "description": "return created todo item",
+        "operationId": "createTodoItem",
+        "parameters": [
+          {
+            "name": "todoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "*/*": {
+              "schema": {
+                "$ref": "#/components/schemas/TodoItemDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created todo item",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TodoItemDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You are not authorized to view the resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Accessing the resource you were trying to reach is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/todoservice/v1/todos": {
+      "post": {
+        "tags": [
+          "Todo Service"
+        ],
+        "summary": "create a new todo",
+        "description": "return created todo information",
+        "operationId": "createTodo",
+        "requestBody": {
+          "content": {
+            "*/*": {
+              "schema": {
+                "$ref": "#/components/schemas/TodoDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created todo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TodoDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You are not authorized to view the resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Accessing the resource you were trying to reach is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/todoservice/v1/todos/{todoId}/items/{todoItemId}/history": {
+      "get": {
+        "tags": [
+          "Todo Service"
+        ],
+        "summary": "Get todo audit history",
+        "description": "return todo audit history",
+        "operationId": "getTodoItemHistoryById",
+        "parameters": [
+          {
+            "name": "todoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "todoItemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found the todo history",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TodoHistoryDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You are not authorized to view the resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Accessing the resource you were trying to reach is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/todoservice/v1/todos/{todoId}/history": {
+      "get": {
+        "tags": [
+          "Todo Service"
+        ],
+        "summary": "Get todo audit history",
+        "description": "return todo audit history",
+        "operationId": "getTodoHistoryById",
+        "parameters": [
+          {
+            "name": "todoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found the todo history",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TodoHistoryDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You are not authorized to view the resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Accessing the resource you were trying to reach is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/todoservice/v1/todos/user/{user}": {
+      "get": {
+        "tags": [
+          "Todo Service"
+        ],
+        "summary": "Get todos created by user",
+        "description": "return todos created by user",
+        "operationId": "getTodosForUser",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found todos for user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TodoDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You are not authorized to view the resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Accessing the resource you were trying to reach is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/todoservice/v1/todos/ping": {
+      "get": {
+        "tags": [
+          "Todo Service"
+        ],
+        "summary": "ping",
+        "description": "check if service is alive",
+        "operationId": "ping",
+        "responses": {
+          "200": {
+            "description": "a live",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TodoDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You are not authorized to view the resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Accessing the resource you were trying to reach is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/todoservice/v1/todos/{todoId}/items/{todoItemId}": {
+      "delete": {
+        "tags": [
+          "Todo Service"
+        ],
+        "summary": "delete todo item",
+        "description": "todo item id to delete",
+        "operationId": "deleteTodoItem",
+        "parameters": [
+          {
+            "name": "todoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "todoItemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "todo item is deleted"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You are not authorized to view the resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Accessing the resource you were trying to reach is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "TodoDto": {
+        "required": [
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier of the todo. Should not be set for new Todo.",
+            "format": "int64"
+          },
+          "idStr": {
+            "type": "string",
+            "description": "React do not like long very well"
+          },
+          "createdDate": {
+            "type": "string",
+            "description": "date when todo was created",
+            "format": "date-time"
+          },
+          "lastModifiedDate": {
+            "type": "string",
+            "description": "date when todo was last modified",
+            "format": "date-time"
+          },
+          "createdByUser": {
+            "pattern": "[a-zA-Z]{1,50}",
+            "type": "string",
+            "description": "user that created the todo"
+          },
+          "lastModifiedByUser": {
+            "type": "string",
+            "description": "user that last modified the todo"
+          },
+          "name": {
+            "pattern": "[\\w\\s\\dæÆøØåÅ_-]{1,50}",
+            "type": "string",
+            "description": "Name of todo"
+          },
+          "status": {
+            "type": "string",
+            "description": "Status of todo, OPEN, IN_PROGRESS or FINISHED"
+          },
+          "description": {
+            "pattern": "[\\w\\s\\dæÆøØåÅ_-]{1,100}",
+            "type": "string",
+            "description": "description of this to do task"
+          },
+          "toDoItemDtoList": {
+            "type": "array",
+            "description": "List of task/item/action this todo list contains",
+            "items": {
+              "$ref": "#/components/schemas/TodoItemDto"
+            }
+          }
+        },
+        "description": "Holds information about a todo"
+      },
+      "TodoItemDto": {
+        "required": [
+          "todoId"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Global unique identifier of the todo item. Should not be set for new todo item.",
+            "format": "int64"
+          },
+          "todoId": {
+            "type": "integer",
+            "description": "Global unique identifier for the todo that this item belongs to.",
+            "format": "int64"
+          },
+          "createdDate": {
+            "type": "string",
+            "description": "date when todo was created",
+            "format": "date-time"
+          },
+          "lastModifiedDate": {
+            "type": "string",
+            "description": "date when todo was last modified",
+            "format": "date-time"
+          },
+          "createdByUser": {
+            "type": "string",
+            "description": "user that created the todo"
+          },
+          "lastModifiedByUser": {
+            "type": "string",
+            "description": "user that last modified the todo"
+          },
+          "name": {
+            "pattern": "[\\w\\s\\dæÆøØåÅ_-]{1,50}",
+            "type": "string",
+            "description": "doc me"
+          },
+          "description": {
+            "pattern": "[\\w\\s\\dæÆøØåÅ_-]{1,100}",
+            "type": "string",
+            "description": "description of the task to do"
+          },
+          "status": {
+            "type": "string",
+            "description": "Status of todo, OPEN, IN_PROGRESS or FINISHED"
+          },
+          "action": {
+            "type": "string",
+            "description": "The action that should be done for this item"
+          },
+          "assignedTo": {
+            "type": "string",
+            "description": "the person that is responsible to follow up and fulfill this task"
+          }
+        },
+        "description": "Holds information about a todo item"
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "httpStatus": {
+            "type": "integer",
+            "description": "http status code",
+            "format": "int32",
+            "example": 404
+          },
+          "httpMessage": {
+            "type": "string",
+            "description": "Http message",
+            "example": "Not Found"
+          },
+          "errorCode": {
+            "type": "integer",
+            "description": "Internal error code",
+            "format": "int32",
+            "example": 4041001
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the error",
+            "example": "Customer not found"
+          }
+        },
+        "description": "Holds rest service error description"
+      },
+      "TodoHistoryDto": {
+        "required": [
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "revisionId": {
+            "type": "integer",
+            "description": "Unique identifier of the revision",
+            "format": "int32"
+          },
+          "revisionEndId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "revisionType": {
+            "type": "string",
+            "description": "the revision type, update, delete"
+          },
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier of the todo. Should not be set for new Todo.",
+            "format": "int64"
+          },
+          "idStr": {
+            "type": "string",
+            "description": "React do not like long very well"
+          },
+          "createdDate": {
+            "type": "string",
+            "description": "date when todo was created",
+            "format": "date-time"
+          },
+          "lastModifiedDate": {
+            "type": "string",
+            "description": "date when todo was last modified",
+            "format": "date-time"
+          },
+          "createdByUser": {
+            "pattern": "[a-zA-Z]{1,50}",
+            "type": "string",
+            "description": "user that created the todo"
+          },
+          "lastModifiedByUser": {
+            "type": "string",
+            "description": "user that last modified the todo"
+          },
+          "name": {
+            "pattern": "[\\w\\s\\d-_]{1,50}",
+            "type": "string",
+            "description": "Name of todo"
+          },
+          "status": {
+            "type": "string",
+            "description": "Status of todo, OPEN, IN_PROGRESS or FINISHED"
+          },
+          "description": {
+            "pattern": "[\\w\\s\\d-_]{1,100}",
+            "type": "string",
+            "description": "description of this to do task"
+          }
+        },
+        "description": "Holds audit log for Todo"
+      }
+    },
+    "securitySchemes": {
+      "api": {
+        "type": "http",
+        "in": "header",
+        "scheme": "basic"
+      }
+    }
+  }
+}

@@ -129,7 +129,7 @@ public class TodoMapperTest {
         assertEquals(1, todoHistoryDtoList.size());
         assertEquals(todoHistory.getName(), todoHistoryDtoList.get(0).getName());
         assertEquals(todoHistory.getRevisionEndId(), todoHistoryDtoList.get(0).getRevisionEndId());
-        assertEquals(todoHistory.getRevisionId(), todoHistoryDtoList.get(0).getRevisionId());
+        assertEquals(todoHistory.getRevisionId(), todoHistoryDtoList.get(0).getRevisionNumber().intValue());
         assertEquals(TodoHistoryDto.RevisionTypesEnum.getByType(todoHistory.getRevisionType()).name(), todoHistoryDtoList.get(0).getRevisionType());
         assertEquals(todoHistory.getId(), todoHistoryDtoList.get(0).getId());
     }

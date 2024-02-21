@@ -37,7 +37,7 @@ public class TodoHistoryDto implements Serializable {
 
     // revision info
     @Schema(description = "Unique identifier of the revision")
-    private Integer revisionId;
+    private Long revisionNumber;
     private Integer revisionEndId;
     @Schema(description = "the revision type, update, delete")
     private String revisionType;

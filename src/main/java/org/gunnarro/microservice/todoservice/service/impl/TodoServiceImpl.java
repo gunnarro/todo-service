@@ -20,8 +20,10 @@ import org.springframework.data.history.Revisions;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -119,7 +121,7 @@ public class TodoServiceImpl implements TodoService {
         return todoHistoryDtoList;
     }
 
-    public List<TodoItemHistoryDto> getTodoItemHistory(Long todoId, Long todoItemId){
+    public List<TodoItemHistoryDto> getTodoItemHistory(Long todoId, Long todoItemId) {
         List<TodoItemHistoryDto> todoItemHistoryDtoList = new ArrayList<>();
         Revisions<Long, TodoItem> revisions = this.todoItemRepository.findRevisions(todoItemId);
         Iterator<Revision<Long, TodoItem>> revisionsIterator = revisions.stream().iterator();
@@ -128,43 +130,5 @@ public class TodoServiceImpl implements TodoService {
             todoItemHistoryDtoList.add(TodoMapper.toTodoItemHistoryDto(rev.getEntity(), null, rev.getMetadata().getRevisionType().name()));
         }
         return todoItemHistoryDtoList;
-    }
-
-    // only for testing
-    List<TodoDto> createTodoTestData() {
-        Long b39TodoId = 2000L;
-        Long stvgt35TodoId = 3000L;
-        List<TodoItemDto> b39ToDoItemDtoList = List.of(createItem(b39TodoId, "tv", "Active"));
-        List<TodoItemDto> stv35ToDoItemDtoList = List.of(createItem(stvgt35TodoId, "fryser", "Active"), createItem(stvgt35TodoId, "stol", "Finished"));
-        return List.of(TodoDto.builder()
-                        .name("B39")
-                        .id(b39TodoId)
-                        .createdDate(LocalDateTime.now())
-                        .lastModifiedDate(LocalDateTime.now())
-                        .lastModifiedByUser("adm")
-                        .status("Active")
-                        .toDoItemDtoList(b39ToDoItemDtoList)
-                        .build(),
-                TodoDto.builder()
-                        .name("STV35")
-                        .id(stvgt35TodoId)
-                        .createdDate(LocalDateTime.now())
-                        .lastModifiedDate(LocalDateTime.now())
-                        .lastModifiedByUser("adm")
-                        .status("Finished")
-                        .toDoItemDtoList(stv35ToDoItemDtoList)
-                        .build());
-    }
-
-    TodoItemDto createItem(Long todoId, String name, String status) {
-        return TodoItemDto.builder()
-                .id(new Random().nextLong())
-                .todoId(todoId)
-                .name(name)
-                .description("stue")
-                .action("selges")
-                .status(status)
-                .assignedTo("guro")
-                .build();
     }
 }

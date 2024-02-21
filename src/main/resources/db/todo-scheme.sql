@@ -75,8 +75,9 @@ COLLATE 'utf8_unicode_ci';
 -- needed by hibernate envers
 DROP TABLE IF EXISTS revinfo;
 CREATE TABLE revinfo (
-    rev             INTEGER PRIMARY KEY AUTO_INCREMENT,
-    revtstmp        BIGINT
+    rev             INTEGER PRIMARY KEY AUTO_INCREMENT=1,
+    revtstmp        BIGINT,
+    CONSTRAINT revinfo_pkey PRIMARY KEY (rev)
 )
 CHARACTER SET 'utf8'
 COLLATE 'utf8_unicode_ci';
@@ -100,9 +101,10 @@ CREATE TABLE todo_history (
     revision_end_id integer,
     revision_type integer,
     FOREIGN KEY (revision_end_id) REFERENCES revinfo(rev) ON DELETE SET NULL ON UPDATE CASCADE,
-    CONSTRAINT todo_author_aud_pkey PRIMARY KEY (id, revision_id),
-    CONSTRAINT todo_author_aud_revinfo FOREIGN KEY (revision_id)
+    CONSTRAINT todo_aud_pkey PRIMARY KEY (id, revision_id),
+    CONSTRAINT todo_aud_revinfo FOREIGN KEY (revision_id)
     REFERENCES revinfo (rev) MATCH SIMPLE
+    ON UPDATE NO ACTION ON DELETE NO ACTION
     -- end hibernate envers
 )
 CHARACTER SET 'utf8'
@@ -132,9 +134,10 @@ CREATE TABLE todo_item_history(
                    revision_end_id integer,
                    revision_type integer,
                    FOREIGN KEY (revision_end_id) REFERENCES revinfo(rev) ON DELETE SET NULL ON UPDATE CASCADE,
-                   CONSTRAINT todo_item_author_aud_pkey PRIMARY KEY (id, revision_id),
-                   CONSTRAINT todo_item_author_aud_revinfo FOREIGN KEY (revision_id)
+                   CONSTRAINT todo_item_aud_pkey PRIMARY KEY (id, revision_id),
+                   CONSTRAINT todo_item_aud_revinfo FOREIGN KEY (revision_id)
                    REFERENCES revinfo (rev) MATCH SIMPLE
+                   ON UPDATE NO ACTION ON DELETE NO ACTION
                    -- end hibernate envers
 )
 CHARACTER SET 'utf8'

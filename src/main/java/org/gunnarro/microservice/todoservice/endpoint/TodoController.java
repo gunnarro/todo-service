@@ -21,7 +21,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 
@@ -105,7 +107,12 @@ public class TodoController {
     })
     @PostMapping(path = "/todos", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
     public @ResponseBody TodoDto createTodo(@RequestBody @Valid TodoDto todoDto) {
-        return toDoService.addTodo(todoDto);
+        TodoDto createdTodoDto = toDoService.addTodo(todoDto);
+        URI resourceUri = ServletUriComponentsBuilder
+                                .fromCurrentRequest().path("todos/{todoId}")
+                                .buildAndExpand(createdTodoDto.getId())
+                                .toUri();
+        return createdTodoDto;
     }
 
     @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
@@ -116,7 +123,7 @@ public class TodoController {
                             schema = @Schema(implementation = TodoDto.class))})
     })
     @PutMapping(path = "/todos/{todoId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public TodoDto updateTodo(@PathVariable("todoId") String todoId, @RequestBody @Valid TodoDto todoDto) {
+    public TodoDto updateTodo(@PathVariable("todoId") Long todoId, @RequestBody @Valid TodoDto todoDto) {
         return toDoService.updateTodo(todoDto);
     }
 
@@ -144,8 +151,10 @@ public class TodoController {
                             schema = @Schema(implementation = TodoItemDto.class))})
     })
     @PostMapping(path = "/todos/{todoId}/items", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
-    public TodoItemDto createTodoItem(@PathVariable("todoId") String todoId, @RequestBody @Valid TodoItemDto todoItemDto) {
-        return toDoService.addTodoItem(todoItemDto);
+    public TodoItemDto createTodoItem(@PathVariable("todoId") Long todoId, @RequestBody @Valid TodoItemDto todoItemDto) {
+        TodoItemDto createdTodoItemDto = toDoService.addTodoItem(todoItemDto);
+        URI resourceUri = ServletUriComponentsBuilder.fromCurrentRequest().path("/todoItemId}").buildAndExpand(createdTodoItemDto.getId()).toUri();
+        return createdTodoItemDto;
     }
 
     @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
@@ -155,8 +164,8 @@ public class TodoController {
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = TodoItemDto.class))})
     })
-    @PutMapping(path = "/todos/{todoId}/items/{todoItemId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public TodoItemDto updateTodoItem(@PathVariable("todoId") String todoId, @RequestBody @Valid TodoItemDto toDoItemDto) {
+    @PutMapping(path = "/todos/{todoId}/items", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public TodoItemDto updateTodoItem(@PathVariable("todoId") Long todoId, @RequestBody @Valid TodoItemDto toDoItemDto) {
         return toDoService.updateTodoItem(toDoItemDto);
     }
 

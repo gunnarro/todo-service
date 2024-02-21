@@ -127,12 +127,12 @@ public class TodoMapper {
                 .createdByUser(todoHistory.getCreatedByUser())
                 .lastModifiedByUser(todoHistory.getLastModifiedByUser())
                 .revisionType(TodoHistoryDto.RevisionTypesEnum.getByType(todoHistory.getRevisionType()).name())
-                .revisionId(todoHistory.getRevisionId())
+                .revisionNumber(todoHistory.getRevisionId().longValue())
                 .revisionEndId(todoHistory.getRevisionEndId())
                 .build();
     }
 
-    public static TodoHistoryDto toTodoHistoryDto(Todo todo, Integer revisionId, String revisionType) {
+    public static TodoHistoryDto toTodoHistoryDto(Todo todo, Long revisionNumber, String revisionType) {
         if (todo == null) {
             return null;
         }
@@ -147,11 +147,11 @@ public class TodoMapper {
                 .createdByUser(todo.getCreatedByUser())
                 .lastModifiedByUser(todo.getLastModifiedByUser())
                 .revisionType(revisionType)
-                .revisionId(revisionId)
+                .revisionNumber(revisionNumber)
                 .build();
     }
 
-    public static TodoItemHistoryDto toTodoItemHistoryDto(TodoItem todoItem, Integer revisionId, String revisionType) {
+    public static TodoItemHistoryDto toTodoItemHistoryDto(TodoItem todoItem, Long revisionNumber, String revisionType) {
         if (todoItem == null) {
             return null;
         }
@@ -169,7 +169,7 @@ public class TodoMapper {
                 .createdByUser(todoItem.getCreatedByUser())
                 .lastModifiedByUser(todoItem.getLastModifiedByUser())
                 .revisionType(revisionType)
-                .revisionId(revisionId)
+                .revisionNumber(revisionNumber)
                 .build();
     }
 }

@@ -35,7 +35,9 @@ import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -256,7 +258,7 @@ public class TodoControllerIT {
         Assertions.assertEquals(HttpStatus.OK, todoHistoryResponse.getStatusCode());
         assertEquals(3, todoHistoryResponse.getBody().size());
         assertEquals(todoGetResponse.getBody().getId(), todoHistoryResponse.getBody().get(0).getId());
-        assertEquals(null, todoHistoryResponse.getBody().get(0).getRevisionId());
+        assertEquals(null, todoHistoryResponse.getBody().get(0).getRevisionNumber());
         assertEquals("INSERT", todoHistoryResponse.getBody().get(0).getRevisionType());
         assertEquals("todo-crud-unit-test-all", todoHistoryResponse.getBody().get(0).getName());
         assertEquals("my todo list", todoHistoryResponse.getBody().get(0).getDescription());
@@ -303,7 +305,7 @@ public class TodoControllerIT {
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(3, response.getBody().size());
         assertEquals(545716833011225412L, response.getBody().get(0).getId());
-        assertEquals(null, response.getBody().get(0).getRevisionId());
+        assertEquals(null, response.getBody().get(0).getRevisionNumber());
         assertEquals("INSERT", response.getBody().get(0).getRevisionType());
         assertEquals("todo-crud-unit-test-all", response.getBody().get(0).getName());
         assertEquals("my todo list", response.getBody().get(0).getDescription());
@@ -343,6 +345,43 @@ public class TodoControllerIT {
 
     private String encodeBasic(String username, String password) {
         return "Basic " + Base64.encodeBase64String(String.format("%s:%s", username, password).getBytes());
+    }
+
+    List<TodoDto> createTodoTestData() {
+        Long b39TodoId = 2000L;
+        Long stvgt35TodoId = 3000L;
+        List<TodoItemDto> b39ToDoItemDtoList = List.of(createItem(b39TodoId, "tv", "Active"));
+        List<TodoItemDto> stv35ToDoItemDtoList = List.of(createItem(stvgt35TodoId, "fryser", "Active"), createItem(stvgt35TodoId, "stol", "Finished"));
+        return List.of(TodoDto.builder()
+                        .name("B39")
+                        .id(b39TodoId)
+                        .createdDate(LocalDateTime.now())
+                        .lastModifiedDate(LocalDateTime.now())
+                        .lastModifiedByUser("adm")
+                        .status("Active")
+                        .toDoItemDtoList(b39ToDoItemDtoList)
+                        .build(),
+                TodoDto.builder()
+                        .name("STV35")
+                        .id(stvgt35TodoId)
+                        .createdDate(LocalDateTime.now())
+                        .lastModifiedDate(LocalDateTime.now())
+                        .lastModifiedByUser("adm")
+                        .status("Finished")
+                        .toDoItemDtoList(stv35ToDoItemDtoList)
+                        .build());
+    }
+
+    TodoItemDto createItem(Long todoId, String name, String status) {
+        return TodoItemDto.builder()
+                .id(new Random().nextLong())
+                .todoId(todoId)
+                .name(name)
+                .description("stue")
+                .action("selges")
+                .status(status)
+                .assignedTo("guro")
+                .build();
     }
 }
 
