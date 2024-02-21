@@ -107,12 +107,7 @@ public class TodoController {
     })
     @PostMapping(path = "/todos", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
     public @ResponseBody TodoDto createTodo(@RequestBody @Valid TodoDto todoDto) {
-        TodoDto createdTodoDto = toDoService.addTodo(todoDto);
-        URI resourceUri = ServletUriComponentsBuilder
-                                .fromCurrentRequest().path("todos/{todoId}")
-                                .buildAndExpand(createdTodoDto.getId())
-                                .toUri();
-        return createdTodoDto;
+        return toDoService.addTodo(todoDto);
     }
 
     @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
