@@ -42,6 +42,7 @@
         <maven-enforcer-plugin.version>3.4.1</maven-enforcer-plugin.version>
         <zally-maven-plugin.version>1.1.1</zally-maven-plugin.version>
         <zally-ruleset-zalando.version>2.1.1</zally-ruleset-zalando.version>
+        <mvn-jib-plugin.version>3.4.0</mvn-jib-plugin.version>
     </properties>
 
     <!-- Run integration test only: 			            -->
@@ -341,6 +342,40 @@
     </reporting>
 
     <profiles>
+        <profile>
+            <id>build-docker</id>
+            <properties>
+                <maven.deploy.skip>true</maven.deploy.skip>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <!-- build and deploy docker image -->
+                        <!-- mvn compile jib:build -P build-docker -->
+                        <groupId>com.google.cloud.tools</groupId>
+                        <artifactId>jib-maven-plugin</artifactId>
+                        <version>${mvn-jib-plugin.version}</version>
+                        <configuration>
+                            <!-- By default, Jib uses the distro-less java image -->
+                            <from>
+                                <!-- <image>openjdk:11-jdk-slim</image> -->
+                                <image>openjdk@sha256:29eca747201257182d746a59ebc96751436ccec372274c0cf22229b44ea0073c
+                                </image>
+                            </from>
+                            <to>
+                                <!-- <image>gunnarroregistry.azurecr.io/${project.artifactId}</image> -->
+                                <!-- image path at hub.docker.com, see mvn settings.xml file -->
+                                <image>registry.hub.docker.com/gunnarro/todo-service</image>
+                                <tags>
+                                    <tag>${project.version}</tag>
+                                    <tag>latest</tag>
+                                </tags>
+                            </to>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
         <profile>
             <id>verify-rest-api</id>
             <build>
