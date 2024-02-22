@@ -1324,10 +1324,10 @@
         ],
         "type": "object",
         "properties": {
-          "revisionId": {
+          "revisionNumber": {
             "type": "integer",
             "description": "Unique identifier of the revision",
-            "format": "int32"
+            "format": "int64"
           },
           "revisionEndId": {
             "type": "integer",

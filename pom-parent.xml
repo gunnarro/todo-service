@@ -406,17 +406,18 @@
                                 <skipRule>DateTimePropertiesSuffixRule</skipRule>
                                 <skipRule>SecureAllEndpointsRule</skipRule>
                                 <skipRule>VersionInInfoSectionRule</skipRule>
+                                <skipRule>CommonFieldTypesRule</skipRule>
                             </skipRules>
-                            <ruleConfig>
+                            <ruleConfigs>
                                 <!-- NOTE: The rule elements' content can be written in JSON or YAML -->
                                 <PluralizeResourceNamesRule>
                                     whitelist:
                                     - current
                                     - self
                                 </PluralizeResourceNamesRule>
-                            </ruleConfig>
+                            </ruleConfigs>
                             <!-- Alternatively rules can be configured with configuration file -->
-                            <rulesConfigLocation>reference.conf</rulesConfigLocation>
+                            <!-- rulesConfigLocation>reference.conf</rulesConfigLocation -->
                             <!-- Write the result of the validation to file. Optional-->
                             <resultFile>target/todo-service-api_validation_result.yaml</resultFile>
                         </configuration>
