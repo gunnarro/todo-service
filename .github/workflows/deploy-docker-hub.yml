@@ -2,7 +2,7 @@ name: build and deploy image to docker.hub
 
 on:
   workflow_run:
-    workflows: [ Build and Verify ]
+    workflows: [build and analyse]
     types:
       - completed
 
