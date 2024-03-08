@@ -13,8 +13,8 @@ import java.util.Optional;
 @Repository
 public interface TodoRepository extends JpaRepository<Todo, Long>, RevisionRepository<Todo, Long, Long> {
 
-    @Query("SELECT t FROM Todo t WHERE t.createdByUser LIKE :user OR t.lastModifiedByUser LIKE :user")
-    List<Todo> getTodosForUser(@Param("user") String user);
+    @Query("SELECT t FROM Todo t WHERE t.createdByUser LIKE :userName OR t.lastModifiedByUser LIKE :userName")
+    List<Todo> getTodosByUserName(@Param("userName") String userName);
 
     @Query("SELECT t FROM Todo t WHERE t.id = :id")
     Optional<Todo> getTodoByUuid(@Param("id") Long id);

@@ -63,27 +63,15 @@ public class TodoController {
     }
 
     @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
-    @Operation(summary = "ping", description = "check if service is alive")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "a live",
-                    content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = TodoDto.class))})
-    })
-    @GetMapping(path = "/todos/ping", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
-    public ResponseEntity<String> ping() {
-        return ResponseEntity.ok("{ \"status\": \"alive\" }");
-    }
-
-    @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
     @Operation(summary = "Get todos created by user", description = "return todos created by user")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found todos for user",
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = TodoDto.class))})
     })
-    @GetMapping(path = "/todos/user/{user}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
-    public ResponseEntity<List<TodoDto>> getTodosForUser(@PathVariable("user") @NotNull String user) {
-        return ResponseEntity.ok(toDoService.getTodosForUser(user));
+    @GetMapping(path = "/todos/user/{userName}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
+    public ResponseEntity<List<TodoDto>> getTodosByUserName(@PathVariable("userName") @NotNull String userName) {
+        return ResponseEntity.ok(toDoService.getTodosByUserName(userName));
     }
 
     @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
@@ -145,7 +133,7 @@ public class TodoController {
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = TodoItemDto.class))})
     })
-    @PostMapping(path = "/todos/{todoId}/items", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
+    @PostMapping(path = "/todos/{todoId}/items", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_PROBLEM_JSON_VALUE)
     public TodoItemDto createTodoItem(@PathVariable("todoId") Long todoId, @RequestBody @Valid TodoItemDto todoItemDto) {
         TodoItemDto createdTodoItemDto = toDoService.addTodoItem(todoItemDto);
         URI resourceUri = ServletUriComponentsBuilder.fromCurrentRequest().path("/todoItemId}").buildAndExpand(createdTodoItemDto.getId()).toUri();

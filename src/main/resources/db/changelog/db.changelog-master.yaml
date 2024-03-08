@@ -4,8 +4,8 @@ databaseChangeLog:
       author: gunnarro
       changes:
         - createTable:
-            schemaName: masterdata
-            tableName: organization
+            schemaName: todo
+            tableName: todo
             columns:
               - column:
                   name: id
@@ -14,13 +14,18 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: orgNumber
-                  type: bigint
+                  name: name
+                  type: varchar(255)
                   constraints:
                     nullable: false
               - column:
-                  name: orgName
-                  type: datetime
+                  name: description
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: status
+                  type: varchar(255)
                   constraints:
                     nullable: false
               - column:
@@ -32,6 +37,18 @@ databaseChangeLog:
               - column:
                   name: lastModifiedDate
                   type: datetime
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_by_user
+                  type: varchar(255)
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_modified_by_user
+                  type: varchar(255)
                   defaultValueComputed: CURRENT_TIMESTAMP
                   constraints:
                     nullable: false

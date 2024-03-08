@@ -5,9 +5,9 @@
 # Todo Rest Service
 Service for create and handle todo lists.
 
-| Name      | Firm     | Mobile              | Email           |
-|-----------|----------|---------------------|-----------------|
-| developer | Company  | myname@company.com  | +47 00 00 00 00 |
+| Name      | Firm     | Mobile          | Email               |
+|-----------|----------|-----------------|---------------------|
+| developer | Company  | +47 00 00 00 00 | myname@company.com  |
 
  * Check out from git:
    * git clone git@github.com:<user>/todoservice.git
@@ -34,9 +34,6 @@ static {
    
 [rest service api](https://localhost:xxxx/api-docs/swagger-ui.html)
 [service documentation](https://github.com/gunnarro/microservice-archetype/wiki/documentation/todoservice)
-	 
-
-
 
 ```
 mvn clean verify -P verify-rest-api -U 
@@ -58,6 +55,41 @@ curl -v -H "Access-Control-Request-Method: GET" -H "Origin: http://localhost:300
 curl -X DELETE https://localhost:9999/todoservice/v1/todos/11eec40c-c279-03fd-b266-cc2f713aeb66 -H accept: */* 
 ```
 
+## Docker
+
+### Build with docker
+Create docker image:
+```
+docker run -d -p 9999:9999 --name todo-service todo-service:latest
+```
+where 'name' is the container name, if omitted, docker wil generate a container name.
+
+Push to docker hub:
+```
+docker push gunnarro/todo-service:latest
+```
+
+Run docker image:
+```
+docker run -d -p 9999:9999 --name todo-service todo-service:latest
+```
+or get docker image from docker hub (deployed by the project github action).
+By default, docker pull pulls images from Docker Hub.
+```
+docker pull gunnarro/todo-service:latest
+or 
+docker image pull docker.io/gunnarro/todo-service:latest
+then run
+docker run ....
+```
+
+### Build with jib
+NB! Must add DOCKER_HUB_USER and DOCKER_HUB_PWD to environment or add to the .bash_profile ( on ubuntu .profile ) file
+```
+mvn compile jib:build -P build-docker -Djib.to.auth.username=$DOCKER_HUB_USER -Djib.to.auth.password=$DOCKER_HUB_PWD
+```
+
+
 # Resources
 - [TSID](https://vladmihalcea.com/tsid-identifier-jpa-hibernate/)
 - [hibernate envers doc](https://docs.jboss.org/envers/docs/)
@@ -70,3 +102,6 @@ curl -X DELETE https://localhost:9999/todoservice/v1/todos/11eec40c-c279-03fd-b2
 - [reactstrap](https://www.npmjs.com/package/reactstrap)
 - [openapi-generator](https://github.com/OpenAPITools/openapi-generator)
 
+
+## Database
+[liquibase json format](https://docs.liquibase.com/concepts/changelogs/json-format.html)

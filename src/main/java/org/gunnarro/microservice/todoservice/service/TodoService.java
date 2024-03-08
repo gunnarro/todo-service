@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public interface TodoService {
 
-    List<TodoDto> getTodosForUser(String user);
+    List<TodoDto> getTodosByUserName(String userName);
 
     TodoDto getTodo(Long todoId);
 

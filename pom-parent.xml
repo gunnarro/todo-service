@@ -30,6 +30,7 @@
         <aspectjrt.version>1.9.21</aspectjrt.version>
         <apache.collections4.version>4.4</apache.collections4.version>
         <prometheus.version>1.12.2</prometheus.version>
+        <liquibase.version>4.26.0</liquibase.version>
         <!-- plugin version properties -->
         <mvn-release.plugin.version>3.0.1</mvn-release.plugin.version>
         <jacoco.plugin.version>0.8.11</jacoco.plugin.version>
@@ -101,6 +102,12 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+        </dependency>
+        <!-- database -->
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>${liquibase.version}</version>
         </dependency>
         <!-- For testing -->
         <dependency>
@@ -358,9 +365,8 @@
                         <configuration>
                             <!-- By default, Jib uses the distro-less java image -->
                             <from>
-                                <!-- <image>openjdk:11-jdk-slim</image> -->
-                                <image>openjdk@sha256:29eca747201257182d746a59ebc96751436ccec372274c0cf22229b44ea0073c
-                                </image>
+                                <image>openjdk:17-jdk-slim</image>
+                                <!-- image>openjdk@sha256:29eca747201257182d746a59ebc96751436ccec372274c0cf22229b44ea0073c</image -->
                             </from>
                             <to>
                                 <!-- <image>gunnarroregistry.azurecr.io/${project.artifactId}</image> -->

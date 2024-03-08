@@ -5,6 +5,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.ThreadContext;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -16,6 +19,8 @@ import java.util.UUID;
  * 
  */
 @Slf4j
+@Component
+@Order(Ordered.LOWEST_PRECEDENCE)
 public class HttpResponseHeaderFilter implements Filter {
     private static final String HTTP_HEADER_UUID = "UUID";
 

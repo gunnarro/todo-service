@@ -118,14 +118,19 @@ public class TodoControllerIT {
                 .toEntity(TodoDto.class);
     }
 
-    @Disabled
+   //@Disabled
     @Test
     void getTodoByRestTemplate() {
         HttpEntity<TodoDto> entity = new HttpEntity<>(null, requestHeaders);
-        ResponseEntity<TodoDto> response = testRestTemplate.exchange(createURLWithPort("https", "todos/543855162824364902"), HttpMethod.GET, entity, TodoDto.class);
+        ResponseEntity<TodoDto> response = testRestTemplate.exchange(createURLWithPort("https", "todos/547357066032030645"), HttpMethod.GET, entity, TodoDto.class);
         response.getHeaders().forEach((k, v) -> System.out.println("Response Header: " + k + "=" + v));
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(543855162824364902L, response.getBody().getId());
+        assertEquals(547357066032030645L, response.getBody().getId());
+        assertEquals("b39", response.getBody().getName());
+        assertEquals(1, response.getBody().getToDoItemDtoList().size());
+        assertEquals(547357066032030645L, response.getBody().getToDoItemDtoList().get(0).getTodoId());
+        assertEquals("trampoline", response.getBody().getToDoItemDtoList().get(0).getName());
+
         /*
         assertEquals("", response.getBody().getName());
         assertEquals("", response.getBody().getDescription());

@@ -43,8 +43,8 @@ public class TodoControllerTest {
                 .createdByUser("guro")
                 .lastModifiedByUser("guro-2")
                 .build();
-        when(todoServiceMock.getTodosForUser("guro")).thenReturn(List.of(todoDto));
-        ResponseEntity<List<TodoDto>> response = todoController.getTodosForUser("guro");
+        when(todoServiceMock.getTodosByUserName("guro")).thenReturn(List.of(todoDto));
+        ResponseEntity<List<TodoDto>> response = todoController.getTodosByUserName("guro");
         assertThat(response).isNotNull();
         Assertions.assertEquals(200, response.getStatusCode().value());
         Assertions.assertNotNull(response.getBody());

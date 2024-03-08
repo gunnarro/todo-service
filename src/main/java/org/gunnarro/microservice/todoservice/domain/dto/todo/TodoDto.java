@@ -19,8 +19,8 @@ import java.util.List;
 public class TodoDto {
     @Schema(description = "Unique identifier of the todo. Should not be set for new Todo.")
     private Long id;
-    @Schema(description = "React do not like long very well")
-    private String idStr;
+    @Schema(description = "Unique global identifier of the todo. Used by guest users to access the todo, i.e, unidentified users")
+    private String uuid;
     @Schema(description = "date when todo was created")
     private LocalDateTime createdDate;
     @Schema(description = "date when todo was last modified")

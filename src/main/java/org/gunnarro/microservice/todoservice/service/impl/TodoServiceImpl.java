@@ -38,8 +38,8 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
-    public List<TodoDto> getTodosForUser(String user) {
-        return TodoMapper.toTodoDtoList(todoRepository.getTodosForUser(user));
+    public List<TodoDto> getTodosByUserName(String userName) {
+        return TodoMapper.toTodoDtoList(todoRepository.getTodosByUserName(userName));
     }
 
     @Override
@@ -90,7 +90,10 @@ public class TodoServiceImpl implements TodoService {
     @Override
     public TodoItemDto addTodoItem(TodoItemDto todoItemDto) {
         try {
-            return TodoMapper.toTodoItemDto(todoItemRepository.save(TodoMapper.fromTodoItemDto(todoItemDto)));
+            log.debug("{}", todoItemDto);
+            TodoItem todoItem = TodoMapper.fromTodoItemDto(todoItemDto);
+            log.debug("{}", todoItem);
+            return TodoMapper.toTodoItemDto(todoItemRepository.save(todoItem));
         } catch (DataIntegrityViolationException ex) {
             throw new RestInputValidationException(ex.getMessage());
         } catch (Exception e) {

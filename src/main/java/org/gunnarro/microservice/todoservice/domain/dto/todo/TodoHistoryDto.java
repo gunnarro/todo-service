@@ -44,8 +44,6 @@ public class TodoHistoryDto implements Serializable {
     // end revision info
     @Schema(description = "Unique identifier of the todo. Should not be set for new Todo.")
     private Long id;
-    @Schema(description = "React do not like long very well")
-    private String idStr;
     @Schema(description = "date when todo was created")
     private LocalDateTime createdDate;
     @Schema(description = "date when todo was last modified")
