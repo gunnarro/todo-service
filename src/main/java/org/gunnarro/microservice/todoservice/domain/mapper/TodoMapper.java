@@ -25,7 +25,7 @@ public class TodoMapper {
             return null;
         }
         return TodoDto.builder()
-                .id(todo.getId())
+                .id(todo.getId().toString())
                 .name(todo.getName())
                 .status(todo.getStatus())
                 .description(todo.getDescription())
@@ -42,7 +42,7 @@ public class TodoMapper {
             return null;
         }
         return Todo.builder()
-                .id(toDoDto.getId())
+                .id(Long.valueOf(toDoDto.getId()))
                 .name(toDoDto.getName())
                 .status(toDoDto.getStatus())
                 .description(toDoDto.getDescription())
@@ -74,8 +74,8 @@ public class TodoMapper {
             return null;
         }
         return TodoItemDto.builder()
-                .id(todoItem.getId())
-                .todoId(todoItem.getFkTodoId())
+                .id(todoItem.getId().toString())
+                .todoId(todoItem.getFkTodoId().toString())
                 .name(todoItem.getName())
                 .description(todoItem.getDescription())
                 .status(todoItem.getStatus())
@@ -91,8 +91,8 @@ public class TodoMapper {
             return null;
         }
         return TodoItem.builder()
-                .id(todoItemDto.getId())
-                .fkTodoId(todoItemDto.getTodoId())
+                .id(Long.valueOf(todoItemDto.getId()))
+                .fkTodoId(Long.valueOf(todoItemDto.getTodoId()))
                 .name(todoItemDto.getName())
                 .description(todoItemDto.getDescription())
                 .status(todoItemDto.getStatus())
@@ -116,7 +116,7 @@ public class TodoMapper {
             return null;
         }
         return TodoHistoryDto.builder()
-                .id(todoHistory.getId())
+                .id(todoHistory.getId().toString())
                 .name(todoHistory.getName())
                 .status(todoHistory.getStatus())
                 .description(todoHistory.getDescription())
@@ -135,7 +135,7 @@ public class TodoMapper {
             return null;
         }
         return TodoHistoryDto.builder()
-                .id(todo.getId())
+                .id(todo.getId().toString())
                 .name(todo.getName())
                 .status(todo.getStatus())
                 .description(todo.getDescription())
@@ -153,9 +153,8 @@ public class TodoMapper {
             return null;
         }
         return TodoItemHistoryDto.builder()
-                .id(todoItem.getId())
-                .todoId(todoItem.getFkTodoId())
-                //  .idStr(todoItem.getId().toString())
+                .id(todoItem.getId().toString())
+                .todoId(todoItem.getFkTodoId().toString())
                 .name(todoItem.getName())
                 .status(todoItem.getStatus())
                 .action(todoItem.getAction())

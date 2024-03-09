@@ -31,7 +31,7 @@ public class TodoMapperTest {
         todo.setStatus("Active");
 
         TodoDto toDoDto = TodoMapper.toTodoDto(todo);
-        assertEquals(todo.getId(), toDoDto.getId());
+        assertEquals(todo.getId().toString(), toDoDto.getId());
         assertEquals(todo.getName(), toDoDto.getName());
         assertEquals(todo.getCreatedByUser(), toDoDto.getCreatedByUser());
         assertEquals(todo.getCreatedByUser(), toDoDto.getCreatedByUser());
@@ -45,7 +45,7 @@ public class TodoMapperTest {
     @Test
     void fromTodoDto() {
         TodoDto todoDto = TodoDto.builder()
-                .id(1234245234634745869L)
+                .id("1234245234634745869")
                 .name("guro")
                 .status("Active")
                 .description("my todo list")
@@ -56,7 +56,7 @@ public class TodoMapperTest {
                 .build();
 
         Todo toDo = TodoMapper.fromTodoDto(todoDto);
-        assertEquals(todoDto.getId(), toDo.getId());
+        assertEquals(todoDto.getId(), toDo.getId().toString());
         assertEquals(todoDto.getName(), toDo.getName());
         assertEquals(todoDto.getCreatedByUser(), toDo.getCreatedByUser());
         assertEquals(todoDto.getCreatedByUser(), toDo.getCreatedByUser());
@@ -79,8 +79,8 @@ public class TodoMapperTest {
                 .build();
 
         TodoItemDto todoItemDto = TodoMapper.toTodoItemDto(todoItem);
-        assertEquals(todoItem.getId(), todoItemDto.getId());
-        assertEquals(todoItem.getFkTodoId(), todoItemDto.getTodoId());
+        assertEquals(todoItem.getId().toString(), todoItemDto.getId());
+        assertEquals(todoItem.getFkTodoId().toString(), todoItemDto.getTodoId());
         assertEquals(todoItem.getName(), todoItemDto.getName());
         assertEquals(todoItem.getAction(), todoItemDto.getAction());
         assertEquals(todoItem.getAssignedTo(), todoItemDto.getAssignedTo());
@@ -93,8 +93,8 @@ public class TodoMapperTest {
     @Test
     void fromTodoItemDto() {
         TodoItemDto todoItemDto = TodoItemDto.builder()
-                .id(new Random().nextLong())
-                .todoId(new Random().nextLong())
+                .id(String.valueOf(new Random().nextLong()))
+                .todoId(String.valueOf(new Random().nextLong()))
                 .name("tv")
                 .status("Active")
                 .description("stue")
@@ -103,8 +103,8 @@ public class TodoMapperTest {
                 .build();
 
         TodoItem todoItem = TodoMapper.fromTodoItemDto(todoItemDto);
-        assertEquals(todoItemDto.getId(), todoItem.getId());
-        assertEquals(todoItemDto.getTodoId(), todoItem.getFkTodoId());
+        assertEquals(todoItemDto.getId(), todoItem.getId().toString());
+        assertEquals(todoItemDto.getTodoId(), todoItem.getFkTodoId().toString());
         assertEquals(todoItemDto.getName(), todoItem.getName());
         assertEquals(todoItemDto.getAction(), todoItem.getAction());
         assertEquals(todoItemDto.getAssignedTo(), todoItem.getAssignedTo());
@@ -131,7 +131,7 @@ public class TodoMapperTest {
         assertEquals(todoHistory.getRevisionEndId(), todoHistoryDtoList.get(0).getRevisionEndId());
         assertEquals(todoHistory.getRevisionId(), todoHistoryDtoList.get(0).getRevisionNumber().intValue());
         assertEquals(TodoHistoryDto.RevisionTypesEnum.getByType(todoHistory.getRevisionType()).name(), todoHistoryDtoList.get(0).getRevisionType());
-        assertEquals(todoHistory.getId(), todoHistoryDtoList.get(0).getId());
+        assertEquals(todoHistory.getId().toString(), todoHistoryDtoList.get(0).getId());
     }
 
 }

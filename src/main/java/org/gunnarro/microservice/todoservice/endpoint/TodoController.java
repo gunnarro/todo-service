@@ -55,11 +55,9 @@ public class TodoController {
 
     private final TodoService toDoService;
 
-  //  private final AuditService auditService;
-
     public TodoController(TodoService toDoService) {//}, AuditService auditService) {
         this.toDoService = toDoService;
-    //    this.auditService = auditService;
+        //    this.auditService = auditService;
     }
 
     @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
@@ -82,8 +80,8 @@ public class TodoController {
                             schema = @Schema(implementation = TodoDto.class))})
     })
     @GetMapping(path = "/todos/{todoId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
-    public TodoDto getTodoById(@PathVariable("todoId") Long todoId) {
-        return toDoService.getTodo(todoId);
+    public TodoDto getTodoById(@PathVariable("todoId") String todoId) {
+        return toDoService.getTodo(Long.valueOf(todoId));
     }
 
     @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
@@ -106,7 +104,7 @@ public class TodoController {
                             schema = @Schema(implementation = TodoDto.class))})
     })
     @PutMapping(path = "/todos/{todoId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public TodoDto updateTodo(@PathVariable("todoId") Long todoId, @RequestBody @Valid TodoDto todoDto) {
+    public TodoDto updateTodo(@PathVariable("todoId") String todoId, @RequestBody @Valid TodoDto todoDto) {
         return toDoService.updateTodo(todoDto);
     }
 
@@ -117,9 +115,9 @@ public class TodoController {
     })
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(path = "/todos/{todoId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
-    public void deleteTodo(@PathVariable("todoId") @NotNull Long todoId) {
+    public void deleteTodo(@PathVariable("todoId") @NotNull String todoId) {
         log.info("delete: todoId={} ", todoId);
-        toDoService.deleteTodo(todoId);
+        toDoService.deleteTodo(Long.valueOf(todoId));
     }
 
     // ---------------------------------------------------------
@@ -134,7 +132,7 @@ public class TodoController {
                             schema = @Schema(implementation = TodoItemDto.class))})
     })
     @PostMapping(path = "/todos/{todoId}/items", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_PROBLEM_JSON_VALUE)
-    public TodoItemDto createTodoItem(@PathVariable("todoId") Long todoId, @RequestBody @Valid TodoItemDto todoItemDto) {
+    public TodoItemDto createTodoItem(@PathVariable("todoId") String todoId, @RequestBody @Valid TodoItemDto todoItemDto) {
         TodoItemDto createdTodoItemDto = toDoService.addTodoItem(todoItemDto);
         URI resourceUri = ServletUriComponentsBuilder.fromCurrentRequest().path("/todoItemId}").buildAndExpand(createdTodoItemDto.getId()).toUri();
         return createdTodoItemDto;
@@ -148,7 +146,7 @@ public class TodoController {
                             schema = @Schema(implementation = TodoItemDto.class))})
     })
     @PutMapping(path = "/todos/{todoId}/items", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public TodoItemDto updateTodoItem(@PathVariable("todoId") Long todoId, @RequestBody @Valid TodoItemDto toDoItemDto) {
+    public TodoItemDto updateTodoItem(@PathVariable("todoId") String todoId, @RequestBody @Valid TodoItemDto toDoItemDto) {
         return toDoService.updateTodoItem(toDoItemDto);
     }
 
@@ -159,9 +157,9 @@ public class TodoController {
     })
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(path = "/todos/{todoId}/items/{todoItemId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void deleteTodoItem(@PathVariable("todoId") @NotNull Long todoId, @PathVariable("todoItemId") @NotNull Long todoItemId) {
+    public void deleteTodoItem(@PathVariable("todoId") @NotNull String todoId, @PathVariable("todoItemId") @NotNull String todoItemId) {
         log.info("delete: todoId={}, todoItemId={}", todoId, todoItemId);
-        toDoService.deleteTodoItem(todoId, todoItemId);
+        toDoService.deleteTodoItem(Long.valueOf(todoId), Long.valueOf(todoItemId));
     }
 
     // ---------------------------------------------------------
@@ -175,9 +173,8 @@ public class TodoController {
                             schema = @Schema(implementation = TodoHistoryDto.class))})
     })
     @GetMapping(path = "/todos/{todoId}/history", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
-    public List<TodoHistoryDto> getTodoHistoryById(@PathVariable("todoId") Long todoId) {
-        // return auditService.getTodoHistory(todoId);
-        return toDoService.getTodoHistory(todoId);
+    public List<TodoHistoryDto> getTodoHistoryById(@PathVariable("todoId") String todoId) {
+        return toDoService.getTodoHistory(Long.valueOf(todoId));
     }
 
 
@@ -189,9 +186,8 @@ public class TodoController {
                             schema = @Schema(implementation = TodoHistoryDto.class))})
     })
     @GetMapping(path = "/todos/{todoId}/items/{todoItemId}/history", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
-    public List<TodoItemHistoryDto> getTodoItemHistoryById(@PathVariable("todoId") Long todoId, @PathVariable("todoItemId") Long todoItemId) {
-        // return auditService.getTodoHistory(todoId);
-        return toDoService.getTodoItemHistory(todoId, todoItemId);
+    public List<TodoItemHistoryDto> getTodoItemHistoryById(@PathVariable("todoId") String todoId, @PathVariable("todoItemId") String todoItemId) {
+        return toDoService.getTodoItemHistory(Long.valueOf(todoId), Long.valueOf(todoItemId));
     }
 
 }

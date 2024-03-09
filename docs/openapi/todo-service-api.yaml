@@ -36,8 +36,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int64"
+              "type": "string"
             }
           }
         ],
@@ -137,8 +136,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int64"
+              "type": "string"
             }
           }
         ],
@@ -248,8 +246,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int64"
+              "type": "string"
             }
           }
         ],
@@ -344,8 +341,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int64"
+              "type": "string"
             }
           }
         ],
@@ -455,14 +451,13 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int64"
+              "type": "string"
             }
           }
         ],
         "requestBody": {
           "content": {
-            "*/*": {
+            "application/problem+json": {
               "schema": {
                 "$ref": "#/components/schemas/TodoItemDto"
               }
@@ -670,8 +665,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int64"
+              "type": "string"
             }
           },
           {
@@ -679,8 +673,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int64"
+              "type": "string"
             }
           }
         ],
@@ -782,8 +775,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int64"
+              "type": "string"
             }
           }
         ],
@@ -871,17 +863,17 @@
         }
       }
     },
-    "/todoservice/v1/todos/user/{user}": {
+    "/todoservice/v1/todos/user/{userName}": {
       "get": {
         "tags": [
           "Todo Service"
         ],
         "summary": "Get todos created by user",
         "description": "return todos created by user",
-        "operationId": "getTodosForUser",
+        "operationId": "getTodosByUserName",
         "parameters": [
           {
-            "name": "user",
+            "name": "userName",
             "in": "path",
             "required": true,
             "schema": {
@@ -892,98 +884,6 @@
         "responses": {
           "200": {
             "description": "Found todos for user",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TodoDto"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "You are not authorized to view the resource",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Accessing the resource you were trying to reach is forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Too Many Requests",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "503": {
-            "description": "Service Unavailable",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/todoservice/v1/todos/ping": {
-      "get": {
-        "tags": [
-          "Todo Service"
-        ],
-        "summary": "ping",
-        "description": "check if service is alive",
-        "operationId": "ping",
-        "responses": {
-          "200": {
-            "description": "a live",
             "content": {
               "application/json": {
                 "schema": {
@@ -1079,8 +979,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int64"
+              "type": "string"
             }
           },
           {
@@ -1088,8 +987,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int64"
+              "type": "string"
             }
           }
         ],
@@ -1180,13 +1078,13 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "integer",
-            "description": "Unique identifier of the todo. Should not be set for new Todo.",
-            "format": "int64"
-          },
-          "idStr": {
+            "pattern": "[0-9]{1,25}",
             "type": "string",
-            "description": "React do not like long very well"
+            "description": "Unique identifier of the todo. Should not be set for new Todo."
+          },
+          "uuid": {
+            "type": "string",
+            "description": "Unique global identifier of the todo. Used by guest users to access the todo, i.e, unidentified users"
           },
           "createdDate": {
             "type": "string",
@@ -1232,20 +1130,17 @@
         "description": "Holds information about a todo"
       },
       "TodoItemDto": {
-        "required": [
-          "todoId"
-        ],
         "type": "object",
         "properties": {
           "id": {
-            "type": "integer",
-            "description": "Global unique identifier of the todo item. Should not be set for new todo item.",
-            "format": "int64"
+            "pattern": "[0-9]{1,25}",
+            "type": "string",
+            "description": "Global unique identifier of the todo item. Should not be set for new todo item."
           },
           "todoId": {
-            "type": "integer",
-            "description": "Global unique identifier for the todo that this item belongs to.",
-            "format": "int64"
+            "pattern": "[0-9]{1,25}",
+            "type": "string",
+            "description": "Global unique identifier for the todo that this item belongs to."
           },
           "createdDate": {
             "type": "string",
@@ -1338,13 +1233,9 @@
             "description": "the revision type, update, delete"
           },
           "id": {
-            "type": "integer",
-            "description": "Unique identifier of the todo. Should not be set for new Todo.",
-            "format": "int64"
-          },
-          "idStr": {
+            "pattern": "[0-9]{1,25}",
             "type": "string",
-            "description": "React do not like long very well"
+            "description": "Unique identifier of the todo. Should not be set for new Todo."
           },
           "createdDate": {
             "type": "string",

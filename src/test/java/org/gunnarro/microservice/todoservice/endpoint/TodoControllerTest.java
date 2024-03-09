@@ -34,7 +34,7 @@ public class TodoControllerTest {
     @Test
     void getTodosForUser() {
         TodoDto todoDto = TodoDto.builder()
-                .id(new Random().nextLong())
+                .id(String.valueOf(new Random().nextLong()))
                 .name("guro")
                 .status("Active")
                 .description("my todo list")

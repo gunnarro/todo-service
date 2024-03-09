@@ -43,7 +43,8 @@ public class TodoHistoryDto implements Serializable {
     private String revisionType;
     // end revision info
     @Schema(description = "Unique identifier of the todo. Should not be set for new Todo.")
-    private Long id;
+    @Pattern(regexp = "[0-9]{1,25}", message = "can only contain integers, min 1 and max 25")
+    private String id;
     @Schema(description = "date when todo was created")
     private LocalDateTime createdDate;
     @Schema(description = "date when todo was last modified")

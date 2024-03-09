@@ -17,10 +17,11 @@ import java.time.LocalDateTime;
 @Builder
 public class TodoItemDto {
     @Schema(description = "Global unique identifier of the todo item. Should not be set for new todo item.")
-    private Long id;
+    @Pattern(regexp = "[0-9]{1,25}", message = "can only contain integers, min 1 and max 25")
+    private String id;
     @Schema(description = "Global unique identifier for the todo that this item belongs to.")
-    @NotNull
-    private Long todoId;
+    @Pattern(regexp = "[0-9]{1,25}", message = "can only contain integers, min 1 and max 25")
+    private String todoId;
     @Schema(description = "date when todo was created")
     private LocalDateTime createdDate;
     @Schema(description = "date when todo was last modified")

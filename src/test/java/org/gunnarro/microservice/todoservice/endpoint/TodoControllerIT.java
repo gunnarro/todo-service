@@ -359,7 +359,7 @@ public class TodoControllerIT {
         List<TodoItemDto> stv35ToDoItemDtoList = List.of(createItem(stvgt35TodoId, "fryser", "Active"), createItem(stvgt35TodoId, "stol", "Finished"));
         return List.of(TodoDto.builder()
                         .name("B39")
-                        .id(b39TodoId)
+                        .id(b39TodoId.toString())
                         .createdDate(LocalDateTime.now())
                         .lastModifiedDate(LocalDateTime.now())
                         .lastModifiedByUser("adm")
@@ -368,7 +368,7 @@ public class TodoControllerIT {
                         .build(),
                 TodoDto.builder()
                         .name("STV35")
-                        .id(stvgt35TodoId)
+                        .id(stvgt35TodoId.toString())
                         .createdDate(LocalDateTime.now())
                         .lastModifiedDate(LocalDateTime.now())
                         .lastModifiedByUser("adm")
@@ -379,8 +379,8 @@ public class TodoControllerIT {
 
     TodoItemDto createItem(Long todoId, String name, String status) {
         return TodoItemDto.builder()
-                .id(new Random().nextLong())
-                .todoId(todoId)
+                .id(String.valueOf(new Random().nextLong()))
+                .todoId(String.valueOf(todoId))
                 .name(name)
                 .description("stue")
                 .action("selges")

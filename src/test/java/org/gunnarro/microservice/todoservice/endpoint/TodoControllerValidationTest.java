@@ -63,7 +63,7 @@ public class TodoControllerValidationTest extends DefaultTestConfig {
     @Test
     void createTodoInputValidationOk() throws Exception {
         TodoDto todoDto = TodoDto.builder()
-                .id(new Random().nextLong())
+                .id(String.valueOf(new Random().nextLong()))
                 .name("todo-task-v22 test æøå")
                 .status("Active")
                 .description("my todo list")
@@ -81,7 +81,7 @@ public class TodoControllerValidationTest extends DefaultTestConfig {
     @Test
     void createTodoInputValidationError() throws Exception {
         TodoDto todoDto = TodoDto.builder()
-                .id(new Random().nextLong())
+                .id(String.valueOf(Math.abs(new Random().nextLong()))) // only positive numbers
                 .name("guro*#/")
                 .status("Active")
                 .description("my todo list")
@@ -101,7 +101,7 @@ public class TodoControllerValidationTest extends DefaultTestConfig {
     @Test
     void updateTodoInputValidationError() throws Exception {
         TodoDto todoDto = TodoDto.builder()
-                .id(new Random().nextLong())
+                .id(String.valueOf(Math.abs(new Random().nextLong()))) // only positive
                 .name("guro*#/&")
                 .status("Active")
                 .description("my todo list")
@@ -116,5 +116,25 @@ public class TodoControllerValidationTest extends DefaultTestConfig {
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.description", Is.is("Service Input Validation Error. name can only contain lower and uppercase alphabetic chars. Min 1 char, max 50 chars.")))
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    void updateTodoInvalidId() throws Exception {
+        TodoDto todoDto = TodoDto.builder()
+                .id("1234567-3")
+                .name("guro")
+                .status("Active")
+                .description("my todo list")
+                .createdDate(LocalDateTime.of(2024, 2, 1, 10, 0, 0))
+                .lastModifiedDate(LocalDateTime.of(2024, 2, 1, 10, 0, 0))
+                .createdByUser("guro")
+                .lastModifiedByUser("guro-2")
+                .build();
+        // invalid chars in id
+        mockMvc.perform(MockMvcRequestBuilders.put("/todoservice/v1/todos/" + todoDto.getId())
+                        .content(objectMapper.writeValueAsString(todoDto))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.description", Is.is("Service Input Validation Error. id can only contain integers, min 1 and max 25")));
     }
 }

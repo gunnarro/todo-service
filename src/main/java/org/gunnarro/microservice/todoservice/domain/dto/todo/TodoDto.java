@@ -18,7 +18,8 @@ import java.util.List;
 @Builder
 public class TodoDto {
     @Schema(description = "Unique identifier of the todo. Should not be set for new Todo.")
-    private Long id;
+    @Pattern(regexp = "[0-9]{1,25}", message = "can only contain integers, min 1 and max 25")
+    private String id;
     @Schema(description = "Unique global identifier of the todo. Used by guest users to access the todo, i.e, unidentified users")
     private String uuid;
     @Schema(description = "date when todo was created")
