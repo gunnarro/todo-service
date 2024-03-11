@@ -35,8 +35,8 @@ public class TodoItemDto {
     @Schema(description = "description of the task to do")
     @Pattern(regexp = "[\\w\\s\\dæÆøØåÅ_-]{1,100}", message = "Description can only contain lower and uppercase alphabetic chars. Min 1 char, max 100 chars.")
     private String description;
-    @Schema(description = "Status of todo, OPEN, IN_PROGRESS or FINISHED")
-    private String status;
+    @Schema(description = "Status of todo, OPEN, IN_PROGRESS, ON_HOLD, DONE and CANCELLED")
+    private TodoItemStatus status;
     @Schema(description = "The action that should be done for this item")
     private String action;
     @Schema(description = "the person that is responsible to follow up and fulfill this task")

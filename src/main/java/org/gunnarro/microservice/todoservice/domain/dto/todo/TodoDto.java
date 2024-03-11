@@ -35,7 +35,7 @@ public class TodoDto {
     @Pattern(regexp = "[\\w\\s\\dæÆøØåÅ_-]{1,50}", message = "can only contain lower and uppercase alphabetic chars. Min 1 char, max 50 chars.")
     private String name;
     @Schema(description = "Status of todo, OPEN, IN_PROGRESS, ON_HOLD, DONE and CANCELLED")
-    @NotNull
+   // @Pattern(regexp = "\\W*(OPEN|IN_PROGRESS|ON_HOLD|DONE|CANCELLED)\\W*")
     private TodoStatus status;
     @Schema(description = "description of this to do task")
     @Pattern(regexp = "[\\w\\s\\dæÆøØåÅ_-]{1,100}", message = "Description can only contain lower and uppercase alphabetic chars. Min 1 char, max 100 chars.")

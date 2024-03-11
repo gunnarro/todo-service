@@ -1,9 +1,6 @@
 package org.gunnarro.microservice.todoservice.domain.mapper;
 
-import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoDto;
-import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoHistoryDto;
-import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoItemDto;
-import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoStatus;
+import org.gunnarro.microservice.todoservice.domain.dto.todo.*;
 import org.gunnarro.microservice.todoservice.repository.entity.Todo;
 import org.gunnarro.microservice.todoservice.repository.entity.TodoHistory;
 import org.gunnarro.microservice.todoservice.repository.entity.TodoItem;
@@ -73,7 +70,7 @@ public class TodoMapperTest {
                 .id(100L)
                 .fkTodoId(10L)
                 .name("tv")
-                .status("Active")
+                .status(TodoItemStatus.IN_PROGRESS.name())
                 .description("stue")
                 .action("selges")
                 .assignedTo("guro")
@@ -86,7 +83,7 @@ public class TodoMapperTest {
         assertEquals(todoItem.getAction(), todoItemDto.getAction());
         assertEquals(todoItem.getAssignedTo(), todoItemDto.getAssignedTo());
         assertEquals(todoItem.getDescription(), todoItemDto.getDescription());
-        assertEquals(todoItem.getStatus(), todoItemDto.getStatus());
+        assertEquals(todoItem.getStatus(), todoItemDto.getStatus().name());
         assertEquals(todoItem.getCreatedByUser(), todoItemDto.getCreatedByUser());
         assertEquals(todoItem.getLastModifiedByUser(), todoItemDto.getLastModifiedByUser());
     }
@@ -97,7 +94,7 @@ public class TodoMapperTest {
                 .id(String.valueOf(new Random().nextLong()))
                 .todoId(String.valueOf(new Random().nextLong()))
                 .name("tv")
-                .status("Active")
+                .status(TodoItemStatus.IN_PROGRESS)
                 .description("stue")
                 .action("selges")
                 .assignedTo("guro")
@@ -110,7 +107,7 @@ public class TodoMapperTest {
         assertEquals(todoItemDto.getAction(), todoItem.getAction());
         assertEquals(todoItemDto.getAssignedTo(), todoItem.getAssignedTo());
         assertEquals(todoItemDto.getDescription(), todoItem.getDescription());
-        assertEquals(todoItemDto.getStatus(), todoItem.getStatus());
+        assertEquals(todoItemDto.getStatus().name(), todoItem.getStatus());
         assertEquals(todoItemDto.getCreatedByUser(), todoItem.getCreatedByUser());
         assertEquals(todoItemDto.getLastModifiedByUser(), todoItem.getLastModifiedByUser());
     }

@@ -202,7 +202,7 @@ public class TodoControllerIT {
                 .todoId(todoPostResponse.getBody().getId())
                 .name("stuebord")
                 .description("stue")
-                .status("Open")
+                .status(TodoItemStatus.OPEN)
                 .assignedTo("guro")
                 .createdByUser("guro")
                 .lastModifiedByUser("guro")
@@ -216,7 +216,7 @@ public class TodoControllerIT {
                 .todoId(todoPostResponse.getBody().getId())
                 .name("kjøleskap")
                 .description("stue")
-                .status("Open")
+                .status(TodoItemStatus.OPEN)
                 .assignedTo("guro")
                 .createdByUser("guro")
                 .lastModifiedByUser("guro")
@@ -352,8 +352,8 @@ public class TodoControllerIT {
     List<TodoDto> createTodoTestData() {
         Long b39TodoId = 2000L;
         Long stvgt35TodoId = 3000L;
-        List<TodoItemDto> b39ToDoItemDtoList = List.of(createItem(b39TodoId, "tv", "Active"));
-        List<TodoItemDto> stv35ToDoItemDtoList = List.of(createItem(stvgt35TodoId, "fryser", "Active"), createItem(stvgt35TodoId, "stol", "Finished"));
+        List<TodoItemDto> b39ToDoItemDtoList = List.of(createItem(b39TodoId, "tv", TodoItemStatus.IN_PROGRESS));
+        List<TodoItemDto> stv35ToDoItemDtoList = List.of(createItem(stvgt35TodoId, "fryser", TodoItemStatus.IN_PROGRESS), createItem(stvgt35TodoId, "stol", TodoItemStatus.DONE));
         return List.of(TodoDto.builder()
                         .name("B39")
                         .id(b39TodoId.toString())
@@ -374,7 +374,7 @@ public class TodoControllerIT {
                         .build());
     }
 
-    TodoItemDto createItem(Long todoId, String name, String status) {
+    TodoItemDto createItem(Long todoId, String name, TodoItemStatus status) {
         return TodoItemDto.builder()
                 .id(String.valueOf(new Random().nextLong()))
                 .todoId(String.valueOf(todoId))
