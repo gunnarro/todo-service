@@ -1,0 +1,15 @@
+package org.gunnarro.microservice.todoservice.domain.dto.todo;
+
+public enum TaskAction {
+    TO_BE_SOLD("toBeSold"), GIVES_AWAY("givesAway"), THROW_AWAY("throwAway"), OWNED_BY("ownedBy"), GIVEN_TO("givenTo"), STAY_AS_IS("stayAsIs");
+
+    private final String label;
+
+    TaskAction(String label) {
+        this.label = label;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+}

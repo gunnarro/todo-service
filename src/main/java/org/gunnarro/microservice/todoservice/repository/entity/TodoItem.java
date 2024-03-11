@@ -43,4 +43,6 @@ public class TodoItem extends BaseEntity {
     @Column(name = "FK_TODO_ID", nullable = false)
     private Long fkTodoId;
 
+    @Column(name = "PRIORITY")
+    private Integer priority;
 }

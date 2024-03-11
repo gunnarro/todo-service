@@ -380,7 +380,7 @@ public class TodoControllerIT {
                 .todoId(String.valueOf(todoId))
                 .name(name)
                 .description("stue")
-                .action("selges")
+                .action(TaskAction.TO_BE_SOLD)
                 .status(status)
                 .assignedTo("guro")
                 .build();

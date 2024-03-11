@@ -76,10 +76,11 @@ public class TodoMapper {
                 .name(todoItem.getName())
                 .description(todoItem.getDescription())
                 .status(TodoItemStatus.valueOf(todoItem.getStatus()))
-                .action(todoItem.getAction())
+                .action(TaskAction.valueOf(todoItem.getAction()))
                 .assignedTo(todoItem.getAssignedTo())
                 .createdByUser(todoItem.getCreatedByUser())
                 .lastModifiedByUser(todoItem.getLastModifiedByUser())
+                .priority(todoItem.getPriority())
                 .build();
     }
 
@@ -93,10 +94,11 @@ public class TodoMapper {
                 .name(todoItemDto.getName())
                 .description(todoItemDto.getDescription())
                 .status(todoItemDto.getStatus().name())
-                .action(todoItemDto.getAction())
+                .action(todoItemDto.getAction().name())
                 .assignedTo(todoItemDto.getAssignedTo())
                 .createdByUser(todoItemDto.getCreatedByUser())
                 .lastModifiedByUser(todoItemDto.getLastModifiedByUser())
+                .priority(todoItemDto.getPriority())
                 .build();
     }
 
@@ -161,6 +163,7 @@ public class TodoMapper {
                 .lastModifiedDate(todoItem.getLastModifiedDate())
                 .createdByUser(todoItem.getCreatedByUser())
                 .lastModifiedByUser(todoItem.getLastModifiedByUser())
+                .priority(todoItem.getPriority())
                 .revisionType(revisionType)
                 .revisionNumber(revisionNumber)
                 .build();

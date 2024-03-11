@@ -72,7 +72,7 @@ public class TodoMapperTest {
                 .name("tv")
                 .status(TodoItemStatus.IN_PROGRESS.name())
                 .description("stue")
-                .action("selges")
+                .action(TaskAction.TO_BE_SOLD.name())
                 .assignedTo("guro")
                 .build();
 
@@ -80,7 +80,7 @@ public class TodoMapperTest {
         assertEquals(todoItem.getId().toString(), todoItemDto.getId());
         assertEquals(todoItem.getFkTodoId().toString(), todoItemDto.getTodoId());
         assertEquals(todoItem.getName(), todoItemDto.getName());
-        assertEquals(todoItem.getAction(), todoItemDto.getAction());
+        assertEquals(todoItem.getAction(), todoItemDto.getAction().name());
         assertEquals(todoItem.getAssignedTo(), todoItemDto.getAssignedTo());
         assertEquals(todoItem.getDescription(), todoItemDto.getDescription());
         assertEquals(todoItem.getStatus(), todoItemDto.getStatus().name());
@@ -96,7 +96,7 @@ public class TodoMapperTest {
                 .name("tv")
                 .status(TodoItemStatus.IN_PROGRESS)
                 .description("stue")
-                .action("selges")
+                .action(TaskAction.TO_BE_SOLD)
                 .assignedTo("guro")
                 .build();
 
@@ -104,7 +104,7 @@ public class TodoMapperTest {
         assertEquals(todoItemDto.getId(), todoItem.getId().toString());
         assertEquals(todoItemDto.getTodoId(), todoItem.getFkTodoId().toString());
         assertEquals(todoItemDto.getName(), todoItem.getName());
-        assertEquals(todoItemDto.getAction(), todoItem.getAction());
+        assertEquals(todoItemDto.getAction().name(), todoItem.getAction());
         assertEquals(todoItemDto.getAssignedTo(), todoItem.getAssignedTo());
         assertEquals(todoItemDto.getDescription(), todoItem.getDescription());
         assertEquals(todoItemDto.getStatus().name(), todoItem.getStatus());
