@@ -8,10 +8,7 @@ import org.apache.hc.client5.http.ssl.SSLConnectionSocketFactory;
 import org.apache.hc.client5.http.ssl.TrustSelfSignedStrategy;
 import org.apache.hc.client5.http.utils.Base64;
 import org.apache.hc.core5.ssl.SSLContextBuilder;
-import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoDto;
-import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoHistoryDto;
-import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoItemDto;
-import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoItemHistoryDto;
+import org.gunnarro.microservice.todoservice.domain.dto.todo.*;
 import org.gunnarro.microservice.todoservice.exception.NotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -127,9 +124,9 @@ public class TodoControllerIT {
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(547357066032030645L, response.getBody().getId());
         assertEquals("b39", response.getBody().getName());
-        assertEquals(1, response.getBody().getToDoItemDtoList().size());
-        assertEquals(547357066032030645L, response.getBody().getToDoItemDtoList().get(0).getTodoId());
-        assertEquals("trampoline", response.getBody().getToDoItemDtoList().get(0).getName());
+        assertEquals(1, response.getBody().getTodoItemDtoList().size());
+        assertEquals(547357066032030645L, response.getBody().getTodoItemDtoList().get(0).getTodoId());
+        assertEquals("trampoline", response.getBody().getTodoItemDtoList().get(0).getName());
 
         /*
         assertEquals("", response.getBody().getName());
@@ -146,7 +143,7 @@ public class TodoControllerIT {
     void todoAndItemsCrud() {
         TodoDto todoDto = TodoDto.builder()
                 .name("todo-crud-unit-test-all")
-                .status("Open")
+                .status(TodoStatus.OPEN)
                 .description("my todo list")
                 //       .createdDate(LocalDateTime.of(2024, 2, 1, 10, 0, 0))
                 //       .lastModifiedDate(LocalDateTime.of(2024, 2, 1, 10, 0, 0))
@@ -179,22 +176,22 @@ public class TodoControllerIT {
         assertNotNull(todoPostResponse.getBody().getId());
         assertEquals(todoDto.getName(), todoPostResponse.getBody().getName());
         assertEquals(todoDto.getDescription(), todoPostResponse.getBody().getDescription());
-        assertEquals(todoDto.getStatus(), todoPostResponse.getBody().getStatus());
+        assertEquals(todoDto.getStatus().name(), todoPostResponse.getBody().getStatus());
         assertEquals(todoDto.getCreatedByUser(), todoPostResponse.getBody().getCreatedByUser());
         assertEquals(todoDto.getLastModifiedByUser(), todoPostResponse.getBody().getLastModifiedByUser());
         assertEquals(todoDto.getCreatedDate(), todoPostResponse.getBody().getCreatedDate());
         assertEquals(todoDto.getLastModifiedByUser(), todoPostResponse.getBody().getLastModifiedByUser());
-        assertEquals(0, todoPostResponse.getBody().getToDoItemDtoList().size());
+        assertEquals(0, todoPostResponse.getBody().getTodoItemDtoList().size());
 
         // update todo status
         TodoDto updateTodoDto = TodoDto.builder()
                 .id(todoPostResponse.getBody().getId())
                 .name(todoPostResponse.getBody().getName())
                 .description(todoPostResponse.getBody().getDescription())
-                .status("inprogress")
+                .status(TodoStatus.IN_PROGRESS)
                 .createdByUser(todoPostResponse.getBody().getCreatedByUser())
                 .lastModifiedByUser("unittest")
-                .toDoItemDtoList(todoPostResponse.getBody().getToDoItemDtoList())
+                .todoItemDtoList(todoPostResponse.getBody().getTodoItemDtoList())
                 .build();
         HttpEntity<TodoDto> todoUpdateEntity = new HttpEntity<>(updateTodoDto, requestHeaders);
         ResponseEntity<TodoDto> todoPutResponse = testRestTemplate.exchange(createURLWithPort("https", "todos/" + updateTodoDto.getId()), HttpMethod.PUT, todoUpdateEntity, TodoDto.class);
@@ -236,19 +233,19 @@ public class TodoControllerIT {
         todoGetResponse.getHeaders().forEach((k, v) -> System.out.println("Response Header: " + k + "=" + v));
         Assertions.assertEquals(HttpStatus.OK, todoGetResponse.getStatusCode());
         assertEquals(todoPostResponse.getBody().getId(), todoGetResponse.getBody().getId());
-        assertEquals(2, todoGetResponse.getBody().getToDoItemDtoList().size());
-        assertEquals(todoGetResponse.getBody().getId(), todoGetResponse.getBody().getToDoItemDtoList().get(0).getTodoId());
-        assertNotNull(todoGetResponse.getBody().getToDoItemDtoList().get(0).getId());
+        assertEquals(2, todoGetResponse.getBody().getTodoItemDtoList().size());
+        assertEquals(todoGetResponse.getBody().getId(), todoGetResponse.getBody().getTodoItemDtoList().get(0).getTodoId());
+        assertNotNull(todoGetResponse.getBody().getTodoItemDtoList().get(0).getId());
 
         // delete toto item
         HttpEntity<TodoItemDto> todoItemDeleteEntity = new HttpEntity<>(null, requestHeaders);
-        ResponseEntity<TodoDto> todoItemDeleteResponse = testRestTemplate.exchange(createURLWithPort("https", "todos/" + todoGetResponse.getBody().getId() + "/items/" + todoGetResponse.getBody().getToDoItemDtoList().get(0).getId()), HttpMethod.DELETE, todoItemDeleteEntity, TodoDto.class);
+        ResponseEntity<TodoDto> todoItemDeleteResponse = testRestTemplate.exchange(createURLWithPort("https", "todos/" + todoGetResponse.getBody().getId() + "/items/" + todoGetResponse.getBody().getTodoItemDtoList().get(0).getId()), HttpMethod.DELETE, todoItemDeleteEntity, TodoDto.class);
         assertEquals("204 NO_CONTENT", todoItemDeleteResponse.getStatusCode().toString());
 
         // check that item is deleted
         todoGetResponse = testRestTemplate.exchange(createURLWithPort("https", "todos/" + todoGetResponse.getBody().getId()), HttpMethod.GET, entity, TodoDto.class);
         Assertions.assertEquals(HttpStatus.OK, todoGetResponse.getStatusCode());
-        assertEquals(1, todoGetResponse.getBody().getToDoItemDtoList().size());
+        assertEquals(1, todoGetResponse.getBody().getTodoItemDtoList().size());
 
         // finally, clean up, delete created todo
         HttpEntity<TodoDto> todoDeleteEntity = new HttpEntity<>(null, requestHeaders);
@@ -363,8 +360,8 @@ public class TodoControllerIT {
                         .createdDate(LocalDateTime.now())
                         .lastModifiedDate(LocalDateTime.now())
                         .lastModifiedByUser("adm")
-                        .status("Active")
-                        .toDoItemDtoList(b39ToDoItemDtoList)
+                        .status(TodoStatus.IN_PROGRESS)
+                        .todoItemDtoList(b39ToDoItemDtoList)
                         .build(),
                 TodoDto.builder()
                         .name("STV35")
@@ -372,8 +369,8 @@ public class TodoControllerIT {
                         .createdDate(LocalDateTime.now())
                         .lastModifiedDate(LocalDateTime.now())
                         .lastModifiedByUser("adm")
-                        .status("Finished")
-                        .toDoItemDtoList(stv35ToDoItemDtoList)
+                        .status(TodoStatus.IN_PROGRESS)
+                        .todoItemDtoList(stv35ToDoItemDtoList)
                         .build());
     }
 

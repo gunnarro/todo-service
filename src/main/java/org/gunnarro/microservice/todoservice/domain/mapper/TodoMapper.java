@@ -1,9 +1,6 @@
 package org.gunnarro.microservice.todoservice.domain.mapper;
 
-import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoDto;
-import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoHistoryDto;
-import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoItemDto;
-import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoItemHistoryDto;
+import org.gunnarro.microservice.todoservice.domain.dto.todo.*;
 import org.gunnarro.microservice.todoservice.repository.entity.Todo;
 import org.gunnarro.microservice.todoservice.repository.entity.TodoHistory;
 import org.gunnarro.microservice.todoservice.repository.entity.TodoItem;
@@ -27,13 +24,13 @@ public class TodoMapper {
         return TodoDto.builder()
                 .id(todo.getId().toString())
                 .name(todo.getName())
-                .status(todo.getStatus())
+                .status(TodoStatus.valueOf(todo.getStatus()))
                 .description(todo.getDescription())
                 .createdDate(todo.getCreatedDate())
                 .lastModifiedDate(todo.getLastModifiedDate())
                 .createdByUser(todo.getCreatedByUser())
                 .lastModifiedByUser(todo.getLastModifiedByUser())
-                .toDoItemDtoList(todoItemDtoList(todo.getTodoItemList()))
+                .todoItemDtoList(todoItemDtoList(todo.getTodoItemList()))
                 .build();
     }
 
@@ -42,9 +39,9 @@ public class TodoMapper {
             return null;
         }
         return Todo.builder()
-                .id(Long.valueOf(toDoDto.getId()))
+                .id(toDoDto.getId() != null ? Long.valueOf(toDoDto.getId()) : null)
                 .name(toDoDto.getName())
-                .status(toDoDto.getStatus())
+                .status(toDoDto.getStatus().name())
                 .description(toDoDto.getDescription())
                 .createdDate(toDoDto.getCreatedDate())
                 .lastModifiedDate(toDoDto.getLastModifiedDate())
@@ -57,7 +54,7 @@ public class TodoMapper {
     public static void updateTodo(Todo todo, TodoDto toDoDto) {
         todo.setName(toDoDto.getName());
         todo.setDescription(toDoDto.getDescription());
-        todo.setStatus(toDoDto.getStatus());
+        todo.setStatus(toDoDto.getStatus().name());
         todo.setLastModifiedByUser(toDoDto.getLastModifiedByUser());
     }
 
@@ -91,7 +88,7 @@ public class TodoMapper {
             return null;
         }
         return TodoItem.builder()
-                .id(Long.valueOf(todoItemDto.getId()))
+                .id(todoItemDto.getId() != null ? Long.valueOf(todoItemDto.getId()) : null)
                 .fkTodoId(Long.valueOf(todoItemDto.getTodoId()))
                 .name(todoItemDto.getName())
                 .description(todoItemDto.getDescription())

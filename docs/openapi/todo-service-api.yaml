@@ -1119,7 +1119,7 @@
             "type": "string",
             "description": "description of this to do task"
           },
-          "toDoItemDtoList": {
+          "todoItemDtoList": {
             "type": "array",
             "description": "List of task/item/action this todo list contains",
             "items": {

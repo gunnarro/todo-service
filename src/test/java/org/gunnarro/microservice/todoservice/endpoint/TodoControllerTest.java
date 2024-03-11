@@ -1,6 +1,7 @@
 package org.gunnarro.microservice.todoservice.endpoint;
 
 import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoDto;
+import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoStatus;
 import org.gunnarro.microservice.todoservice.service.TodoService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,7 +37,7 @@ public class TodoControllerTest {
         TodoDto todoDto = TodoDto.builder()
                 .id(String.valueOf(new Random().nextLong()))
                 .name("guro")
-                .status("Active")
+                .status(TodoStatus.IN_PROGRESS)
                 .description("my todo list")
                 .createdDate(LocalDateTime.of(2024, 2, 1, 10, 0, 0))
                 .lastModifiedDate(LocalDateTime.of(2024, 2, 1, 10, 0, 0))

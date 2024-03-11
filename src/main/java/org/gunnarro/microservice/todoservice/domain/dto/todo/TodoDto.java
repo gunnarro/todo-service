@@ -34,12 +34,12 @@ public class TodoDto {
     @Schema(description = "Name of todo")
     @Pattern(regexp = "[\\w\\s\\dæÆøØåÅ_-]{1,50}", message = "can only contain lower and uppercase alphabetic chars. Min 1 char, max 50 chars.")
     private String name;
-    @Schema(description = "Status of todo, OPEN, IN_PROGRESS or FINISHED")
+    @Schema(description = "Status of todo, OPEN, IN_PROGRESS, ON_HOLD, DONE and CANCELLED")
     @NotNull
-    private String status;
+    private TodoStatus status;
     @Schema(description = "description of this to do task")
     @Pattern(regexp = "[\\w\\s\\dæÆøØåÅ_-]{1,100}", message = "Description can only contain lower and uppercase alphabetic chars. Min 1 char, max 100 chars.")
     private String description;
     @Schema(description = "List of task/item/action this todo list contains")
-    private List<TodoItemDto> toDoItemDtoList;
+    private List<TodoItemDto> todoItemDtoList;
 }

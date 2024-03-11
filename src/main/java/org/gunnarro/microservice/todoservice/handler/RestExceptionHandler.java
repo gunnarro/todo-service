@@ -72,7 +72,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 .build();
 
         logException(exception, error);
-
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
@@ -107,10 +106,16 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
-    //    TODO hvorfor håndteres denne med handleNotFoundException?
     @ExceptionHandler(HttpClientErrorException.class)
     public ResponseEntity<ErrorResponse> handleHttpClientErrorException(final Exception exception) {
-        return handleNotFoundException(exception);
+        HttpClientErrorException ex = (HttpClientErrorException) exception;
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .httpStatus(ex.getStatusCode().value())
+                .httpMessage(ex.getStatusText())
+                .description(ex.getMessage())
+                .build();
+        logException(exception, errorResponse);
+        return new ResponseEntity<>(errorResponse, HttpStatus.valueOf(errorResponse.getHttpStatus()));
     }
 
     @ExceptionHandler(NotFoundException.class)

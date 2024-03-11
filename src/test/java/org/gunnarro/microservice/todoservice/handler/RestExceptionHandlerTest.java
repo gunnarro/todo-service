@@ -53,9 +53,9 @@ class RestExceptionHandlerTest {
     void handleHttpClientErrorException() {
         RestExceptionHandler handler = new RestExceptionHandler();
         ResponseEntity<ErrorResponse> errorResponse = handler.handleHttpClientErrorException(new HttpClientErrorException(HttpStatus.BAD_REQUEST));
-        Assertions.assertEquals(404, errorResponse.getStatusCode().value());
-        Assertions.assertEquals(404, errorResponse.getBody().getHttpStatus());
-        Assertions.assertEquals("Not Found", errorResponse.getBody().getHttpMessage());
+        Assertions.assertEquals(400, errorResponse.getStatusCode().value());
+        Assertions.assertEquals(400, errorResponse.getBody().getHttpStatus());
+        Assertions.assertEquals("BAD_REQUEST", errorResponse.getBody().getHttpMessage());
         Assertions.assertEquals("400 BAD_REQUEST", errorResponse.getBody().getDescription());
         Assertions.assertNull(errorResponse.getBody().getErrorCode());
     }

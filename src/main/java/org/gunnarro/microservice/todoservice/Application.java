@@ -6,7 +6,9 @@ import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
 import org.gunnarro.microservice.todoservice.exception.ApplicationException;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration;
 import org.springframework.boot.context.ApplicationPidFileWriter;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -26,10 +28,11 @@ import java.util.Arrays;
  * Swagger url:
  * <a href="https://localhost:9999/swagger-ui/index.html">https://localhost:9999/swagger-ui/index.html</a>
  */
+@Slf4j
 @SpringBootApplication
 @ServletComponentScan
 @EnableEncryptableProperties
-@Slf4j
+@EnableAutoConfiguration(exclude= LiquibaseAutoConfiguration.class)
 public class Application {
     private static final String DASHED_LINE = "-------------------------------------------------------------------------";
 

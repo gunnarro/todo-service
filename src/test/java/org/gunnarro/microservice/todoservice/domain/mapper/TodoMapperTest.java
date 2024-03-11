@@ -3,6 +3,7 @@ package org.gunnarro.microservice.todoservice.domain.mapper;
 import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoDto;
 import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoHistoryDto;
 import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoItemDto;
+import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoStatus;
 import org.gunnarro.microservice.todoservice.repository.entity.Todo;
 import org.gunnarro.microservice.todoservice.repository.entity.TodoHistory;
 import org.gunnarro.microservice.todoservice.repository.entity.TodoItem;
@@ -28,7 +29,7 @@ public class TodoMapperTest {
         todo.setId(23L);
         todo.setName("b39");
         todo.setDescription("my todo list");
-        todo.setStatus("Active");
+        todo.setStatus(TodoStatus.IN_PROGRESS.name());
 
         TodoDto toDoDto = TodoMapper.toTodoDto(todo);
         assertEquals(todo.getId().toString(), toDoDto.getId());
@@ -38,8 +39,8 @@ public class TodoMapperTest {
         assertEquals(todo.getLastModifiedByUser(), toDoDto.getLastModifiedByUser());
         assertEquals(todo.getLastModifiedDate(), toDoDto.getLastModifiedDate());
         assertEquals(todo.getDescription(), toDoDto.getDescription());
-        assertEquals(todo.getStatus(), toDoDto.getStatus());
-        assertEquals(0, toDoDto.getToDoItemDtoList().size());
+        assertEquals(todo.getStatus(), toDoDto.getStatus().name());
+        assertEquals(0, toDoDto.getTodoItemDtoList().size());
     }
 
     @Test
@@ -47,7 +48,7 @@ public class TodoMapperTest {
         TodoDto todoDto = TodoDto.builder()
                 .id("1234245234634745869")
                 .name("guro")
-                .status("Active")
+                .status(TodoStatus.IN_PROGRESS)
                 .description("my todo list")
                 .createdDate(LocalDateTime.of(2024, 2, 1, 10, 0, 0))
                 .lastModifiedDate(LocalDateTime.of(2024, 2, 1, 10, 0, 0))
@@ -63,7 +64,7 @@ public class TodoMapperTest {
         assertEquals(todoDto.getLastModifiedByUser(), toDo.getLastModifiedByUser());
         assertEquals(todoDto.getLastModifiedDate(), toDo.getLastModifiedDate());
         assertEquals(todoDto.getDescription(), toDo.getDescription());
-        assertEquals(todoDto.getStatus(), toDo.getStatus());
+        assertEquals(todoDto.getStatus().name(), toDo.getStatus());
     }
 
     @Test

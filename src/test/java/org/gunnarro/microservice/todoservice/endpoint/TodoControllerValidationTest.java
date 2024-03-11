@@ -3,6 +3,7 @@ package org.gunnarro.microservice.todoservice.endpoint;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.gunnarro.microservice.todoservice.DefaultTestConfig;
 import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoDto;
+import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoStatus;
 import org.gunnarro.microservice.todoservice.handler.RestExceptionHandler;
 import org.gunnarro.microservice.todoservice.repository.TodoRepository;
 import org.gunnarro.microservice.todoservice.service.TodoService;
@@ -63,9 +64,9 @@ public class TodoControllerValidationTest extends DefaultTestConfig {
     @Test
     void createTodoInputValidationOk() throws Exception {
         TodoDto todoDto = TodoDto.builder()
-                .id(String.valueOf(new Random().nextLong()))
+                .id(String.valueOf(Math.abs(new Random().nextLong())))
                 .name("todo-task-v22 test æøå")
-                .status("Active")
+                .status(TodoStatus.IN_PROGRESS)
                 .description("my todo list")
                 .createdDate(LocalDateTime.of(2024, 2, 1, 10, 0, 0))
                 .lastModifiedDate(LocalDateTime.of(2024, 2, 1, 10, 0, 0))
@@ -83,7 +84,7 @@ public class TodoControllerValidationTest extends DefaultTestConfig {
         TodoDto todoDto = TodoDto.builder()
                 .id(String.valueOf(Math.abs(new Random().nextLong()))) // only positive numbers
                 .name("guro*#/")
-                .status("Active")
+                .status(TodoStatus.IN_PROGRESS)
                 .description("my todo list")
                 .createdDate(LocalDateTime.of(2024, 2, 1, 10, 0, 0))
                 .lastModifiedDate(LocalDateTime.of(2024, 2, 1, 10, 0, 0))
@@ -103,7 +104,7 @@ public class TodoControllerValidationTest extends DefaultTestConfig {
         TodoDto todoDto = TodoDto.builder()
                 .id(String.valueOf(Math.abs(new Random().nextLong()))) // only positive
                 .name("guro*#/&")
-                .status("Active")
+                .status(TodoStatus.IN_PROGRESS)
                 .description("my todo list")
                 .createdDate(LocalDateTime.of(2024, 2, 1, 10, 0, 0))
                 .lastModifiedDate(LocalDateTime.of(2024, 2, 1, 10, 0, 0))
@@ -123,7 +124,7 @@ public class TodoControllerValidationTest extends DefaultTestConfig {
         TodoDto todoDto = TodoDto.builder()
                 .id("1234567-3")
                 .name("guro")
-                .status("Active")
+                .status(TodoStatus.IN_PROGRESS)
                 .description("my todo list")
                 .createdDate(LocalDateTime.of(2024, 2, 1, 10, 0, 0))
                 .lastModifiedDate(LocalDateTime.of(2024, 2, 1, 10, 0, 0))
