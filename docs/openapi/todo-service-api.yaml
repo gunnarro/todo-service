@@ -351,6 +351,11 @@
               "schema": {
                 "$ref": "#/components/schemas/TodoItemDto"
               }
+            },
+            "application/problem+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TodoItemDto"
+              }
             }
           },
           "required": true
@@ -444,7 +449,7 @@
         ],
         "summary": "Add new todo item to the todo list",
         "description": "return created todo item",
-        "operationId": "createTodoItem",
+        "operationId": "createTodoItem_1",
         "parameters": [
           {
             "name": "todoId",
@@ -457,6 +462,11 @@
         ],
         "requestBody": {
           "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TodoItemDto"
+              }
+            },
             "application/problem+json": {
               "schema": {
                 "$ref": "#/components/schemas/TodoItemDto"
@@ -574,6 +584,218 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/TodoDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You are not authorized to view the resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Accessing the resource you were trying to reach is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/todoservice/v1/todos/{todoId}/participants": {
+      "get": {
+        "tags": [
+          "Todo Service"
+        ],
+        "summary": "Get todos participants",
+        "description": "return todos participants",
+        "operationId": "getTodoParticipants",
+        "parameters": [
+          {
+            "name": "todoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found todos participants",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TodoDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You are not authorized to view the resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Accessing the resource you were trying to reach is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Todo Service"
+        ],
+        "summary": "Add new participant to the todo list",
+        "description": "return created participant",
+        "operationId": "createTodoItem",
+        "parameters": [
+          {
+            "name": "todoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParticipantDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created participant",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TodoItemDto"
                 }
               }
             }
@@ -965,6 +1187,109 @@
         }
       }
     },
+    "/todoservice/v1/todos/{todoId}/participants/{participantId}": {
+      "delete": {
+        "tags": [
+          "Todo Service"
+        ],
+        "summary": "delete todo participant",
+        "description": "participant to delete",
+        "operationId": "deleteTodoParticipant",
+        "parameters": [
+          {
+            "name": "todoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "participantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "participant is deleted"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You are not authorized to view the resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Accessing the resource you were trying to reach is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/todoservice/v1/todos/{todoId}/items/{todoItemId}": {
       "delete": {
         "tags": [
@@ -1071,6 +1396,28 @@
   },
   "components": {
     "schemas": {
+      "ItemPriceDto": {
+        "type": "object",
+        "description": "the price of this item"
+      },
+      "ParticipantDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "todoId": {
+            "type": "string"
+          }
+        },
+        "description": "Holds information about a todo list participant"
+      },
       "TodoDto": {
         "required": [
           "status"
@@ -1112,7 +1459,14 @@
           },
           "status": {
             "type": "string",
-            "description": "Status of todo, OPEN, IN_PROGRESS or FINISHED"
+            "description": "Holds all possible statues of a todo task",
+            "enum": [
+              "OPEN",
+              "IN_PROGRESS",
+              "ON_HOLD",
+              "DONE",
+              "CANCELLED"
+            ]
           },
           "description": {
             "pattern": "[\\w\\s\\dæÆøØåÅ_-]{1,100}",
@@ -1121,15 +1475,25 @@
           },
           "todoItemDtoList": {
             "type": "array",
-            "description": "List of task/item/action this todo list contains",
+            "description": "List of task for the todo list",
             "items": {
               "$ref": "#/components/schemas/TodoItemDto"
+            }
+          },
+          "participantDtoList": {
+            "type": "array",
+            "description": "List of participant for the todo",
+            "items": {
+              "$ref": "#/components/schemas/ParticipantDto"
             }
           }
         },
         "description": "Holds information about a todo"
       },
       "TodoItemDto": {
+        "required": [
+          "status"
+        ],
         "type": "object",
         "properties": {
           "id": {
@@ -1163,7 +1527,11 @@
           "name": {
             "pattern": "[\\w\\s\\dæÆøØåÅ_-]{1,50}",
             "type": "string",
-            "description": "doc me"
+            "description": "Name of the task"
+          },
+          "category": {
+            "pattern": "[\\w\\s\\dæÆøØåÅ_-]{1,50}",
+            "type": "string"
           },
           "description": {
             "pattern": "[\\w\\s\\dæÆøØåÅ_-]{1,100}",
@@ -1172,15 +1540,43 @@
           },
           "status": {
             "type": "string",
-            "description": "Status of todo, OPEN, IN_PROGRESS or FINISHED"
+            "description": "Holds all possible statues for a todo item",
+            "enum": [
+              "OPEN",
+              "IN_PROGRESS",
+              "ON_HOLD",
+              "DONE",
+              "CANCELLED"
+            ]
           },
           "action": {
             "type": "string",
-            "description": "The action that should be done for this item"
+            "description": "The action that should be done for this item",
+            "enum": [
+              "TO_BE_SOLD",
+              "GIVES_AWAY",
+              "THROW_AWAY",
+              "OWNED_BY",
+              "GIVEN_TO",
+              "STAY_AS_IS"
+            ]
           },
           "assignedTo": {
             "type": "string",
             "description": "the person that is responsible to follow up and fulfill this task"
+          },
+          "priority": {
+            "type": "integer",
+            "description": "the priority of this task, can be any integer, typically from 1- 10",
+            "format": "int32"
+          },
+          "price": {
+            "$ref": "#/components/schemas/ItemPriceDto"
+          },
+          "workedMinutes": {
+            "type": "integer",
+            "description": "number of minutes worked with this task",
+            "format": "int32"
           }
         },
         "description": "Holds information about a todo item"

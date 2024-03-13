@@ -1,5 +1,6 @@
 package org.gunnarro.microservice.todoservice.endpoint;
 
+import jakarta.transaction.Transactional;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.client5.http.io.HttpClientConnectionManager;
@@ -39,7 +40,6 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@Disabled
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestPropertySource(locations = "file:src/test/resources/it-application.properties")
@@ -115,7 +115,7 @@ public class TodoControllerIT {
                 .toEntity(TodoDto.class);
     }
 
-   //@Disabled
+    @Disabled
     @Test
     void getTodoByRestTemplate() {
         HttpEntity<TodoDto> entity = new HttpEntity<>(null, requestHeaders);
@@ -139,6 +139,8 @@ public class TodoControllerIT {
          */
     }
 
+    @Transactional
+    @Rollback
     @Test
     void todoAndItemsCrud() {
         TodoDto todoDto = TodoDto.builder()
@@ -153,9 +155,8 @@ public class TodoControllerIT {
 
         Assertions.assertEquals("[Basic bXktc2VydmljZS1uYW1lOmNoYW5nZS1tZQ==]", requestHeaders.get("Authorization").toString());
         Assertions.assertEquals("[application/json]", requestHeaders.get("Content-Type").toString());
-        HttpEntity<TodoDto> todoEntity = new HttpEntity<>(todoDto, requestHeaders);
 
-        ResponseEntity<TodoDto> todoPostResponse = testRestTemplate.exchange(createURLWithPort("https", "todos"), HttpMethod.POST, todoEntity, TodoDto.class);
+        ResponseEntity<TodoDto> todoPostResponse = testRestTemplate.exchange(createURLWithPort("https", "todos"), HttpMethod.POST, new HttpEntity<>(todoDto, requestHeaders), TodoDto.class);
 
         todoPostResponse.getHeaders().forEach((k, v) -> System.out.println("Response header: " + k + "=" + v));
         assertEquals("[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]", todoPostResponse.getHeaders().get("Vary").toString());
@@ -170,18 +171,20 @@ public class TodoControllerIT {
         //assertEquals(LocalDate.now(), response.getHeaders().get("Date").toString());
         assertEquals("[timeout=5]", todoPostResponse.getHeaders().get("Keep-Alive").toString());
         assertEquals("[keep-alive]", todoPostResponse.getHeaders().get("Connection").toString());
-        assertEquals(13, todoPostResponse.getHeaders().size());
+        assertEquals(38, todoPostResponse.getHeaders().get("UUID").toString().length());
+        assertEquals(14, todoPostResponse.getHeaders().size());
         assertEquals("200 OK", todoPostResponse.getStatusCode().toString());
 
         assertNotNull(todoPostResponse.getBody().getId());
         assertEquals(todoDto.getName(), todoPostResponse.getBody().getName());
         assertEquals(todoDto.getDescription(), todoPostResponse.getBody().getDescription());
-        assertEquals(todoDto.getStatus().name(), todoPostResponse.getBody().getStatus());
+        assertEquals(todoDto.getStatus().name(), todoPostResponse.getBody().getStatus().name());
         assertEquals(todoDto.getCreatedByUser(), todoPostResponse.getBody().getCreatedByUser());
         assertEquals(todoDto.getLastModifiedByUser(), todoPostResponse.getBody().getLastModifiedByUser());
         assertEquals(todoDto.getCreatedDate(), todoPostResponse.getBody().getCreatedDate());
         assertEquals(todoDto.getLastModifiedByUser(), todoPostResponse.getBody().getLastModifiedByUser());
         assertEquals(0, todoPostResponse.getBody().getTodoItemDtoList().size());
+        assertEquals(0, todoPostResponse.getBody().getParticipantDtoList().size());
 
         // update todo status
         TodoDto updateTodoDto = TodoDto.builder()
@@ -192,44 +195,49 @@ public class TodoControllerIT {
                 .createdByUser(todoPostResponse.getBody().getCreatedByUser())
                 .lastModifiedByUser("unittest")
                 .todoItemDtoList(todoPostResponse.getBody().getTodoItemDtoList())
+                .participantDtoList(todoPostResponse.getBody().getParticipantDtoList())
                 .build();
-        HttpEntity<TodoDto> todoUpdateEntity = new HttpEntity<>(updateTodoDto, requestHeaders);
-        ResponseEntity<TodoDto> todoPutResponse = testRestTemplate.exchange(createURLWithPort("https", "todos/" + updateTodoDto.getId()), HttpMethod.PUT, todoUpdateEntity, TodoDto.class);
+
+        ResponseEntity<TodoDto> todoPutResponse = testRestTemplate.exchange(createURLWithPort("https", "todos/" + updateTodoDto.getId()), HttpMethod.PUT, new HttpEntity<>(updateTodoDto, requestHeaders), TodoDto.class);
         assertEquals("200 OK", todoPutResponse.getStatusCode().toString());
 
         // add item to todo
         TodoItemDto todoItemDto1 = TodoItemDto.builder()
                 .todoId(todoPostResponse.getBody().getId())
                 .name("stuebord")
-                .description("stue")
+                .category("stue")
+                .description("bord i stue")
                 .status(TodoItemStatus.OPEN)
+                .action(TaskAction.TO_BE_SOLD)
+                .price(998)
                 .assignedTo("guro")
                 .createdByUser("guro")
                 .lastModifiedByUser("guro")
                 .build();
 
-        HttpEntity<TodoItemDto> todoItemEntity1 = new HttpEntity<>(todoItemDto1, requestHeaders);
-        ResponseEntity<TodoItemDto> todoItemResponse1 = testRestTemplate.exchange(createURLWithPort("https", "/todos/" + todoPostResponse.getBody().getId() + "/items"), HttpMethod.POST, todoItemEntity1, TodoItemDto.class);
+        ResponseEntity<TodoItemDto> todoItemResponse1 = testRestTemplate.exchange(createURLWithPort("https", "/todos/" + todoPostResponse.getBody().getId() + "/items"), HttpMethod.POST, new HttpEntity<>(todoItemDto1, requestHeaders), TodoItemDto.class);
         assertEquals("200 OK", todoItemResponse1.getStatusCode().toString());
+        assertEquals(TodoItemStatus.OPEN, todoItemResponse1.getBody().getStatus());
 
         TodoItemDto todoItemDto2 = TodoItemDto.builder()
                 .todoId(todoPostResponse.getBody().getId())
                 .name("kjøleskap")
-                .description("stue")
+                .category("kjeller")
+                .description("nope")
                 .status(TodoItemStatus.OPEN)
+                .action(TaskAction.TO_BE_SOLD)
+                .price(2500)
                 .assignedTo("guro")
                 .createdByUser("guro")
                 .lastModifiedByUser("guro")
                 .build();
 
-        HttpEntity<TodoItemDto> todoItemEntity2 = new HttpEntity<>(todoItemDto2, requestHeaders);
-        ResponseEntity<TodoItemDto> todoItemResponse2 = testRestTemplate.exchange(createURLWithPort("https", "/todos/" + todoPostResponse.getBody().getId() + "/items"), HttpMethod.POST, todoItemEntity2, TodoItemDto.class);
+        ResponseEntity<TodoItemDto> todoItemResponse2 = testRestTemplate.exchange(createURLWithPort("https", "/todos/" + todoPostResponse.getBody().getId() + "/items"), HttpMethod.POST, new HttpEntity<>(todoItemDto2, requestHeaders), TodoItemDto.class);
         assertEquals("200 OK", todoItemResponse2.getStatusCode().toString());
-
+        assertEquals(TodoItemStatus.OPEN, todoItemResponse2.getBody().getStatus());
 
         // get todo items
-        HttpEntity<TodoDto> entity = new HttpEntity<>(null, requestHeaders);
-        ResponseEntity<TodoDto> todoGetResponse = testRestTemplate.exchange(createURLWithPort("https", "todos/" + todoPostResponse.getBody().getId()), HttpMethod.GET, entity, TodoDto.class);
+        ResponseEntity<TodoDto> todoGetResponse = testRestTemplate.exchange(createURLWithPort("https", "todos/" + todoPostResponse.getBody().getId()), HttpMethod.GET, new HttpEntity<>(null, requestHeaders), TodoDto.class);
         todoGetResponse.getHeaders().forEach((k, v) -> System.out.println("Response Header: " + k + "=" + v));
         Assertions.assertEquals(HttpStatus.OK, todoGetResponse.getStatusCode());
         assertEquals(todoPostResponse.getBody().getId(), todoGetResponse.getBody().getId());
@@ -237,26 +245,42 @@ public class TodoControllerIT {
         assertEquals(todoGetResponse.getBody().getId(), todoGetResponse.getBody().getTodoItemDtoList().get(0).getTodoId());
         assertNotNull(todoGetResponse.getBody().getTodoItemDtoList().get(0).getId());
 
+        // update todo item status to done
+        TodoItemDto updateTodoItemDto2 = TodoItemDto.builder()
+                .id(todoItemResponse2.getBody().getId())
+                .todoId(todoItemResponse2.getBody().getTodoId())
+                .name(todoItemResponse2.getBody().getName())
+                .category(todoItemResponse2.getBody().getCategory())
+                .description(todoItemResponse2.getBody().getDescription())
+                .status(TodoItemStatus.DONE)
+                .action(todoItemResponse2.getBody().getAction())
+                .price(todoItemResponse2.getBody().getPrice())
+                .assignedTo("guro")
+                .createdByUser("guro")
+                .lastModifiedByUser("guro")
+                .build();
+
+        ResponseEntity<TodoItemDto> updateTodoItemResponse2 = testRestTemplate.exchange(createURLWithPort("https", "/todos/" + todoPostResponse.getBody().getId() + "/items"), HttpMethod.PUT, new HttpEntity<>(updateTodoItemDto2, requestHeaders), TodoItemDto.class);
+        assertEquals("200 OK", updateTodoItemResponse2.getStatusCode().toString());
+        assertEquals(TodoItemStatus.DONE, updateTodoItemResponse2.getBody().getStatus());
+
         // delete toto item
-        HttpEntity<TodoItemDto> todoItemDeleteEntity = new HttpEntity<>(null, requestHeaders);
-        ResponseEntity<TodoDto> todoItemDeleteResponse = testRestTemplate.exchange(createURLWithPort("https", "todos/" + todoGetResponse.getBody().getId() + "/items/" + todoGetResponse.getBody().getTodoItemDtoList().get(0).getId()), HttpMethod.DELETE, todoItemDeleteEntity, TodoDto.class);
+        ResponseEntity<TodoDto> todoItemDeleteResponse = testRestTemplate.exchange(createURLWithPort("https", "todos/" + todoGetResponse.getBody().getId() + "/items/" + todoGetResponse.getBody().getTodoItemDtoList().get(0).getId()), HttpMethod.DELETE,  new HttpEntity<>(null, requestHeaders), TodoDto.class);
         assertEquals("204 NO_CONTENT", todoItemDeleteResponse.getStatusCode().toString());
 
         // check that item is deleted
-        todoGetResponse = testRestTemplate.exchange(createURLWithPort("https", "todos/" + todoGetResponse.getBody().getId()), HttpMethod.GET, entity, TodoDto.class);
+        todoGetResponse = testRestTemplate.exchange(createURLWithPort("https", "todos/" + todoGetResponse.getBody().getId()), HttpMethod.GET, new HttpEntity<>(null, requestHeaders), TodoDto.class);
         Assertions.assertEquals(HttpStatus.OK, todoGetResponse.getStatusCode());
         assertEquals(1, todoGetResponse.getBody().getTodoItemDtoList().size());
 
         // finally, clean up, delete created todo
-        HttpEntity<TodoDto> todoDeleteEntity = new HttpEntity<>(null, requestHeaders);
-        ResponseEntity<TodoDto> todoDeleteResponse = testRestTemplate.exchange(createURLWithPort("https", "todos/" + todoGetResponse.getBody().getId()), HttpMethod.DELETE, todoDeleteEntity, TodoDto.class);
+        ResponseEntity<TodoDto> todoDeleteResponse = testRestTemplate.exchange(createURLWithPort("https", "todos/" + todoGetResponse.getBody().getId()), HttpMethod.DELETE, new HttpEntity<>(null, requestHeaders), TodoDto.class);
         assertEquals("204 NO_CONTENT", todoDeleteResponse.getStatusCode().toString());
 
         // check todo audit history
-        HttpEntity<TodoHistoryDto> todoHistoryRequestEntity = new HttpEntity<>(null, requestHeaders);
         ParameterizedTypeReference<List<TodoHistoryDto>> todoHistoryResponseEntity = new ParameterizedTypeReference<>() {
         };
-        ResponseEntity<List<TodoHistoryDto>> todoHistoryResponse = testRestTemplate.exchange(createURLWithPort("https", "todos/" + todoGetResponse.getBody().getId() + "/history"), HttpMethod.GET, todoHistoryRequestEntity, todoHistoryResponseEntity);
+        ResponseEntity<List<TodoHistoryDto>> todoHistoryResponse = testRestTemplate.exchange(createURLWithPort("https", "todos/" + todoGetResponse.getBody().getId() + "/history"), HttpMethod.GET, new HttpEntity<>(null, requestHeaders), todoHistoryResponseEntity);
         Assertions.assertEquals(HttpStatus.OK, todoHistoryResponse.getStatusCode());
         assertEquals(3, todoHistoryResponse.getBody().size());
         assertEquals(todoGetResponse.getBody().getId(), todoHistoryResponse.getBody().get(0).getId());
@@ -264,19 +288,18 @@ public class TodoControllerIT {
         assertEquals("INSERT", todoHistoryResponse.getBody().get(0).getRevisionType());
         assertEquals("todo-crud-unit-test-all", todoHistoryResponse.getBody().get(0).getName());
         assertEquals("my todo list", todoHistoryResponse.getBody().get(0).getDescription());
-        assertEquals("Open", todoHistoryResponse.getBody().get(0).getStatus());
+        assertEquals("OPEN", todoHistoryResponse.getBody().get(0).getStatus());
         assertNotNull(todoHistoryResponse.getBody().get(0).getLastModifiedDate());
         assertNotNull(todoHistoryResponse.getBody().get(0).getCreatedDate());
         assertEquals("guro", todoHistoryResponse.getBody().get(0).getCreatedByUser());
         assertEquals("guro-2", todoHistoryResponse.getBody().get(0).getLastModifiedByUser());
 
         // che k todo item audit history
-        HttpEntity<TodoItemHistoryDto> todoItemHistoryRequestEntity = new HttpEntity<>(null, requestHeaders);
         ParameterizedTypeReference<List<TodoItemHistoryDto>> todoItemHistoryResponseEntity = new ParameterizedTypeReference<>() {
         };
-        ResponseEntity<List<TodoItemHistoryDto>> todoItemHistoryResponse = testRestTemplate.exchange(createURLWithPort("https", "todos/" + todoGetResponse.getBody().getId() + "/items/" + todoItemResponse2.getBody().getId() + "/history"), HttpMethod.GET, todoItemHistoryRequestEntity, todoItemHistoryResponseEntity);
+        ResponseEntity<List<TodoItemHistoryDto>> todoItemHistoryResponse = testRestTemplate.exchange(createURLWithPort("https", "todos/" + todoGetResponse.getBody().getId() + "/items/" + todoItemResponse2.getBody().getId() + "/history"), HttpMethod.GET, new HttpEntity<>(null, requestHeaders), todoItemHistoryResponseEntity);
         Assertions.assertEquals(HttpStatus.OK, todoItemHistoryResponse.getStatusCode());
-        assertEquals(2, todoItemHistoryResponse.getBody().size());
+        assertEquals(3, todoItemHistoryResponse.getBody().size());
         assertEquals(todoGetResponse.getBody().getId(), todoItemHistoryResponse.getBody().get(0).getTodoId());
         assertEquals("kjøleskap", todoItemHistoryResponse.getBody().get(0).getName());
 
@@ -286,6 +309,76 @@ public class TodoControllerIT {
 //        ResponseEntity<TodoDto> response = testRestTemplate.exchange(createURLWithPort("https", "todos/" + UUID.randomUUID()), HttpMethod.POST, entity, TodoDto.class);
 //        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
     }
+
+    @Transactional
+    @Rollback
+    @Test
+    void todoParticipantCrud() {
+
+        TodoDto todoDto = TodoDto.builder()
+                .name("todo-test-participant")
+                .status(TodoStatus.OPEN)
+                .description("my todo list with participant")
+                .createdByUser("guro")
+                .lastModifiedByUser("guro-2")
+                .build();
+
+        HttpEntity<TodoDto> todoEntity = new HttpEntity<>(todoDto, requestHeaders);
+
+        ResponseEntity<TodoDto> todoPostResponse = testRestTemplate.exchange(createURLWithPort("https", "todos"), HttpMethod.POST, todoEntity, TodoDto.class);
+        assertEquals("200 OK", todoPostResponse.getStatusCode().toString());
+
+        String todoId = todoPostResponse.getBody().getId();
+        ParticipantDto participantDto = ParticipantDto.builder()
+                .todoId(todoId)
+                .name("guro")
+                .email("guro@mail.org")
+                .enabled(1)
+                .build();
+
+        // add participant to todo list
+        HttpEntity<ParticipantDto> participantEntity = new HttpEntity<>(participantDto, requestHeaders);
+        ResponseEntity<ParticipantDto> participantResp = testRestTemplate.exchange(createURLWithPort("https", "/todos/" + todoId + "/participants"), HttpMethod.POST, participantEntity, ParticipantDto.class);
+        assertEquals("200 OK", participantResp.getStatusCode().toString());
+        assertEquals(todoId.toString(), participantResp.getBody().getTodoId());
+        assertEquals("guro", participantResp.getBody().getName());
+        assertEquals("guro@mail.org", participantResp.getBody().getEmail());
+
+        // update existing participant
+        ParticipantDto updateParticipantDto = ParticipantDto.builder()
+                .id(participantResp.getBody().getId())
+                .todoId(todoId)
+                .name("guro")
+                .email("guro@gmail.com")
+                .enabled(1)
+                .build();
+
+        HttpEntity<ParticipantDto> updatedParticipantEntity = new HttpEntity<>(updateParticipantDto, requestHeaders);
+        participantResp = testRestTemplate.exchange(createURLWithPort("https", "/todos/" + todoId + "/participants"), HttpMethod.PUT, updatedParticipantEntity, ParticipantDto.class);
+        assertEquals("200 OK", participantResp.getStatusCode().toString());
+        assertEquals(todoId, participantResp.getBody().getTodoId());
+        assertEquals("guro", participantResp.getBody().getName());
+        assertEquals("guro@gmail.com", participantResp.getBody().getEmail());
+
+        // delete participant
+        HttpEntity<ParticipantDto> participantDeleteEntity = new HttpEntity<>(null, requestHeaders);
+        participantResp = testRestTemplate.exchange(createURLWithPort("https", "todos/" + participantResp.getBody().getTodoId() + "/participants/" + participantResp.getBody().getId()), HttpMethod.DELETE, participantDeleteEntity, ParticipantDto.class);
+        assertEquals("204 NO_CONTENT", participantResp.getStatusCode().toString());
+
+        // delete todo
+
+    }
+
+    @Test
+    void getTodoParticipants() {
+        HttpEntity<ParticipantDto> requestEntity = new HttpEntity<>(null, requestHeaders);
+        ParameterizedTypeReference<List<ParticipantDto>> responseEntity = new ParameterizedTypeReference<>() {
+        };
+        ResponseEntity<List<ParticipantDto>> response = testRestTemplate.exchange(createURLWithPort("https", "todos/546769619193246584/participants"), HttpMethod.GET, requestEntity, responseEntity);
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(0, response.getBody().size());
+    }
+
 
     @Test
     void getTodoAuditHistoryNotHit() {

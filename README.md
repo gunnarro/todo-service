@@ -101,6 +101,8 @@ mvn compile jib:build -P build-docker -Djib.to.auth.username=$DOCKER_HUB_USER -D
 - [react bootstrap form validation](https://www.abstractapi.com/guides/react-bootstrap-form-validation)
 - [reactstrap](https://www.npmjs.com/package/reactstrap)
 - [openapi-generator](https://github.com/OpenAPITools/openapi-generator)
+- [Bucket4j rate limiting](https://www.baeldung.com/spring-bucket4j)
+  - [bucket4j 8.9.0 doc](https://bucket4j.com/8.9.0/toc.html)
 
 
 ## Database

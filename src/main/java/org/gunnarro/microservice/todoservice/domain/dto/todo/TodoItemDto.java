@@ -31,10 +31,12 @@ public class TodoItemDto {
     @Schema(description = "user that last modified the todo")
     private String lastModifiedByUser;
     @Schema(description = "Name of the task")
-    @Pattern(regexp = "[\\w\\s\\dæÆøØåÅ_-]{1,50}", message = "Name can only contain lower and uppercase alphabetic chars. Min 1 char, max 50 chars.")
+    @Pattern(regexp = "[\\w\\s\\dæÆøØåÅ_-]{2,50}", message = "Name can only contain lower and uppercase alphabetic chars. Min 2 char, max 50 chars.")
     private String name;
+    @Pattern(regexp = "[\\w\\s\\dæÆøØåÅ_-]{0,50}", message = "Category that this task belong to. Can be empty or max 50 chars")
+    private String category;
     @Schema(description = "description of the task to do")
-    @Pattern(regexp = "[\\w\\s\\dæÆøØåÅ_-]{1,100}", message = "Description can only contain lower and uppercase alphabetic chars. Min 1 char, max 100 chars.")
+    @Pattern(regexp = "[\\w\\s\\dæÆøØåÅ_-]{0,100}", message = "Description can only contain lower and uppercase alphabetic chars. Can be empty or max 100 chars.")
     private String description;
     @Schema(description = "Status of todo, OPEN, IN_PROGRESS, ON_HOLD, DONE and CANCELLED")
     @NotNull
@@ -45,4 +47,8 @@ public class TodoItemDto {
     private String assignedTo;
     @Schema(description = "the priority of this task, can be any integer, typically from 1- 10")
     private Integer priority;
+    @Schema(description = "the price of this item")
+    private Integer price;
+    @Schema(description = "number of minutes worked with this task")
+    private Integer workedMinutes;
 }

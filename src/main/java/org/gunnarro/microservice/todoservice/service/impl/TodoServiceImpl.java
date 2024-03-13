@@ -2,13 +2,11 @@ package org.gunnarro.microservice.todoservice.service.impl;
 
 
 import lombok.extern.slf4j.Slf4j;
-import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoDto;
-import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoHistoryDto;
-import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoItemDto;
-import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoItemHistoryDto;
+import org.gunnarro.microservice.todoservice.domain.dto.todo.*;
 import org.gunnarro.microservice.todoservice.domain.mapper.TodoMapper;
 import org.gunnarro.microservice.todoservice.exception.ApplicationException;
 import org.gunnarro.microservice.todoservice.exception.RestInputValidationException;
+import org.gunnarro.microservice.todoservice.repository.ParticipantRepository;
 import org.gunnarro.microservice.todoservice.repository.TodoItemRepository;
 import org.gunnarro.microservice.todoservice.repository.TodoRepository;
 import org.gunnarro.microservice.todoservice.repository.entity.Todo;
@@ -32,9 +30,12 @@ public class TodoServiceImpl implements TodoService {
     private final TodoRepository todoRepository;
     private final TodoItemRepository todoItemRepository;
 
-    public TodoServiceImpl(TodoRepository todoRepository, TodoItemRepository todoItemRepository) {
+    private final ParticipantRepository participantRepository;
+
+    public TodoServiceImpl(TodoRepository todoRepository, TodoItemRepository todoItemRepository, ParticipantRepository participantRepository) {
         this.todoRepository = todoRepository;
         this.todoItemRepository = todoItemRepository;
+        this.participantRepository = participantRepository;
     }
 
     @Override
@@ -45,7 +46,7 @@ public class TodoServiceImpl implements TodoService {
     @Override
     public TodoDto getTodo(Long todoId) {
         log.debug("todoId={}", todoId);
-        Optional<Todo> todoOpt = todoRepository.getTodoByUuid(todoId);
+        Optional<Todo> todoOpt = todoRepository.getTodoById(todoId);
         if (todoOpt.isPresent())
             return TodoMapper.toTodoDto(todoOpt.get());
         else {
@@ -104,7 +105,7 @@ public class TodoServiceImpl implements TodoService {
     @Transactional
     @Override
     public TodoItemDto updateTodoItem(TodoItemDto todoItemDto) {
-        return null;
+        return TodoMapper.toTodoItemDto(todoItemRepository.save(TodoMapper.fromTodoItemDto(todoItemDto)));
     }
 
     @Override
@@ -112,6 +113,26 @@ public class TodoServiceImpl implements TodoService {
         todoItemRepository.deleteById(todoItemId);
     }
 
+    @Override
+    public List<ParticipantDto> getParticipants(Long todoId) {
+        return TodoMapper.toParticipantDtoList(participantRepository.getParticipants(todoId));
+    }
+
+    @Override
+    public ParticipantDto addParticipant(ParticipantDto participantDto) {
+        return TodoMapper.toParticipantDto(participantRepository.save(TodoMapper.fromParticipantDto(participantDto)));
+    }
+
+    @Override
+    public ParticipantDto updateParticipant(ParticipantDto participantDto) {
+        return TodoMapper.toParticipantDto(participantRepository.save(TodoMapper.fromParticipantDto(participantDto)));
+    }
+
+    @Override
+    public void deleteParticipant(Long todoId, Long participantId) {
+        participantRepository.deleteById(participantId);
+        log.debug("deleted participant, todoId={}, participantId={}", todoId, participantId);
+    }
 
     public List<TodoHistoryDto> getTodoHistory(Long todoId) {
         List<TodoHistoryDto> todoHistoryDtoList = new ArrayList<>();

@@ -32,15 +32,17 @@ public class TodoDto {
     @Schema(description = "user that last modified the todo")
     private String lastModifiedByUser;
     @Schema(description = "Name of todo")
-    @Pattern(regexp = "[\\w\\s\\dæÆøØåÅ_-]{1,50}", message = "can only contain lower and uppercase alphabetic chars. Min 1 char, max 50 chars.")
+    @Pattern(regexp = "[\\w\\s\\dæÆøØåÅ_-]{2,50}", message = "can only contain lower and uppercase alphabetic chars. Min 2 char, max 50 chars.")
     private String name;
     @Schema(description = "Status of todo, OPEN, IN_PROGRESS, ON_HOLD, DONE and CANCELLED")
    // @Pattern(regexp = "\\W*(OPEN|IN_PROGRESS|ON_HOLD|DONE|CANCELLED)\\W*")
     @NotNull
     private TodoStatus status;
     @Schema(description = "description of this to do task")
-    @Pattern(regexp = "[\\w\\s\\dæÆøØåÅ_-]{1,100}", message = "Description can only contain lower and uppercase alphabetic chars. Min 1 char, max 100 chars.")
+    @Pattern(regexp = "[\\w\\s\\dæÆøØåÅ_-]{0,100}", message = "Description can only contain lower and uppercase alphabetic chars. Can be empty or max 100 chars.")
     private String description;
-    @Schema(description = "List of task/item/action this todo list contains")
+    @Schema(description = "List of task for the todo list")
     private List<TodoItemDto> todoItemDtoList;
+    @Schema(description = "List of participant for the todo")
+    private List<ParticipantDto> participantDtoList;
 }

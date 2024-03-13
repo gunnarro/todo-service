@@ -15,7 +15,7 @@ import java.util.Optional;
 @Repository
 public interface TodoItemRepository extends JpaRepository<TodoItem, Long>, RevisionRepository<TodoItem, Long, Long> {
 
-    @Query("SELECT i FROM TodoItem i WHERE i.fkTodoId = :todoId")
+    @Query("SELECT i FROM TodoItem i WHERE i.fkTodoId = :todoId ORDER BY i.category, i.name DESC")
     List<TodoItem> getTodoItems(@Param("todoId") Long todoId);
 
     @Query("SELECT i FROM TodoItem i WHERE i.id = :todoItemId AND i.fkTodoId = :todoId")

@@ -1,6 +1,7 @@
 package org.gunnarro.microservice.todoservice.domain.mapper;
 
 import org.gunnarro.microservice.todoservice.domain.dto.todo.*;
+import org.gunnarro.microservice.todoservice.repository.entity.Participant;
 import org.gunnarro.microservice.todoservice.repository.entity.Todo;
 import org.gunnarro.microservice.todoservice.repository.entity.TodoHistory;
 import org.gunnarro.microservice.todoservice.repository.entity.TodoItem;
@@ -38,6 +39,7 @@ public class TodoMapperTest {
         assertEquals(todo.getDescription(), toDoDto.getDescription());
         assertEquals(todo.getStatus(), toDoDto.getStatus().name());
         assertEquals(0, toDoDto.getTodoItemDtoList().size());
+        assertEquals(0, toDoDto.getParticipantDtoList().size());
     }
 
     @Test
@@ -70,6 +72,7 @@ public class TodoMapperTest {
                 .id(100L)
                 .fkTodoId(10L)
                 .name("tv")
+                .category("stue")
                 .status(TodoItemStatus.IN_PROGRESS.name())
                 .description("stue")
                 .action(TaskAction.TO_BE_SOLD.name())
@@ -80,6 +83,7 @@ public class TodoMapperTest {
         assertEquals(todoItem.getId().toString(), todoItemDto.getId());
         assertEquals(todoItem.getFkTodoId().toString(), todoItemDto.getTodoId());
         assertEquals(todoItem.getName(), todoItemDto.getName());
+        assertEquals(todoItem.getCategory(), todoItemDto.getCategory());
         assertEquals(todoItem.getAction(), todoItemDto.getAction().name());
         assertEquals(todoItem.getAssignedTo(), todoItemDto.getAssignedTo());
         assertEquals(todoItem.getDescription(), todoItemDto.getDescription());
@@ -94,6 +98,7 @@ public class TodoMapperTest {
                 .id(String.valueOf(new Random().nextLong()))
                 .todoId(String.valueOf(new Random().nextLong()))
                 .name("tv")
+                .category("stue")
                 .status(TodoItemStatus.IN_PROGRESS)
                 .description("stue")
                 .action(TaskAction.TO_BE_SOLD)
@@ -104,6 +109,7 @@ public class TodoMapperTest {
         assertEquals(todoItemDto.getId(), todoItem.getId().toString());
         assertEquals(todoItemDto.getTodoId(), todoItem.getFkTodoId().toString());
         assertEquals(todoItemDto.getName(), todoItem.getName());
+        assertEquals(todoItemDto.getCategory(), todoItem.getCategory());
         assertEquals(todoItemDto.getAction().name(), todoItem.getAction());
         assertEquals(todoItemDto.getAssignedTo(), todoItem.getAssignedTo());
         assertEquals(todoItemDto.getDescription(), todoItem.getDescription());
@@ -132,4 +138,37 @@ public class TodoMapperTest {
         assertEquals(todoHistory.getId().toString(), todoHistoryDtoList.get(0).getId());
     }
 
+    @Test
+    void fromParticipantDto() {
+        ParticipantDto participantDto = ParticipantDto.builder()
+                .id("11")
+                .name("gunnar")
+                .email("gr@mail.org")
+                .todoId("123456789")
+                .enabled(1)
+                .build();
+        Participant participant = TodoMapper.fromParticipantDto(participantDto);
+        assertEquals(participantDto.getId(), participant.getId().toString());
+        assertEquals(participantDto.getTodoId(), participant.getFkTodoId().toString());
+        assertEquals(participantDto.getName(), participant.getName());
+        assertEquals(participantDto.getEmail(), participant.getEmail());
+        assertEquals(participantDto.getEnabled(), participant.getEnabled());
+    }
+
+    @Test
+    void toParticipantDto() {
+        Participant participant = Participant.builder()
+                .id(12345L)
+                .name("gunnar")
+                .email("gr@mail.org")
+                .fkTodoId(123456789L)
+                .enabled(0)
+                .build();
+        ParticipantDto participantDto = TodoMapper.toParticipantDto(participant);
+        assertEquals(participant.getId().toString(), participantDto.getId());
+        assertEquals(participant.getFkTodoId().toString(), participantDto.getTodoId());
+        assertEquals(participant.getName(), participantDto.getName());
+        assertEquals(participant.getEmail(), participantDto.getEmail());
+        assertEquals(participant.getEnabled(), participantDto.getEnabled());
+    }
 }

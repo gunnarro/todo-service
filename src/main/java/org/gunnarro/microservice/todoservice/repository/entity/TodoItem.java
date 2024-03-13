@@ -25,6 +25,10 @@ public class TodoItem extends BaseEntity {
     private String name;
 
     @Audited(withModifiedFlag = true)
+    @Column(name = "CATEGORY", nullable = false)
+    private String category;
+
+    @Audited(withModifiedFlag = true)
     @Column(name = "STATUS", nullable = false)
     private String status;
 
@@ -40,6 +44,9 @@ public class TodoItem extends BaseEntity {
     @Column(name = "ASSIGNED_TO", nullable = false)
     private String assignedTo;
 
+    /**
+     * An item can only be assigned to one todo list.
+     */
     @Column(name = "FK_TODO_ID", nullable = false)
     private Long fkTodoId;
 

@@ -1,0 +1,37 @@
+
+Table user_account {
+    id long [primary key]
+    userName varchar
+    password varchar
+}
+
+Table todo {
+    id long [primary key]
+    name varchar
+    description varchar
+}
+
+Table todo_item {
+    id long [primary key]
+    fk_todo_id long
+    name varchar
+    description varchar
+}
+
+Table todo_participant {
+    id long [primary key]
+    name varchar
+    email varchar
+}
+
+
+Table todo_participant_lnk {
+    id long [primary key]
+    fk_todo_id long
+    fk_todo_participant_id long
+}
+
+Ref todo_items: todo_item.fk_todo_id > todo.id  // many-to-one
+Ref: todo_participant_lnk.fk_todo_id > todo.id // many to one
+Ref: todo_participant_lnk.fk_todo_participant_id > todo_participant.id // many to one
+

@@ -1,9 +1,7 @@
 package org.gunnarro.microservice.todoservice.endpoint;
 
 
-import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;
-import io.github.bucket4j.Refill;
 import io.micrometer.core.annotation.Timed;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -15,10 +13,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.gunnarro.microservice.todoservice.domain.dto.ErrorResponse;
-import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoDto;
-import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoHistoryDto;
-import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoItemDto;
-import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoItemHistoryDto;
+import org.gunnarro.microservice.todoservice.domain.dto.todo.*;
 import org.gunnarro.microservice.todoservice.service.TodoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -65,15 +60,10 @@ public class TodoController {
     public TodoController(TodoService toDoService) {
         this.toDoService = toDoService;
         // allowing the API 5 requests per minute. In other words, the API rejects a request if it’s already received 5 requests in a time window of 1 minute.
-        // Bandwidth limit = Bandwidth.classic(5, Refill.greedy(1, Duration.ofMinutes(1)));
-        // this.bucket = Bucket.builder()
-        //         .addLimit(limit)
-        //         .build();
-
         this.bucket = Bucket.builder()
                 .addLimit(limit -> limit.capacity(25)
                         .refillGreedy(5, Duration.ofMinutes(1))
-                        .initialTokens(10))
+                        .initialTokens(20))
                 .build();
     }
 
@@ -166,7 +156,7 @@ public class TodoController {
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = TodoItemDto.class))})
     })
-    @PostMapping(path = "/todos/{todoId}/items", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_PROBLEM_JSON_VALUE)
+    @PostMapping(path = "/todos/{todoId}/items", produces = MediaType.APPLICATION_JSON_VALUE, consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
     public TodoItemDto createTodoItem(@PathVariable("todoId") String todoId, @RequestBody @Valid TodoItemDto todoItemDto) {
         if (bucket.tryConsume(1)) {
             TodoItemDto createdTodoItemDto = toDoService.addTodoItem(todoItemDto);
@@ -183,7 +173,7 @@ public class TodoController {
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = TodoItemDto.class))})
     })
-    @PutMapping(path = "/todos/{todoId}/items", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(path = "/todos/{todoId}/items", produces = MediaType.APPLICATION_JSON_VALUE, consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
     public TodoItemDto updateTodoItem(@PathVariable("todoId") String todoId, @RequestBody @Valid TodoItemDto toDoItemDto) {
         if (bucket.tryConsume(1)) {
             return toDoService.updateTodoItem(toDoItemDto);
@@ -206,6 +196,73 @@ public class TodoController {
             throw new HttpClientErrorException(HttpStatus.TOO_MANY_REQUESTS);
         }
     }
+
+    // ---------------------------------------------------------
+    // todo participant
+    // ---------------------------------------------------------
+
+    @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
+    @Operation(summary = "Get todos participants", description = "return todos participants")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found todos participants",
+                    content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = TodoDto.class))})
+    })
+    @GetMapping(path = "/todos/{todoId}/participants", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
+    public ResponseEntity<List<ParticipantDto>> getTodoParticipants(@PathVariable("todoId") @NotNull String todoId) {
+        if (bucket.tryConsume(1)) {
+            return ResponseEntity.ok(toDoService.getParticipants(Long.valueOf(todoId)));
+        }
+        return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build();
+    }
+
+    @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
+    @Operation(summary = "Add new participant to the todo list", description = "return created participant")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Created participant",
+                    content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = TodoItemDto.class))})
+    })
+    @PostMapping(path = "/todos/{todoId}/participants", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ParticipantDto createParticipant(@PathVariable("todoId") String todoId, @RequestBody @Valid ParticipantDto participantDto) {
+        if (bucket.tryConsume(1)) {
+            return toDoService.addParticipant(participantDto);
+        }
+        throw new HttpClientErrorException(HttpStatus.TOO_MANY_REQUESTS);
+    }
+
+    @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
+    @Operation(summary = "Update participant to the todo list", description = "return updated participant")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Updated participant",
+                    content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = TodoItemDto.class))})
+    })
+    @PutMapping(path = "/todos/{todoId}/participants", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ParticipantDto updateParticipant(@PathVariable("todoId") String todoId, @RequestBody @Valid ParticipantDto participantDto) {
+        if (bucket.tryConsume(1)) {
+            return toDoService.updateParticipant(participantDto);
+        }
+        throw new HttpClientErrorException(HttpStatus.TOO_MANY_REQUESTS);
+    }
+
+
+    @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
+    @Operation(summary = "delete todo participant", description = "participant to delete")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "participant is deleted")
+    })
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping(path = "/todos/{todoId}/participants/{participantId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void deleteParticipant(@PathVariable("todoId") @NotNull String todoId, @PathVariable("participantId") @NotNull String participantId) {
+        if (bucket.tryConsume(1)) {
+            log.info("delete: todoId={}, participantId={}", todoId, participantId);
+            toDoService.deleteParticipant(Long.valueOf(todoId), Long.valueOf(participantId));
+        } else {
+            throw new HttpClientErrorException(HttpStatus.TOO_MANY_REQUESTS);
+        }
+    }
+
 
     // ---------------------------------------------------------
     // todo history

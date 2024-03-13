@@ -1,6 +1,7 @@
 package org.gunnarro.microservice.todoservice.domain.mapper;
 
 import org.gunnarro.microservice.todoservice.domain.dto.todo.*;
+import org.gunnarro.microservice.todoservice.repository.entity.Participant;
 import org.gunnarro.microservice.todoservice.repository.entity.Todo;
 import org.gunnarro.microservice.todoservice.repository.entity.TodoHistory;
 import org.gunnarro.microservice.todoservice.repository.entity.TodoItem;
@@ -31,6 +32,7 @@ public class TodoMapper {
                 .createdByUser(todo.getCreatedByUser())
                 .lastModifiedByUser(todo.getLastModifiedByUser())
                 .todoItemDtoList(todoItemDtoList(todo.getTodoItemList()))
+                .participantDtoList(toParticipantDtoList(todo.getParticipantList()))
                 .build();
     }
 
@@ -74,6 +76,7 @@ public class TodoMapper {
                 .id(todoItem.getId().toString())
                 .todoId(todoItem.getFkTodoId().toString())
                 .name(todoItem.getName())
+                .category(todoItem.getCategory())
                 .description(todoItem.getDescription())
                 .status(TodoItemStatus.valueOf(todoItem.getStatus()))
                 .action(TaskAction.valueOf(todoItem.getAction()))
@@ -92,6 +95,7 @@ public class TodoMapper {
                 .id(todoItemDto.getId() != null ? Long.valueOf(todoItemDto.getId()) : null)
                 .fkTodoId(Long.valueOf(todoItemDto.getTodoId()))
                 .name(todoItemDto.getName())
+                .category(todoItemDto.getCategory())
                 .description(todoItemDto.getDescription())
                 .status(todoItemDto.getStatus().name())
                 .action(todoItemDto.getAction().name())
@@ -153,7 +157,7 @@ public class TodoMapper {
         }
         return TodoItemHistoryDto.builder()
                 .id(todoItem.getId().toString())
-                .todoId(todoItem.getFkTodoId().toString())
+                .todoId(todoItem.getFkTodoId() != null ? todoItem.getFkTodoId().toString() : null)
                 .name(todoItem.getName())
                 .status(todoItem.getStatus())
                 .action(todoItem.getAction())
@@ -168,4 +172,40 @@ public class TodoMapper {
                 .revisionNumber(revisionNumber)
                 .build();
     }
+
+    public static List<ParticipantDto> toParticipantDtoList(List<Participant> participantList) {
+        if (participantList == null) {
+            return List.of();
+        }
+        return participantList.stream().map(TodoMapper::toParticipantDto).collect(Collectors.toList());
+    }
+
+    public static ParticipantDto toParticipantDto(Participant participant) {
+        if (participant == null) {
+            return null;
+        }
+        return ParticipantDto.builder()
+                .id(participant.getId().toString())
+                .name(participant.getName())
+                .todoId(participant.getFkTodoId().toString())
+                .email(participant.getEmail())
+                .enabled(participant.getEnabled())
+                .build();
+    }
+
+    public static Participant fromParticipantDto(ParticipantDto participantDto) {
+        if (participantDto == null) {
+            return null;
+        }
+        return Participant.builder()
+                .id( participantDto.getId() != null ? Long.valueOf(participantDto.getId()) : null)
+                .fkTodoId(Long.valueOf(participantDto.getTodoId()))
+                .name(participantDto.getName())
+                .email(participantDto.getEmail())
+                .enabled(participantDto.getEnabled())
+                .createdByUser("test")
+                .lastModifiedByUser("test")
+                .build();
+    }
+
 }

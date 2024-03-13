@@ -95,7 +95,7 @@ public class TodoControllerValidationTest extends DefaultTestConfig {
                         .content(objectMapper.writeValueAsString(todoDto))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.description", Is.is("Service Input Validation Error. name can only contain lower and uppercase alphabetic chars. Min 1 char, max 50 chars.")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.description", Is.is("Service Input Validation Error. name can only contain lower and uppercase alphabetic chars. Min 2 char, max 50 chars.")))
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
     }
 
@@ -115,7 +115,7 @@ public class TodoControllerValidationTest extends DefaultTestConfig {
                         .content(objectMapper.writeValueAsString(todoDto))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.description", Is.is("Service Input Validation Error. name can only contain lower and uppercase alphabetic chars. Min 1 char, max 50 chars.")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.description", Is.is("Service Input Validation Error. name can only contain lower and uppercase alphabetic chars. Min 2 char, max 50 chars.")))
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
     }
 

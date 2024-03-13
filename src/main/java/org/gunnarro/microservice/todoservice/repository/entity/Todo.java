@@ -39,13 +39,22 @@ public class Todo extends BaseEntity {
     @Column(name = "DESCRIPTION", nullable = false)
     private String description;
 
-   // @Column(name = "FK_USER_ACCOUNT_ID")
-   // private Long userAccountId;
+    /**
+     * A todo list can have many todo items.
+     */
     @NotAudited
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    //@OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "FK_TODO_ID", updatable = false, insertable = false)
     @ToString.Exclude
     private List<TodoItem> todoItemList;
+
+    /**
+     * A todo list can have many participants.
+     */
+    @NotAudited
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = false)
+    @JoinColumn(name = "FK_TODO_ID", updatable = false, insertable = false)
+    @ToString.Exclude
+    private List<Participant> participantList;
 
 }
