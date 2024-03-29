@@ -1,10 +1,7 @@
 package org.gunnarro.microservice.todoservice.domain.mapper;
 
 import org.gunnarro.microservice.todoservice.domain.dto.todo.*;
-import org.gunnarro.microservice.todoservice.repository.entity.Participant;
-import org.gunnarro.microservice.todoservice.repository.entity.Todo;
-import org.gunnarro.microservice.todoservice.repository.entity.TodoHistory;
-import org.gunnarro.microservice.todoservice.repository.entity.TodoItem;
+import org.gunnarro.microservice.todoservice.repository.entity.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -84,6 +81,7 @@ public class TodoMapper {
                 .createdByUser(todoItem.getCreatedByUser())
                 .lastModifiedByUser(todoItem.getLastModifiedByUser())
                 .priority(todoItem.getPriority())
+                .approvalRequired(todoItem.getApprovalRequired())
                 .build();
     }
 
@@ -103,6 +101,7 @@ public class TodoMapper {
                 .createdByUser(todoItemDto.getCreatedByUser())
                 .lastModifiedByUser(todoItemDto.getLastModifiedByUser())
                 .priority(todoItemDto.getPriority())
+                .approvalRequired(todoItemDto.getApprovalRequired())
                 .build();
     }
 
@@ -198,13 +197,44 @@ public class TodoMapper {
             return null;
         }
         return Participant.builder()
-                .id( participantDto.getId() != null ? Long.valueOf(participantDto.getId()) : null)
+                .id(participantDto.getId() != null ? Long.valueOf(participantDto.getId()) : null)
                 .fkTodoId(Long.valueOf(participantDto.getTodoId()))
                 .name(participantDto.getName())
                 .email(participantDto.getEmail())
                 .enabled(participantDto.getEnabled())
                 .createdByUser("test")
                 .lastModifiedByUser("test")
+                .build();
+    }
+
+    public static List<ApprovalDto> toApprovalDtoList(List<Approval> ApprovalList) {
+        if (ApprovalList == null) {
+            return List.of();
+        }
+        return ApprovalList.stream().map(TodoMapper::toApprovalDto).collect(Collectors.toList());
+    }
+
+    public static Approval fromApprovalDto(ApprovalDto approvalDto) {
+        if (approvalDto == null) {
+            return null;
+        }
+        return Approval.builder()
+                .id(approvalDto.getId() != null ? Long.valueOf(approvalDto.getId()) : null)
+                .participantId(Long.valueOf(approvalDto.getParticipantId()))
+                .todoItemId(Long.valueOf(approvalDto.getTodoItemId()))
+                .approved(approvalDto.getApproved())
+                .build();
+    }
+
+    public static ApprovalDto toApprovalDto(Approval approval) {
+        if (approval == null) {
+            return null;
+        }
+        return ApprovalDto.builder()
+                .id(approval.getId().toString())
+                .participantId(approval.getParticipantId().toString())
+                .todoItemId(approval.getTodoItemId().toString())
+                .approved(approval.getApproved())
                 .build();
     }
 

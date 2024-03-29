@@ -89,6 +89,15 @@ NB! Must add DOCKER_HUB_USER and DOCKER_HUB_PWD to environment or add to the .ba
 mvn compile jib:build -P build-docker -Djib.to.auth.username=$DOCKER_HUB_USER -Djib.to.auth.password=$DOCKER_HUB_PWD
 ```
 
+## Test
+### Fuzz testing
+- [Snyk fuzzing tools](https://snyk.io/blog/fuzzing-tools-in-your-security-toolkit/)
+- [RESTler fuzzing tool](https://github.com/microsoft/restler-fuzzer)
+- [rest-api-fuzz-testing](https://github.com/microsoft/rest-api-fuzz-testing)
+
+```
+sudo ./restler-quick-start.py --api_spec_path /home/gunnarro/code/github/todo-service/docs/openapi/todo-service-api.yaml --restler_drop_dir /home/gunnarro/code/github/restler-fuzzer/test/todo_service
+```
 
 # Resources
 - [TSID](https://vladmihalcea.com/tsid-identifier-jpa-hibernate/)
@@ -107,3 +116,105 @@ mvn compile jib:build -P build-docker -Djib.to.auth.username=$DOCKER_HUB_USER -D
 
 ## Database
 [liquibase json format](https://docs.liquibase.com/concepts/changelogs/json-format.html)
+
+
+### Meny
+https://meny.no/varer/ost/brunost/gudbrandsdalsost-7038010029530
+```
+{
+  "@context": "http://www.schema.org",
+  "@type": "product",
+  "name": "Gudbrandsdalsost",
+  "logo": "",
+  "sku": "7038010029530",
+  "mpn": null,
+  "brand": {
+    "@type": "Thing",
+    "name": "Tine"
+  },
+  "manufacturer": {
+    "@type": "Organization",
+    "name": "Tine sa"
+  },
+  "image": [
+    "https://bilder.ngdata.no/7038010029530/meny/large.jpg"
+  ],
+  "description": "G35 skivet 130g Tine",
+  "gtin13": "7038010029530",
+  "review": null,
+  "aggregateRating": null,
+  "video": null,
+  "offers": {
+    "@type": "Offer",
+    "url": null,
+    "availability": "http://schema.org/InStock",
+    "priceCurrency": "NOK",
+    "itemCondition": null,
+    "price": "23.5",
+    "selller": null
+  },
+  "category": "Ost",
+  "url": "https://meny.no/varer/ost/brunost/gudbrandsdalsost-7038010029530"
+}
+```
+### Oda
+https://oda.com/no/products/438-tine-skivet-gudbrandsdalsost/
+```
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Skivet Gudbrandsdalsost",
+  "image": [
+    "https://bilder.kolonial.no/local_products/ba33e946-f1f7-46bf-8ba1-fcf19e330549.jpg?auto=format&amp;fit=max&amp;w=752&amp;s=7e9251de247d971d4417179fcbea1f04"
+  ],
+  "brand": "Tine",
+  "offers": {
+    "@type": "Offer",
+    "url": "https://oda.com/no/products/438-tine-skivet-gudbrandsdalsost/",
+    "itemCondition": "https://schema.org/NewCondition",
+    "priceCurrency": "NOK",
+    "price": "21.20",
+    "availability": "https://schema.org/InStock"
+  }
+}
+```
+
+### Spar
+https://spar.no/nettbutikk/varer/drikke/brus/coca-cola-5000112636864
+```
+{
+  "@context": "http://www.schema.org",
+  "@type": "product",
+  "name": "Coca-Cola",
+  "logo": "",
+  "sku": "5000112636864",
+  "mpn": null,
+  "brand": {
+    "@type": "Thing",
+    "name": "Coca-cola"
+  },
+  "manufacturer": {
+    "@type": "Organization",
+    "name": "Coca-cola europacific partners norge as"
+  },
+  "image": [
+    "https://bilder.ngdata.no/5000112636864/kmh/large.jpg?fallback=404&foretrekk=bedark"
+  ],
+  "description": "1,5l flaske",
+  "gtin13": "5000112636864",
+  "review": null,
+  "aggregateRating": null,
+  "video": null,
+  "offers": {
+    "@type": "Offer",
+    "url": null,
+    "availability": "http://schema.org/InStock",
+    "priceCurrency": "NOK",
+    "itemCondition": null,
+    "price": "38.9",
+    "selller": null
+  },
+  "category": "Drikke",
+  "url": "https://spar.no/nettbutikk/varer/drikke/brus/coca-cola-5000112636864"
+}
+```

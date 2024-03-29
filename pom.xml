@@ -224,6 +224,12 @@
             <artifactId>bucket4j-core</artifactId>
             <version>8.9.0</version>
         </dependency>
+        <!-- for reading and paring html page-->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.17.2</version>
+        </dependency>
         <!-- ================= -->
         <!-- Test dependencies -->
         <!-- ================= -->

@@ -43,6 +43,6 @@ public class TodoDto {
     private String description;
     @Schema(description = "List of task for the todo list")
     private List<TodoItemDto> todoItemDtoList;
-    @Schema(description = "List of participant for the todo")
+    @Schema(description = "The todo list can have many participants and a participant is unique for a todo list.")
     private List<ParticipantDto> participantDtoList;
 }

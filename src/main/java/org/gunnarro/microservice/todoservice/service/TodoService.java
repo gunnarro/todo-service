@@ -35,4 +35,10 @@ public interface TodoService {
     ParticipantDto updateParticipant(ParticipantDto participantDto);
 
     void deleteParticipant(Long todoId, Long participantId);
+
+    List<ApprovalDto> getApprovals(Long todoId, Long todoItemId);
+
+    ApprovalDto addApproval(ApprovalDto approvalDto);
+
+    void deleteApproval(Long todoItemId, Long participantId);
 }

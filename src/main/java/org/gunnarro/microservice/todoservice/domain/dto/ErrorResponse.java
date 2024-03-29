@@ -2,16 +2,18 @@ package org.gunnarro.microservice.todoservice.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 /**
  * Common error response for rest services
  */
 @Schema(description = "Holds rest service error description")
-@Data
-@Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@ToString
+@Builder
 public class ErrorResponse {
     @Schema(description = "http status code", example = "404")
     private Integer httpStatus;

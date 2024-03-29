@@ -1,12 +1,14 @@
 package org.gunnarro.microservice.todoservice.repository.entity;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.envers.AuditOverride;
 import org.hibernate.envers.Audited;
+import org.hibernate.type.NumericBooleanConverter;
 
 @Table(name = "TODO_ITEM", schema = "todo")
 @Entity
@@ -52,4 +54,12 @@ public class TodoItem extends BaseEntity {
 
     @Column(name = "PRIORITY")
     private Integer priority;
+
+    @Convert(converter = NumericBooleanConverter.class)
+    @Column(name = "APPROVAL_REQUIRED", nullable = false)
+    private Boolean approvalRequired;
+
+   // @Convert(converter = NumericBooleanConverter.class)
+   // @Column(name = "APPROVED", nullable = false)
+   // private Boolean approved;
 }

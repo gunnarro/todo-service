@@ -10,6 +10,7 @@ import org.gunnarro.microservice.todoservice.exception.RestInputValidationExcept
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -129,7 +130,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler({IllegalArgumentException.class, RestInputValidationException.class})
+    @ExceptionHandler({IllegalArgumentException.class, RestInputValidationException.class, DataIntegrityViolationException.class})
     public ResponseEntity<ErrorResponse> handleBadRequestException(final Exception exception) {
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .httpStatus(HttpStatus.BAD_REQUEST.value())

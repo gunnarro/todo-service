@@ -1,10 +1,7 @@
 package org.gunnarro.microservice.todoservice.domain.mapper;
 
 import org.gunnarro.microservice.todoservice.domain.dto.todo.*;
-import org.gunnarro.microservice.todoservice.repository.entity.Participant;
-import org.gunnarro.microservice.todoservice.repository.entity.Todo;
-import org.gunnarro.microservice.todoservice.repository.entity.TodoHistory;
-import org.gunnarro.microservice.todoservice.repository.entity.TodoItem;
+import org.gunnarro.microservice.todoservice.repository.entity.*;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -77,6 +74,7 @@ public class TodoMapperTest {
                 .description("stue")
                 .action(TaskAction.TO_BE_SOLD.name())
                 .assignedTo("guro")
+                .approvalRequired(false)
                 .build();
 
         TodoItemDto todoItemDto = TodoMapper.toTodoItemDto(todoItem);
@@ -90,6 +88,7 @@ public class TodoMapperTest {
         assertEquals(todoItem.getStatus(), todoItemDto.getStatus().name());
         assertEquals(todoItem.getCreatedByUser(), todoItemDto.getCreatedByUser());
         assertEquals(todoItem.getLastModifiedByUser(), todoItemDto.getLastModifiedByUser());
+        assertEquals(todoItem.getApprovalRequired(), todoItemDto.getApprovalRequired());
     }
 
     @Test
@@ -103,6 +102,7 @@ public class TodoMapperTest {
                 .description("stue")
                 .action(TaskAction.TO_BE_SOLD)
                 .assignedTo("guro")
+                .approvalRequired(true)
                 .build();
 
         TodoItem todoItem = TodoMapper.fromTodoItemDto(todoItemDto);
@@ -116,6 +116,7 @@ public class TodoMapperTest {
         assertEquals(todoItemDto.getStatus().name(), todoItem.getStatus());
         assertEquals(todoItemDto.getCreatedByUser(), todoItem.getCreatedByUser());
         assertEquals(todoItemDto.getLastModifiedByUser(), todoItem.getLastModifiedByUser());
+        assertEquals(todoItemDto.getApprovalRequired(), todoItem.getApprovalRequired());
     }
 
     @Test
@@ -170,5 +171,33 @@ public class TodoMapperTest {
         assertEquals(participant.getName(), participantDto.getName());
         assertEquals(participant.getEmail(), participantDto.getEmail());
         assertEquals(participant.getEnabled(), participantDto.getEnabled());
+    }
+
+    @Test
+    void toApprovalDto() {
+        Approval approval = Approval.builder()
+                .id(12345L)
+                .todoItemId(123456789L)
+                .participantId(987654321L)
+                .approved(false)
+                .build();
+        ApprovalDto approvalDto = TodoMapper.toApprovalDto(approval);
+        assertEquals(approval.getId().toString(), approvalDto.getId());
+        assertEquals(approval.getTodoItemId().toString(), approvalDto.getTodoItemId());
+        assertEquals(approval.getParticipantId().toString(), approvalDto.getParticipantId());
+    }
+
+    @Test
+    void fromApprovalDto() {
+        ApprovalDto approvalDto = ApprovalDto.builder()
+                .id("23")
+                .todoItemId("123456789")
+                .participantId("987654321")
+                .approved(true)
+                .build();
+        Approval approval = TodoMapper.fromApprovalDto(approvalDto);
+        assertEquals(approvalDto.getId(), approval.getId().toString());
+        assertEquals(approvalDto.getTodoItemId(), approval.getTodoItemId().toString());
+        assertEquals(approvalDto.getParticipantId(), approval.getParticipantId().toString());
     }
 }

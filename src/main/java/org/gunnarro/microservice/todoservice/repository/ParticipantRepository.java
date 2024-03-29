@@ -13,7 +13,7 @@ import java.util.Optional;
 @Repository
 public interface ParticipantRepository extends JpaRepository<Participant, Long> {
 
-    @Query("SELECT p FROM Participant p WHERE p.fkTodoId = :todoId")
+    @Query("SELECT p FROM Participant p WHERE p.fkTodoId = :todoId ORDER BY p.name ASC")
     List<Participant> getParticipants(@Param("todoId") Long todoId);
 
     @Query("SELECT p FROM Participant p WHERE p.id = :id")

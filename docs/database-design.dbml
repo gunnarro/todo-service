@@ -5,10 +5,17 @@ Table user_account {
     password varchar
 }
 
+Table user_account_participant_lnk {
+    id long [primary key]
+    fk_user_account_id long
+    fk_participant_id long
+}
+
 Table todo {
     id long [primary key]
     name varchar
     description varchar
+    status varchar
 }
 
 Table todo_item {
@@ -16,6 +23,12 @@ Table todo_item {
     fk_todo_id long
     name varchar
     description varchar
+    status varchar
+    category varchar
+    action varchar
+    assignedTo varchar
+    approvalRequired integer
+    approved integer
 }
 
 Table todo_participant {
@@ -24,14 +37,23 @@ Table todo_participant {
     email varchar
 }
 
-
 Table todo_participant_lnk {
     id long [primary key]
     fk_todo_id long
     fk_todo_participant_id long
 }
 
-Ref todo_items: todo_item.fk_todo_id > todo.id  // many-to-one
+Table todo_item_approval {
+    id long [primary key]
+    fk_todo_item_id long
+    fk_todo_participant_id long
+}
+
+Ref: todo_item.fk_todo_id > todo.id  // many-to-one
 Ref: todo_participant_lnk.fk_todo_id > todo.id // many to one
 Ref: todo_participant_lnk.fk_todo_participant_id > todo_participant.id // many to one
+Ref: todo_item_approval.fk_todo_item_id > todo_item.id // many to one
+Ref: todo_item_approval.fk_todo_participant_id > todo_participant.id // many to one
+Ref: todo_item_approval.fk_todo_participant_id > todo_participant.id // many to one
+
 

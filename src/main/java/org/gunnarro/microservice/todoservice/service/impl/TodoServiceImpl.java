@@ -6,6 +6,7 @@ import org.gunnarro.microservice.todoservice.domain.dto.todo.*;
 import org.gunnarro.microservice.todoservice.domain.mapper.TodoMapper;
 import org.gunnarro.microservice.todoservice.exception.ApplicationException;
 import org.gunnarro.microservice.todoservice.exception.RestInputValidationException;
+import org.gunnarro.microservice.todoservice.repository.ApprovalRepository;
 import org.gunnarro.microservice.todoservice.repository.ParticipantRepository;
 import org.gunnarro.microservice.todoservice.repository.TodoItemRepository;
 import org.gunnarro.microservice.todoservice.repository.TodoRepository;
@@ -29,15 +30,19 @@ public class TodoServiceImpl implements TodoService {
 
     private final TodoRepository todoRepository;
     private final TodoItemRepository todoItemRepository;
-
     private final ParticipantRepository participantRepository;
+    private final ApprovalRepository approvalRepository;
 
-    public TodoServiceImpl(TodoRepository todoRepository, TodoItemRepository todoItemRepository, ParticipantRepository participantRepository) {
+    public TodoServiceImpl(TodoRepository todoRepository, TodoItemRepository todoItemRepository, ParticipantRepository participantRepository, ApprovalRepository approvalRepository) {
         this.todoRepository = todoRepository;
         this.todoItemRepository = todoItemRepository;
         this.participantRepository = participantRepository;
+        this.approvalRepository = approvalRepository;
     }
 
+    //-------------------------------------------------------------------
+    // Todo
+    //-------------------------------------------------------------------
     @Override
     public List<TodoDto> getTodosByUserName(String userName) {
         return TodoMapper.toTodoDtoList(todoRepository.getTodosByUserName(userName));
@@ -87,6 +92,9 @@ public class TodoServiceImpl implements TodoService {
         }
     }
 
+    //-------------------------------------------------------------------
+    // Todo items
+    //-------------------------------------------------------------------
     @Transactional
     @Override
     public TodoItemDto addTodoItem(TodoItemDto todoItemDto) {
@@ -113,6 +121,9 @@ public class TodoServiceImpl implements TodoService {
         todoItemRepository.deleteById(todoItemId);
     }
 
+    //-------------------------------------------------------------------
+    // Participants
+    //-------------------------------------------------------------------
     @Override
     public List<ParticipantDto> getParticipants(Long todoId) {
         return TodoMapper.toParticipantDtoList(participantRepository.getParticipants(todoId));
@@ -134,6 +145,28 @@ public class TodoServiceImpl implements TodoService {
         log.debug("deleted participant, todoId={}, participantId={}", todoId, participantId);
     }
 
+    //-------------------------------------------------------------------
+    // Approvals
+    //-------------------------------------------------------------------
+    @Override
+    public List<ApprovalDto> getApprovals(Long todoId, Long todoItemId) {
+       return TodoMapper.toApprovalDtoList(approvalRepository.getApprovals(todoItemId));
+    }
+
+    @Override
+    public ApprovalDto addApproval(ApprovalDto approvalDto) {
+        return TodoMapper.toApprovalDto(approvalRepository.save(TodoMapper.fromApprovalDto(approvalDto)));
+    }
+
+    @Override
+    public void deleteApproval(Long todoItemId, Long participantId) {
+        approvalRepository.deleteApproval(todoItemId, participantId);
+        log.debug("deleted approval, todoItemId={}, participantId={}", todoItemId, participantId);
+    }
+
+    //-------------------------------------------------------------------
+    // History
+    //-------------------------------------------------------------------
     public List<TodoHistoryDto> getTodoHistory(Long todoId) {
         List<TodoHistoryDto> todoHistoryDtoList = new ArrayList<>();
         Revisions<Long, Todo> revisions = this.todoRepository.findRevisions(todoId);

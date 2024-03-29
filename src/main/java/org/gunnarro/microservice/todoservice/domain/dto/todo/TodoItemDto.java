@@ -51,4 +51,6 @@ public class TodoItemDto {
     private Integer price;
     @Schema(description = "number of minutes worked with this task")
     private Integer workedMinutes;
+    @Schema(description = "Indicates it this task must be approved ba all participants or not, Default is no need for approval.")
+    private Boolean approvalRequired;
 }

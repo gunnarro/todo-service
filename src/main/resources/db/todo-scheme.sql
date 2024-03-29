@@ -12,9 +12,7 @@
 ------------------------------------------------------------------------------------------
 -- 31.01.2024	gunnarro 		Initial version 1.0-SNAPSHOT
 ------------------------------------------------------------------------------------------
-CREATE DATABASE
-
-IF NOT EXISTS todo;
+CREATE DATABASE IF NOT EXISTS todo;
 	-- create user and gran access
 	-- CREATE USER 'todo-service'@'localhost' IDENTIFIED BY 'ABcd-2o1o';
 	-- GRANT SELECT, INSERT, UPDATE, DELETE ON todo.* TO 'todo-service'@'localhost';
@@ -26,9 +24,7 @@ IF NOT EXISTS todo;
 	SET FOREIGN_KEY_CHECKS = 0;
 
 -- Table: user_account
-DROP TABLE
-
-IF EXISTS user_account;
+DROP TABLE IF EXISTS user_account;
 	CREATE TABLE user_account (
 		id BIGINT PRIMARY KEY AUTO_INCREMENT,
 		created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -41,9 +37,7 @@ IF EXISTS user_account;
 SET 'utf8' COLLATE 'utf8_unicode_ci';
 
 -- Table: todo
-DROP TABLE
-
-IF EXISTS todo;
+DROP TABLE IF EXISTS todo;
 	CREATE TABLE todo (
 		id BIGINT PRIMARY KEY AUTO_INCREMENT,
 		created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -61,9 +55,7 @@ IF EXISTS todo;
 SET 'utf8' COLLATE 'utf8_unicode_ci';
 
 -- Table: todo_item
-DROP TABLE
-
-IF EXISTS todo_item;
+DROP TABLE IF EXISTS todo_item;
 	CREATE TABLE todo_item (
 		id BIGINT PRIMARY KEY AUTO_INCREMENT,
 		created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -78,6 +70,7 @@ IF EXISTS todo_item;
 		price INTEGER,
 		assigned_to VARCHAR(25),
 		priority INTEGER,
+		approval_required INTEGER,
 		FOREIGN KEY (fk_todo_id) REFERENCES todo(id) ON DELETE SET NULL ON UPDATE CASCADE,
 		fk_todo_id BIGINT,
 		UNIQUE (name)
@@ -86,9 +79,7 @@ IF EXISTS todo_item;
 SET 'utf8' COLLATE 'utf8_unicode_ci';
 
 -- Table: todo_participant
-DROP TABLE
-
-IF EXISTS todo_participant;
+DROP TABLE IF EXISTS todo_participant;
 	CREATE TABLE todo_participant (
 		id BIGINT PRIMARY KEY AUTO_INCREMENT,
 		created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -106,9 +97,7 @@ IF EXISTS todo_participant;
 SET 'utf8' COLLATE 'utf8_unicode_ci';
 
 -- Table: todo_participant_lnk for many-to-many relations
-DROP TABLE
-
-IF EXISTS todo_participant_lnk;
+DROP TABLE IF EXISTS todo_participant_lnk;
 	CREATE TABLE todo_participant_lnk (
 		id BIGINT PRIMARY KEY AUTO_INCREMENT,
 		created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -125,14 +114,32 @@ IF EXISTS todo_participant_lnk;
 
 SET 'utf8' COLLATE 'utf8_unicode_ci';
 
+DROP TABLE IF EXISTS todo_item_approval;
+	CREATE TABLE todo_item_approval (
+		id BIGINT PRIMARY KEY AUTO_INCREMENT,
+        created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        last_modified_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        created_by_user VARCHAR(100) NOT NULL,
+        last_modified_by_user VARCHAR(100) NOT NULL,
+		FOREIGN KEY (fk_todo_item_id) REFERENCES todo_item(id) ON DELETE SET NULL ON UPDATE CASCADE,
+		fk_todo_item_id BIGINT,
+		FOREIGN KEY (fk_todo_participant_id) REFERENCES todo_participant(id) ON DELETE SET NULL ON UPDATE CASCADE,
+		fk_todo_participant_id BIGINT,
+		approved INTEGER,
+		UNIQUE (
+			fk_todo_item_id,
+			fk_todo_participant_id
+			)
+		) CHARACTER
+
+SET 'utf8' COLLATE 'utf8_unicode_ci';
+
 -- ----------------------------------------------------------------------------------
 -- for auditing
 -- needed by hibernate envers
 -- ----------------------------------------------------------------------------------
 -- create revinfo table
-DROP TABLE
-
-IF EXISTS revinfo;
+DROP TABLE IF EXISTS revinfo;
 	CREATE TABLE revinfo (
 		rev INTEGER AUTO_INCREMENT,
 		revtstmp BIGINT,
@@ -144,9 +151,7 @@ SET 'utf8' COLLATE 'utf8_unicode_ci';
 ALTER TABLE revinfo AUTO_INCREMENT = 1;
 
 -- create todo_history table
-DROP TABLE
-
-IF EXISTS todo_history;
+DROP TABLE IF EXISTS todo_history;
 	CREATE TABLE todo_history (
 		id BIGINT NOT NULL,
 		name CHARACTER VARYING(255),
@@ -176,9 +181,7 @@ IF EXISTS todo_history;
 SET 'utf8' COLLATE 'utf8_unicode_ci';
 
 -- create todo_item_history table
-DROP TABLE
-
-IF EXISTS todo_item_history;
+DROP TABLE IF EXISTS todo_item_history;
 	CREATE TABLE todo_item_history (
 		id BIGINT NOT NULL,
 		fk_todo_id BIGINT,
@@ -197,6 +200,8 @@ IF EXISTS todo_item_history;
 		assigned_to CHARACTER VARYING(255),
 		priority INTEGER,
 		priority_mod boolean,
+		approval_required INTEGER,
+        approval_required_mod boolean,
 		assigned_to_mod boolean,
 		created_date TIMESTAMP,
 		last_modified_date TIMESTAMP,
@@ -219,9 +224,7 @@ IF EXISTS todo_item_history;
 SET 'utf8' COLLATE 'utf8_unicode_ci';
 
 -- create todo_participant_history table
-DROP TABLE
-
-IF EXISTS todo_participant_history;
+DROP TABLE IF EXISTS todo_participant_history;
 	CREATE TABLE todo_participant_history (
 		id BIGINT NOT NULL,
 		fk_todo_id BIGINT,
@@ -246,6 +249,34 @@ IF EXISTS todo_participant_history;
 			revision_id
 			),
 		CONSTRAINT todo_participant_aud_revinfo FOREIGN KEY (revision_id) REFERENCES revinfo(rev) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION
+		-- end hibernate envers
+		) CHARACTER
+
+SET 'utf8' COLLATE 'utf8_unicode_ci';
+
+-- create todo_item_approval_history table
+DROP TABLE IF EXISTS todo_item_approval_history;
+	CREATE TABLE todo_item_approval_history (
+		id BIGINT NOT NULL,
+		fk_todo_item_id BIGINT,
+		fk_todo_participant_id BIGINT,
+		created_date TIMESTAMP,
+		last_modified_date TIMESTAMP,
+		created_by_user CHARACTER VARYING(255),
+		last_modified_by_user CHARACTER VARYING(255),
+		last_modified_by_user_mod BOOLEAN,
+		approved INTEGER,
+		approved_mod BOOLEAN,
+		-- used by auditing hibernate envers
+		revision_id INTEGER NOT NULL,
+		revision_end_id INTEGER,
+		revision_type TINYINT,
+		FOREIGN KEY (revision_end_id) REFERENCES revinfo(rev) ON DELETE SET NULL ON UPDATE CASCADE,
+		CONSTRAINT todo_item_approval_aud_pkey PRIMARY KEY (
+			id,
+			revision_id
+			),
+		CONSTRAINT todo_item_approval_aud_revinfo FOREIGN KEY (revision_id) REFERENCES revinfo(rev) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION
 		-- end hibernate envers
 		) CHARACTER
 

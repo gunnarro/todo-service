@@ -1,14 +1,16 @@
 package org.gunnarro.microservice.todoservice.endpoint;
 
-import jakarta.transaction.Transactional;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.client5.http.io.HttpClientConnectionManager;
 import org.apache.hc.client5.http.ssl.NoopHostnameVerifier;
 import org.apache.hc.client5.http.ssl.SSLConnectionSocketFactory;
 import org.apache.hc.client5.http.ssl.TrustSelfSignedStrategy;
-import org.apache.hc.client5.http.utils.Base64;
 import org.apache.hc.core5.ssl.SSLContextBuilder;
+import org.gunnarro.microservice.todoservice.Utility;
+import org.gunnarro.microservice.todoservice.domain.dto.ErrorResponse;
 import org.gunnarro.microservice.todoservice.domain.dto.todo.*;
 import org.gunnarro.microservice.todoservice.exception.NotFoundException;
 import org.junit.jupiter.api.Assertions;
@@ -21,15 +23,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestTemplate;
 
 import javax.net.ssl.SSLContext;
-import java.io.Serial;
-import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -48,28 +48,26 @@ public class TodoControllerIT {
     // @LocalServerPort
     @Value("${server.port}")
     private int port;
-
     @Value("${spring.security.user.name}")
     private String username;
     @Value("${spring.security.user.password}")
     private String password;
-
     private RestClient restClient;
-
     private RestTemplate testRestTemplate;
     private HttpHeaders requestHeaders;
+    private ObjectMapper objectMapper;
 
     @BeforeEach
     public void init() throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
-        org.hibernate.mapping.Value v;
         //System.setProperty("SERVER_IDENTITY_KEYSTORE_PATH", "config/server-identity-test.jks");
         //System.setProperty("SERVER_IDENTITY_KEYSTORE_ALIAS", "gunnarro-microservice");
         //System.setProperty("SERVER_IDENTITY_KEYSTORE_PASS", "test");
         System.setProperty("jdk.internal.httpclient.disableHostnameVerification", "true");
 
+        objectMapper = new ObjectMapper();
         restClient = RestClient.builder()
                 .baseUrl("")
-                .defaultHeader(HttpHeaders.AUTHORIZATION, encodeBasic("my-service-name", "change-me"))
+                .defaultHeader(HttpHeaders.AUTHORIZATION, Utility.encodeBasic("my-service-name", "change-me"))
                 .build();
 
         final SSLContext sslContext = new SSLContextBuilder().loadTrustMaterial(null, new TrustSelfSignedStrategy()).build();
@@ -86,8 +84,8 @@ public class TodoControllerIT {
         HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
         requestFactory.setHttpClient(httpClient);
         testRestTemplate = new RestTemplate(requestFactory);
-        //  testRestTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-        requestHeaders = createHeaders(username, password);
+        //testRestTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+        requestHeaders = Utility.createHeaders(username, password);
         requestHeaders.setContentType(MediaType.APPLICATION_JSON);
         requestHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
     }
@@ -139,8 +137,6 @@ public class TodoControllerIT {
          */
     }
 
-    @Transactional
-    @Rollback
     @Test
     void todoAndItemsCrud() {
         TodoDto todoDto = TodoDto.builder()
@@ -310,11 +306,9 @@ public class TodoControllerIT {
 //        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
-    @Transactional
-    @Rollback
+
     @Test
     void todoParticipantCrud() {
-
         TodoDto todoDto = TodoDto.builder()
                 .name("todo-test-participant")
                 .status(TodoStatus.OPEN)
@@ -366,7 +360,9 @@ public class TodoControllerIT {
         assertEquals("204 NO_CONTENT", participantResp.getStatusCode().toString());
 
         // delete todo
-
+        HttpEntity<TodoDto> entity = new HttpEntity<>(null, requestHeaders);
+        ResponseEntity<TodoDto> responseDelete = testRestTemplate.exchange(createURLWithPort("https", "todos/" + todoId), HttpMethod.DELETE, entity, TodoDto.class);
+        assertEquals("204 NO_CONTENT", responseDelete.getStatusCode().toString());
     }
 
     @Test
@@ -379,6 +375,41 @@ public class TodoControllerIT {
         assertEquals(0, response.getBody().size());
     }
 
+    @Test
+    void addTodoParticipant_bad_request() throws JsonProcessingException {
+        String todoId = "111111111";
+        ParticipantDto participantDto = ParticipantDto.builder()
+                .todoId(todoId)
+                .name("guro")
+                .email("guro@mail.org")
+                .enabled(1)
+                .build();
+
+        // add participant to todo list
+        HttpEntity<ParticipantDto> participantEntity = new HttpEntity<>(participantDto, requestHeaders);
+        try {
+            testRestTemplate.exchange(createURLWithPort("https", "/todos/" + todoId + "/participants"), HttpMethod.POST, participantEntity, ParticipantDto.class);
+        } catch (HttpClientErrorException e) {
+            assertEquals("400 BAD_REQUEST", e.getStatusCode().toString());
+            assertEquals("{\"httpStatus\":400,\"httpMessage\":\"Bad Request\",\"errorCode\":400200,\"description\":\"Service Input Validation Error\"}", e.getResponseBodyAsString());
+            // check that a ErrorResponse is returned
+            ErrorResponse errorResponse = objectMapper.readValue(e.getResponseBodyAsString(), ErrorResponse.class);
+            assertEquals("400", errorResponse.getHttpStatus().toString());
+            assertEquals("400200", errorResponse.getErrorCode().toString());
+            assertEquals("Bad Request", errorResponse.getHttpMessage());
+            assertEquals("Service Input Validation Error", errorResponse.getDescription());
+        }
+    }
+
+    @Test
+    void getTodoItemApprovals() {
+        HttpEntity<ParticipantDto> requestEntity = new HttpEntity<>(null, requestHeaders);
+        ParameterizedTypeReference<List<ApprovalDto>> responseEntity = new ParameterizedTypeReference<>() {
+        };
+        ResponseEntity<List<ApprovalDto>> response = testRestTemplate.exchange(createURLWithPort("https", "todos/546769619193246584/items/2222222/approvals"), HttpMethod.GET, requestEntity, responseEntity);
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(0, response.getBody().size());
+    }
 
     @Test
     void getTodoAuditHistoryNotHit() {
@@ -411,7 +442,6 @@ public class TodoControllerIT {
         assertEquals("guro-2", response.getBody().get(0).getLastModifiedByUser());
     }
 
-    @Rollback
     @Test
     void deleteTodo() {
         HttpEntity<TodoDto> entity = new HttpEntity<>(null, requestHeaders);
@@ -421,25 +451,6 @@ public class TodoControllerIT {
 
     private String createURLWithPort(String protocol, String uri) {
         return String.format("%s://localhost:%s/todoservice/v1/%s", protocol, port, uri);
-    }
-
-    private HttpHeaders createHeaders(String username, String password) {
-        return new HttpHeaders() {
-            @Serial
-            private static final long serialVersionUID = 1L;
-
-            {
-                String auth = username + ":" + password;
-                byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(StandardCharsets.UTF_8));
-                set("Authorization", String.format("Basic %s", new String(encodedAuth)));
-                set("Content-Type", MediaType.APPLICATION_JSON_VALUE);
-                set("X-XSRF-TOKEN", "must be read from the response");
-            }
-        };
-    }
-
-    private String encodeBasic(String username, String password) {
-        return "Basic " + Base64.encodeBase64String(String.format("%s:%s", username, password).getBytes());
     }
 
     List<TodoDto> createTodoTestData() {
