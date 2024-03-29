@@ -52,8 +52,9 @@ public class TodoItem extends BaseEntity {
     @Column(name = "FK_TODO_ID", nullable = false)
     private Long fkTodoId;
 
-    @Column(name = "PRIORITY")
-    private Integer priority;
+    @Audited(withModifiedFlag = true)
+    @Column(name = "PRIORITY", nullable = false)
+    private String priority;
 
     @Convert(converter = NumericBooleanConverter.class)
     @Column(name = "APPROVAL_REQUIRED", nullable = false)

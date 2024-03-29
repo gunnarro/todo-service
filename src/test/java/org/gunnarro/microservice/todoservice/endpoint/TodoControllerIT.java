@@ -207,6 +207,8 @@ public class TodoControllerIT {
                 .status(TodoItemStatus.OPEN)
                 .action(TaskAction.TO_BE_SOLD)
                 .price(998)
+                .approvalRequired(false)
+                .priority(Priority.HIGHEST)
                 .assignedTo("guro")
                 .createdByUser("guro")
                 .lastModifiedByUser("guro")
@@ -224,6 +226,8 @@ public class TodoControllerIT {
                 .status(TodoItemStatus.OPEN)
                 .action(TaskAction.TO_BE_SOLD)
                 .price(2500)
+                .approvalRequired(true)
+                .priority(Priority.MEDIUM)
                 .assignedTo("guro")
                 .createdByUser("guro")
                 .lastModifiedByUser("guro")
@@ -252,6 +256,7 @@ public class TodoControllerIT {
                 .status(TodoItemStatus.DONE)
                 .action(todoItemResponse2.getBody().getAction())
                 .price(todoItemResponse2.getBody().getPrice())
+                .priority(Priority.MEDIUM)
                 .assignedTo("guro")
                 .createdByUser("guro")
                 .lastModifiedByUser("guro")
@@ -431,7 +436,7 @@ public class TodoControllerIT {
         ResponseEntity<List<TodoHistoryDto>> response = testRestTemplate.exchange(createURLWithPort("https", "todos/546769619193246584/history"), HttpMethod.GET, requestEntity, responseEntity);
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(3, response.getBody().size());
-        assertEquals(545716833011225412L, response.getBody().get(0).getId());
+        assertEquals("545716833011225412L", response.getBody().get(0).getId());
         assertEquals(null, response.getBody().get(0).getRevisionNumber());
         assertEquals("INSERT", response.getBody().get(0).getRevisionType());
         assertEquals("todo-crud-unit-test-all", response.getBody().get(0).getName());
@@ -488,6 +493,8 @@ public class TodoControllerIT {
                 .action(TaskAction.TO_BE_SOLD)
                 .status(status)
                 .assignedTo("guro")
+                .priority(Priority.MEDIUM)
+                .approvalRequired(false)
                 .build();
     }
 }

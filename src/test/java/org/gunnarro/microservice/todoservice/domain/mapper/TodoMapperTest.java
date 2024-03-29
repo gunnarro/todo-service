@@ -12,7 +12,6 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TodoMapperTest {
-
     @Test
     void toTodoDto() {
         Todo todo = new Todo();
@@ -74,6 +73,7 @@ public class TodoMapperTest {
                 .description("stue")
                 .action(TaskAction.TO_BE_SOLD.name())
                 .assignedTo("guro")
+                .priority(Priority.MEDIUM.name())
                 .approvalRequired(false)
                 .build();
 
@@ -89,6 +89,7 @@ public class TodoMapperTest {
         assertEquals(todoItem.getCreatedByUser(), todoItemDto.getCreatedByUser());
         assertEquals(todoItem.getLastModifiedByUser(), todoItemDto.getLastModifiedByUser());
         assertEquals(todoItem.getApprovalRequired(), todoItemDto.getApprovalRequired());
+        assertEquals(todoItem.getPriority(), todoItemDto.getPriority().name());
     }
 
     @Test
@@ -103,6 +104,7 @@ public class TodoMapperTest {
                 .action(TaskAction.TO_BE_SOLD)
                 .assignedTo("guro")
                 .approvalRequired(true)
+                .priority(Priority.HIGHEST)
                 .build();
 
         TodoItem todoItem = TodoMapper.fromTodoItemDto(todoItemDto);
@@ -117,6 +119,7 @@ public class TodoMapperTest {
         assertEquals(todoItemDto.getCreatedByUser(), todoItem.getCreatedByUser());
         assertEquals(todoItemDto.getLastModifiedByUser(), todoItem.getLastModifiedByUser());
         assertEquals(todoItemDto.getApprovalRequired(), todoItem.getApprovalRequired());
+        assertEquals(todoItemDto.getPriority().name(), todoItem.getPriority());
     }
 
     @Test

@@ -52,6 +52,6 @@ public class TodoItemHistoryDto implements Serializable {
     @Schema(description = "the person that is responsible to follow up and fulfill this task")
     private String assignedTo;
     @Schema(description = "the priority of this task, can be any integer, typically from 1- 10")
-    private Integer priority;
+    private Priority priority;
 
 }

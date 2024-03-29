@@ -80,7 +80,7 @@ public class TodoMapper {
                 .assignedTo(todoItem.getAssignedTo())
                 .createdByUser(todoItem.getCreatedByUser())
                 .lastModifiedByUser(todoItem.getLastModifiedByUser())
-                .priority(todoItem.getPriority())
+                .priority(Priority.valueOf(todoItem.getPriority()))
                 .approvalRequired(todoItem.getApprovalRequired())
                 .build();
     }
@@ -100,7 +100,7 @@ public class TodoMapper {
                 .assignedTo(todoItemDto.getAssignedTo())
                 .createdByUser(todoItemDto.getCreatedByUser())
                 .lastModifiedByUser(todoItemDto.getLastModifiedByUser())
-                .priority(todoItemDto.getPriority())
+                .priority(todoItemDto.getPriority().name())
                 .approvalRequired(todoItemDto.getApprovalRequired())
                 .build();
     }
@@ -166,7 +166,7 @@ public class TodoMapper {
                 .lastModifiedDate(todoItem.getLastModifiedDate())
                 .createdByUser(todoItem.getCreatedByUser())
                 .lastModifiedByUser(todoItem.getLastModifiedByUser())
-                .priority(todoItem.getPriority())
+                .priority(todoItem.getPriority() != null ? Priority.valueOf(todoItem.getPriority()) : null)
                 .revisionType(revisionType)
                 .revisionNumber(revisionNumber)
                 .build();

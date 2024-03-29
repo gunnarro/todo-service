@@ -2,13 +2,13 @@ package org.gunnarro.microservice.todoservice.domain.dto.todo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-@Schema(description = "Holds all possible statues for a todo task.")
-public enum TodoStatus {
-    OPEN("open"), IN_PROGRESS("inProgress"), ON_HOLD("onHold"), DONE("done"), CANCELLED("cancelled");
+@Schema(description = "Holds all possible priority levels for a todo item. Where default level is MEDIUM.")
+public enum Priority {
+    LOWEST("lowest"), LOW("low"), MEDIUM("medium"), HIGH("high"), HIGHEST("highest");
 
     private final String label;
 
-    TodoStatus(String label) {
+    Priority(String label) {
         this.label = label;
     }
 
