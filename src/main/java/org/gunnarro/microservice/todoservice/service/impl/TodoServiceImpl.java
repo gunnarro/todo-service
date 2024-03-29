@@ -159,6 +159,11 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
+    public ApprovalDto updateApproval(ApprovalDto approvalDto) {
+        return TodoMapper.toApprovalDto(approvalRepository.save(TodoMapper.fromApprovalDto(approvalDto)));
+    }
+
+    @Override
     public void deleteApproval(Long todoItemId, Long participantId) {
         approvalRepository.deleteApproval(todoItemId, participantId);
         log.debug("deleted approval, todoItemId={}, participantId={}", todoItemId, participantId);

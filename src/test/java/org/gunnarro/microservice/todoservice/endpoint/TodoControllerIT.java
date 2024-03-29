@@ -37,8 +37,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @Disabled
 @ExtendWith(SpringExtension.class)
@@ -217,6 +216,9 @@ public class TodoControllerIT {
         ResponseEntity<TodoItemDto> todoItemResponse1 = testRestTemplate.exchange(createURLWithPort("https", "/todos/" + todoPostResponse.getBody().getId() + "/items"), HttpMethod.POST, new HttpEntity<>(todoItemDto1, requestHeaders), TodoItemDto.class);
         assertEquals("200 OK", todoItemResponse1.getStatusCode().toString());
         assertEquals(TodoItemStatus.OPEN, todoItemResponse1.getBody().getStatus());
+        assertEquals(TaskAction.TO_BE_SOLD, todoItemResponse1.getBody().getAction());
+        assertEquals(Priority.HIGHEST, todoItemResponse1.getBody().getPriority());
+        assertFalse(todoItemResponse1.getBody().getApprovalRequired());
 
         TodoItemDto todoItemDto2 = TodoItemDto.builder()
                 .todoId(todoPostResponse.getBody().getId())
@@ -236,6 +238,9 @@ public class TodoControllerIT {
         ResponseEntity<TodoItemDto> todoItemResponse2 = testRestTemplate.exchange(createURLWithPort("https", "/todos/" + todoPostResponse.getBody().getId() + "/items"), HttpMethod.POST, new HttpEntity<>(todoItemDto2, requestHeaders), TodoItemDto.class);
         assertEquals("200 OK", todoItemResponse2.getStatusCode().toString());
         assertEquals(TodoItemStatus.OPEN, todoItemResponse2.getBody().getStatus());
+        assertEquals(TaskAction.TO_BE_SOLD, todoItemResponse2.getBody().getAction());
+        assertEquals(Priority.MEDIUM, todoItemResponse2.getBody().getPriority());
+        assertTrue(todoItemResponse2.getBody().getApprovalRequired());
 
         // get todo items
         ResponseEntity<TodoDto> todoGetResponse = testRestTemplate.exchange(createURLWithPort("https", "todos/" + todoPostResponse.getBody().getId()), HttpMethod.GET, new HttpEntity<>(null, requestHeaders), TodoDto.class);
@@ -246,7 +251,7 @@ public class TodoControllerIT {
         assertEquals(todoGetResponse.getBody().getId(), todoGetResponse.getBody().getTodoItemDtoList().get(0).getTodoId());
         assertNotNull(todoGetResponse.getBody().getTodoItemDtoList().get(0).getId());
 
-        // update todo item status to done
+        // update todo item 2 status to done
         TodoItemDto updateTodoItemDto2 = TodoItemDto.builder()
                 .id(todoItemResponse2.getBody().getId())
                 .todoId(todoItemResponse2.getBody().getTodoId())
@@ -256,7 +261,8 @@ public class TodoControllerIT {
                 .status(TodoItemStatus.DONE)
                 .action(todoItemResponse2.getBody().getAction())
                 .price(todoItemResponse2.getBody().getPrice())
-                .priority(Priority.MEDIUM)
+                .priority(todoItemResponse2.getBody().getPriority())
+                .approvalRequired(todoItemResponse2.getBody().getApprovalRequired())
                 .assignedTo("guro")
                 .createdByUser("guro")
                 .lastModifiedByUser("guro")

@@ -40,5 +40,7 @@ public interface TodoService {
 
     ApprovalDto addApproval(ApprovalDto approvalDto);
 
+    ApprovalDto updateApproval(ApprovalDto approvalDto);
+
     void deleteApproval(Long todoItemId, Long participantId);
 }

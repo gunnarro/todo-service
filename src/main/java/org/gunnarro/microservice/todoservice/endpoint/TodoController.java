@@ -270,6 +270,40 @@ public class TodoController {
     // todo item approval
     // ---------------------------------------------------------
     @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
+    @Operation(summary = "Add item approval", description = "return todo item approval")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Added todo item approval",
+                    content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = ApprovalDto.class))})
+    })
+    @PostMapping(path = "/todos/{todoId}/items/{todoItemId}/approvals", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
+    public ResponseEntity<ApprovalDto> createTodoItemApproval(@PathVariable("todoId") @NotNull String todoId,
+                                                              @PathVariable("todoItemId") @NotNull String todoItemId,
+                                                              @RequestBody @Valid ApprovalDto ApprovalDto) {
+        if (bucket.tryConsume(1)) {
+            return ResponseEntity.ok(toDoService.addApproval(ApprovalDto));
+        }
+        return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build();
+    }
+
+    @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
+    @Operation(summary = "Add item approval", description = "return todo item approval")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Added todo item approval",
+                    content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = ApprovalDto.class))})
+    })
+    @PutMapping(path = "/todos/{todoId}/items/{todoItemId}/approvals", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
+    public ResponseEntity<ApprovalDto> updateTodoItemApproval(@PathVariable("todoId") @NotNull String todoId,
+                                                              @PathVariable("todoItemId") @NotNull String todoItemId,
+                                                              @RequestBody @Valid ApprovalDto ApprovalDto) {
+        if (bucket.tryConsume(1)) {
+            return ResponseEntity.ok(toDoService.updateApproval(ApprovalDto));
+        }
+        return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build();
+    }
+
+    @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
     @Operation(summary = "Get todo item approvals", description = "return todo item approvals")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found todo item approvals",
@@ -291,7 +325,7 @@ public class TodoController {
     })
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(path = "/todos/{todoId}/items/{todoItemId}/approvals/{participantId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void deleteApproval(@PathVariable("todoId") @NotNull String todoId, @PathVariable("todoItemId") @NotNull String todoItemId,  @PathVariable("participantId") @NotNull String participantId) {
+    public void deleteApproval(@PathVariable("todoId") @NotNull String todoId, @PathVariable("todoItemId") @NotNull String todoItemId, @PathVariable("participantId") @NotNull String participantId) {
         if (bucket.tryConsume(1)) {
             log.info("delete: todoId={}, todoItemId={}, participantId={}", todoId, todoItemId, participantId);
             toDoService.deleteApproval(Long.valueOf(todoItemId), Long.valueOf(participantId));
