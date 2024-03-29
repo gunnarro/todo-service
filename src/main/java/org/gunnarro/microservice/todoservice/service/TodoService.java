@@ -22,6 +22,8 @@ public interface TodoService {
 
     TodoItemDto updateTodoItem(TodoItemDto todoItemDto);
 
+    TodoItemDto getTodoItem(Long todoId, Long todoItemId);
+
     void deleteTodoItem(Long todoId, Long todoItemId);
 
     List<TodoHistoryDto> getTodoHistory(Long todoId);

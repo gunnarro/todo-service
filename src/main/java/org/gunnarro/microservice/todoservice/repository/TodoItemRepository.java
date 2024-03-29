@@ -19,7 +19,7 @@ public interface TodoItemRepository extends JpaRepository<TodoItem, Long>, Revis
     List<TodoItem> getTodoItems(@Param("todoId") Long todoId);
 
     @Query("SELECT i FROM TodoItem i WHERE i.id = :todoItemId AND i.fkTodoId = :todoId")
-    Optional<TodoItem> getTodoItem(@Param("todoItemId") Long todoItemId, @Param("todoId") Long todoId);
+    Optional<TodoItem> getTodoItem(@Param("todoId") Long todoId, @Param("todoItemId") Long todoItemId);
 
     @Modifying
     @Query("DELETE FROM TodoItem i WHERE i.id = :id")

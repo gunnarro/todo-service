@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.gunnarro.microservice.todoservice.domain.dto.todo.*;
 import org.gunnarro.microservice.todoservice.domain.mapper.TodoMapper;
 import org.gunnarro.microservice.todoservice.exception.ApplicationException;
+import org.gunnarro.microservice.todoservice.exception.NotFoundException;
 import org.gunnarro.microservice.todoservice.exception.RestInputValidationException;
 import org.gunnarro.microservice.todoservice.repository.ApprovalRepository;
 import org.gunnarro.microservice.todoservice.repository.ParticipantRepository;
@@ -95,6 +96,11 @@ public class TodoServiceImpl implements TodoService {
     //-------------------------------------------------------------------
     // Todo items
     //-------------------------------------------------------------------
+
+    public TodoItemDto getTodoItem(Long todoId, Long todoItemId) {
+        return TodoMapper.toTodoItemDto(todoItemRepository.getTodoItem(todoId, todoItemId).orElse(null));
+    }
+
     @Transactional
     @Override
     public TodoItemDto addTodoItem(TodoItemDto todoItemDto) {

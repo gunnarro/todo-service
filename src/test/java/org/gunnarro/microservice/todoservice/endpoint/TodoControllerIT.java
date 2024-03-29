@@ -96,7 +96,6 @@ public class TodoControllerIT {
     @Disabled
     @Test
     void getTodoById() {
-
         TodoDto todoDtoResponse = restClient.get()
                 .uri(createURLWithPort("https", "todos/543855162824364902"))
                 .accept(MediaType.APPLICATION_JSON)
@@ -135,6 +134,25 @@ public class TodoControllerIT {
         assertEquals("", response.getBody().getCreatedDate());
         assertEquals("", response.getBody().getLastModifiedByUser());
          */
+    }
+
+    @Test
+    void getTodoItem_not_found() throws JsonProcessingException {
+        HttpEntity<TodoItemDto> requestEntity = new HttpEntity<>(null, requestHeaders);
+        ParameterizedTypeReference<TodoItemDto> responseEntity = new ParameterizedTypeReference<>() {
+        };
+        try {
+            testRestTemplate.exchange(createURLWithPort("https", "/todos/1234/items/22"), HttpMethod.GET, requestEntity, responseEntity);
+        } catch (HttpClientErrorException e) {
+            assertEquals("400 BAD_REQUEST", e.getStatusCode().toString());
+            assertEquals("{\"httpStatus\":400,\"httpMessage\":\"Bad Request\",\"errorCode\":400200,\"description\":\"Service Input Validation Error\"}", e.getResponseBodyAsString());
+            // check that a ErrorResponse is returned
+            ErrorResponse errorResponse = objectMapper.readValue(e.getResponseBodyAsString(), ErrorResponse.class);
+            assertEquals("400", errorResponse.getHttpStatus().toString());
+            assertEquals("400200", errorResponse.getErrorCode().toString());
+            assertEquals("Bad Request", errorResponse.getHttpMessage());
+            assertEquals("Service Input Validation Error", errorResponse.getDescription());
+        }
     }
 
     @Test
@@ -242,7 +260,15 @@ public class TodoControllerIT {
         assertEquals(Priority.MEDIUM, todoItemResponse2.getBody().getPriority());
         assertTrue(todoItemResponse2.getBody().getApprovalRequired());
 
-        // get todo items
+        // get only todo item 2
+        todoItemResponse2 = testRestTemplate.exchange(createURLWithPort("https", "/todos/" + todoItemResponse2.getBody().getTodoId() + "/items/" + todoItemResponse2.getBody().getId()), HttpMethod.GET, new HttpEntity<>(null, requestHeaders), TodoItemDto.class);
+        assertEquals("200 OK", todoItemResponse2.getStatusCode().toString());
+        assertEquals(TodoItemStatus.OPEN, todoItemResponse2.getBody().getStatus());
+        assertEquals(TaskAction.TO_BE_SOLD, todoItemResponse2.getBody().getAction());
+        assertEquals(Priority.MEDIUM, todoItemResponse2.getBody().getPriority());
+        assertTrue(todoItemResponse2.getBody().getApprovalRequired());
+
+        // get todo with items
         ResponseEntity<TodoDto> todoGetResponse = testRestTemplate.exchange(createURLWithPort("https", "todos/" + todoPostResponse.getBody().getId()), HttpMethod.GET, new HttpEntity<>(null, requestHeaders), TodoDto.class);
         todoGetResponse.getHeaders().forEach((k, v) -> System.out.println("Response Header: " + k + "=" + v));
         Assertions.assertEquals(HttpStatus.OK, todoGetResponse.getStatusCode());
