@@ -191,7 +191,7 @@ public class TodoController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found todo item",
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = TodoDto.class))})
+                            schema = @Schema(implementation = TodoItemDto.class))})
     })
     @GetMapping(path = "/todos/{todoId}/items/{todoItemId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
     public TodoItemDto getTodoItem(@PathVariable("todoId") @NotNull String todoId, @PathVariable("todoItemId") @NotNull String todoItemId) {
@@ -228,7 +228,7 @@ public class TodoController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found todos participants",
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = TodoDto.class))})
+                            schema = @Schema(implementation = ParticipantDto.class))})
     })
     @GetMapping(path = "/todos/{todoId}/participants", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
     public ResponseEntity<List<ParticipantDto>> getTodoParticipants(@PathVariable("todoId") @NotNull String todoId) {
@@ -243,7 +243,7 @@ public class TodoController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Created participant",
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = TodoItemDto.class))})
+                            schema = @Schema(implementation = ParticipantDto.class))})
     })
     @PostMapping(path = "/todos/{todoId}/participants", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ParticipantDto createParticipant(@PathVariable("todoId") String todoId, @RequestBody @Valid ParticipantDto participantDto) {
@@ -258,7 +258,7 @@ public class TodoController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Updated participant",
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = TodoItemDto.class))})
+                            schema = @Schema(implementation = ParticipantDto.class))})
     })
     @PutMapping(path = "/todos/{todoId}/participants", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ParticipantDto updateParticipant(@PathVariable("todoId") String todoId, @RequestBody @Valid ParticipantDto participantDto) {
@@ -375,7 +375,7 @@ public class TodoController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the todo history",
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = TodoHistoryDto.class))})
+                            schema = @Schema(implementation = TodoItemHistoryDto.class))})
     })
     @GetMapping(path = "/todos/{todoId}/items/{todoItemId}/history", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
     public List<TodoItemHistoryDto> getTodoItemHistoryById(@PathVariable("todoId") String todoId, @PathVariable("todoItemId") String todoItemId) {

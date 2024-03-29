@@ -351,7 +351,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TodoDto"
+                  "$ref": "#/components/schemas/ParticipantDto"
                 }
               }
             }
@@ -461,7 +461,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TodoItemDto"
+                  "$ref": "#/components/schemas/ParticipantDto"
                 }
               }
             }
@@ -571,7 +571,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TodoItemDto"
+                  "$ref": "#/components/schemas/ParticipantDto"
                 }
               }
             }
@@ -1361,7 +1361,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TodoDto"
+                  "$ref": "#/components/schemas/TodoItemDto"
                 }
               }
             }
@@ -1572,7 +1572,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TodoHistoryDto"
+                  "$ref": "#/components/schemas/TodoItemHistoryDto"
                 }
               }
             }
@@ -2328,6 +2328,89 @@
           }
         },
         "description": "Holds all participants that have approved the todo item"
+      },
+      "TodoItemHistoryDto": {
+        "required": [
+          "todoId"
+        ],
+        "type": "object",
+        "properties": {
+          "revisionNumber": {
+            "type": "integer",
+            "description": "Unique identifier of the revision",
+            "format": "int64"
+          },
+          "revisionEndId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "revisionType": {
+            "type": "string",
+            "description": "the revision type, update, delete"
+          },
+          "id": {
+            "pattern": "[0-9]{1,25}",
+            "type": "string",
+            "description": "Global unique identifier of the todo item. Should not be set for new todo item."
+          },
+          "todoId": {
+            "pattern": "[0-9]{1,25}",
+            "type": "string",
+            "description": "Global unique identifier for the todo that this item belongs to."
+          },
+          "createdDate": {
+            "type": "string",
+            "description": "date when todo was created",
+            "format": "date-time"
+          },
+          "lastModifiedDate": {
+            "type": "string",
+            "description": "date when todo was last modified",
+            "format": "date-time"
+          },
+          "createdByUser": {
+            "type": "string",
+            "description": "user that created the todo"
+          },
+          "lastModifiedByUser": {
+            "type": "string",
+            "description": "user that last modified the todo"
+          },
+          "name": {
+            "pattern": "[\\w\\s\\dæÆøØåÅ_-]{1,50}",
+            "type": "string",
+            "description": "doc me"
+          },
+          "description": {
+            "pattern": "[\\w\\s\\dæÆøØåÅ_-]{1,100}",
+            "type": "string",
+            "description": "description of the task to do"
+          },
+          "status": {
+            "type": "string",
+            "description": "Status of todo, OPEN, IN_PROGRESS or FINISHED"
+          },
+          "action": {
+            "type": "string",
+            "description": "The action that should be done for this item"
+          },
+          "assignedTo": {
+            "type": "string",
+            "description": "the person that is responsible to follow up and fulfill this task"
+          },
+          "priority": {
+            "type": "string",
+            "description": "Holds all possible priority levels for a todo item. Where default level is MEDIUM.",
+            "enum": [
+              "LOWEST",
+              "LOW",
+              "MEDIUM",
+              "HIGH",
+              "HIGHEST"
+            ]
+          }
+        },
+        "description": "Holds audit log for Todo item"
       },
       "TodoHistoryDto": {
         "required": [
