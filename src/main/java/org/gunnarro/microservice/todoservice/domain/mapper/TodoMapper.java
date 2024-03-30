@@ -78,6 +78,8 @@ public class TodoMapper {
                 .status(TodoItemStatus.valueOf(todoItem.getStatus()))
                 .action(TaskAction.valueOf(todoItem.getAction()))
                 .assignedTo(todoItem.getAssignedTo())
+                .createdDate(todoItem.getCreatedDate())
+                .lastModifiedDate(todoItem.getLastModifiedDate())
                 .createdByUser(todoItem.getCreatedByUser())
                 .lastModifiedByUser(todoItem.getLastModifiedByUser())
                 .priority(Priority.valueOf(todoItem.getPriority()))

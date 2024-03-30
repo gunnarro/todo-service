@@ -1,6 +1,5 @@
 package org.gunnarro.microservice.todoservice.repository;
 
-import org.gunnarro.microservice.todoservice.repository.entity.Todo;
 import org.gunnarro.microservice.todoservice.repository.entity.TodoItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

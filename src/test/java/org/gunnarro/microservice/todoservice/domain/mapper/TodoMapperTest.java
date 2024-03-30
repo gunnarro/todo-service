@@ -34,6 +34,8 @@ public class TodoMapperTest {
         assertEquals(todo.getLastModifiedDate(), toDoDto.getLastModifiedDate());
         assertEquals(todo.getDescription(), toDoDto.getDescription());
         assertEquals(todo.getStatus(), toDoDto.getStatus().name());
+        assertEquals(todo.getCreatedDate(), toDoDto.getCreatedDate());
+        assertEquals(todo.getLastModifiedDate(), toDoDto.getLastModifiedDate());
         assertEquals(0, toDoDto.getTodoItemDtoList().size());
         assertEquals(0, toDoDto.getParticipantDtoList().size());
     }
@@ -75,6 +77,8 @@ public class TodoMapperTest {
                 .assignedTo("guro")
                 .priority(Priority.MEDIUM.name())
                 .approvalRequired(false)
+                .createdDate(LocalDateTime.of(2024, 1, 2, 12, 10, 23))
+                .lastModifiedDate(LocalDateTime.of(2024, 1, 2, 12, 10, 23))
                 .build();
 
         TodoItemDto todoItemDto = TodoMapper.toTodoItemDto(todoItem);
@@ -90,6 +94,8 @@ public class TodoMapperTest {
         assertEquals(todoItem.getLastModifiedByUser(), todoItemDto.getLastModifiedByUser());
         assertEquals(todoItem.getApprovalRequired(), todoItemDto.getApprovalRequired());
         assertEquals(todoItem.getPriority(), todoItemDto.getPriority().name());
+        assertEquals(todoItem.getCreatedDate(), todoItemDto.getCreatedDate());
+        assertEquals(todoItem.getLastModifiedDate(), todoItemDto.getLastModifiedDate());
     }
 
     @Test
