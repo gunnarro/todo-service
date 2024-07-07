@@ -14,12 +14,16 @@ import lombok.*;
 public class ParticipantDto {
     @Schema(description = "Global unique identifier of a participant. Should not be set for new todo item.")
     private String id;
+
     @Schema(description = "Unique identifier of the todo the participant is assigned to.")
     private String todoId;
+
     @Schema(description = "The participant name")
     private String name;
+
     @Schema(description = "The participant email address")
     private String email;
+
     @Schema(description = "Is the participant enabled or not")
     private Integer enabled;
 }

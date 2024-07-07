@@ -47,6 +47,7 @@ Table todo_item_approval {
     id long [primary key]
     fk_todo_item_id long
     fk_todo_participant_id long
+    approved boolean
 }
 
 Ref: todo_item.fk_todo_id > todo.id  // many-to-one
@@ -54,6 +55,3 @@ Ref: todo_participant_lnk.fk_todo_id > todo.id // many to one
 Ref: todo_participant_lnk.fk_todo_participant_id > todo_participant.id // many to one
 Ref: todo_item_approval.fk_todo_item_id > todo_item.id // many to one
 Ref: todo_item_approval.fk_todo_participant_id > todo_participant.id // many to one
-Ref: todo_item_approval.fk_todo_participant_id > todo_participant.id // many to one
-
-

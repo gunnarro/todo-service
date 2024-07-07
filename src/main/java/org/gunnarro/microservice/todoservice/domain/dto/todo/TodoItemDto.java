@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Schema(description = "Holds information about a todo item")
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -70,4 +71,7 @@ public class TodoItemDto {
 
     @Schema(description = "Indicates it this task must be approved ba all participants or not, Default is no need for approval.")
     private Boolean approvalRequired;
+
+    @Schema(description = "Holds a list of participants that have approved or not approved the todo item.")
+    private List<ApprovalDto> approvalList;
 }

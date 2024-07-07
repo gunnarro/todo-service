@@ -57,7 +57,6 @@ public class TodoMapper {
         todo.setLastModifiedByUser(toDoDto.getLastModifiedByUser());
     }
 
-
     public static List<TodoItemDto> todoItemDtoList(List<TodoItem> todoItemList) {
         if (todoItemList == null) {
             return List.of();
@@ -84,6 +83,7 @@ public class TodoMapper {
                 .lastModifiedByUser(todoItem.getLastModifiedByUser())
                 .priority(Priority.valueOf(todoItem.getPriority()))
                 .approvalRequired(todoItem.getApprovalRequired())
+                .approvalList(toApprovalDtoList(todoItem.getApprovalList()))
                 .build();
     }
 

@@ -1,14 +1,14 @@
 package org.gunnarro.microservice.todoservice.repository.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.envers.AuditOverride;
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 import org.hibernate.type.NumericBooleanConverter;
+
+import java.util.List;
 
 @Table(name = "TODO_ITEM", schema = "todo")
 @Entity
@@ -63,4 +63,14 @@ public class TodoItem extends BaseEntity {
    // @Convert(converter = NumericBooleanConverter.class)
    // @Column(name = "APPROVED", nullable = false)
    // private Boolean approved;
+
+    /**
+     * A todo list can have many participants.
+     *
+    @NotAudited
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JoinColumn(name = "FK_TODO_ITEM_ID", updatable = false, insertable = false)
+    @ToString.Exclude*/
+    @Transient
+    private List<Approval> approvalList;
 }

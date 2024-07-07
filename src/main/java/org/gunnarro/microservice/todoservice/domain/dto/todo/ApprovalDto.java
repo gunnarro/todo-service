@@ -18,8 +18,6 @@ public class ApprovalDto {
     private String todoItemId;
     @Schema(description = "Unique identifier of the participant that have approved the todo item.")
     private String participantId;
-    @Schema(description = "Name of the participant that have approved the todo item.")
-    private String name;
     @Schema(description = "Set equal to true if approved, false otherwise.")
     private Boolean approved;
 }

@@ -62,8 +62,8 @@ public class TodoController {
         this.toDoService = toDoService;
         // allowing the API 5 requests per minute. In other words, the API rejects a request if it’s already received 5 requests in a time window of 1 minute.
         this.bucket = Bucket.builder()
-                .addLimit(limit -> limit.capacity(25)
-                        .refillGreedy(5, Duration.ofMinutes(1))
+                .addLimit(limit -> limit.capacity(50)
+                        .refillGreedy(10, Duration.ofSeconds(1))
                         .initialTokens(20))
                 .build();
     }
@@ -288,9 +288,9 @@ public class TodoController {
     // todo item approval
     // ---------------------------------------------------------
     @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
-    @Operation(summary = "Add item approval", description = "return todo item approval")
+    @Operation(summary = "approve todo item", description = "return approval for todo item")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Added todo item approval",
+            @ApiResponse(responseCode = "200", description = "Approved todo item",
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ApprovalDto.class))})
     })
@@ -305,9 +305,9 @@ public class TodoController {
     }
 
     @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
-    @Operation(summary = "Add item approval", description = "return todo item approval")
+    @Operation(summary = "updated todo item approval, options are approved or not.", description = "return updated todo item approval")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Added todo item approval",
+            @ApiResponse(responseCode = "200", description = "Updated approval for todo item",
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ApprovalDto.class))})
     })
@@ -322,9 +322,9 @@ public class TodoController {
     }
 
     @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
-    @Operation(summary = "Get todo item approvals", description = "return todo item approvals")
+    @Operation(summary = "Get todo item approvals", description = "return approvals for a todo item")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found todo item approvals",
+            @ApiResponse(responseCode = "200", description = "Found approvals for todo item",
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ApprovalDto.class))})
     })
@@ -337,7 +337,7 @@ public class TodoController {
     }
 
     @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
-    @Operation(summary = "delete todo item approval", description = "approval to delete")
+    @Operation(summary = "delete approval for todo item", description = "approval to delete")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "approval is deleted")
     })
