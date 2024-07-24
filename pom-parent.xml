@@ -20,30 +20,30 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <skip.integrationtests>true</skip.integrationtests>
         <!-- spring version -->
-        <spring.boot.version>3.2.7</spring.boot.version>
+        <spring.boot.version>3.3.2</spring.boot.version>
         <!-- spring library override version -->
-        <snakeyaml.version>1.33</snakeyaml.version>
+        <snakeyaml.version>2.2</snakeyaml.version>
         <!-- dependencies version properties -->
-        <springdoc-openapi.version>1.7.0</springdoc-openapi.version>
+        <springdoc-openapi.version>1.8.0</springdoc-openapi.version>
         <jasypt.version>3.0.5</jasypt.version>
-        <disruptor.version>3.4.4</disruptor.version>
-        <aspectjrt.version>1.9.21</aspectjrt.version>
+        <disruptor.version>4.0.0</disruptor.version>
+        <aspectjrt.version>1.9.22.1</aspectjrt.version>
         <apache.collections4.version>4.4</apache.collections4.version>
-        <prometheus.version>1.12.2</prometheus.version>
+        <prometheus.version>1.13.2</prometheus.version>
         <liquibase.version>4.26.0</liquibase.version>
         <!-- plugin version properties -->
         <mvn-release.plugin.version>3.0.1</mvn-release.plugin.version>
-        <jacoco.plugin.version>0.8.11</jacoco.plugin.version>
+        <jacoco.plugin.version>0.8.12</jacoco.plugin.version>
         <sonar.plugin.version>3.9.1.2184</sonar.plugin.version>
-        <surefire.plugin.version>3.2.5</surefire.plugin.version>
-        <failsafe.plugin.version>3.2.5</failsafe.plugin.version>
+        <surefire.plugin.version>3.3.1</surefire.plugin.version>
+        <failsafe.plugin.version>3.3.1</failsafe.plugin.version>
         <buildhelper.plugin.version>3.5.0</buildhelper.plugin.version>
         <assembler.plugin.version>3.2.0</assembler.plugin.version>
-        <dependencycheck.plugin.version>9.0.9</dependencycheck.plugin.version>
-        <maven-enforcer-plugin.version>3.4.1</maven-enforcer-plugin.version>
+        <dependencycheck.plugin.version>10.0.3</dependencycheck.plugin.version>
+        <maven-enforcer-plugin.version>3.5.0</maven-enforcer-plugin.version>
         <zally-maven-plugin.version>1.1.1</zally-maven-plugin.version>
         <zally-ruleset-zalando.version>2.1.1</zally-ruleset-zalando.version>
-        <mvn-jib-plugin.version>3.4.0</mvn-jib-plugin.version>
+        <mvn-jib-plugin.version>3.4.3</mvn-jib-plugin.version>
     </properties>
 
     <!-- Run integration test only: 			            -->
