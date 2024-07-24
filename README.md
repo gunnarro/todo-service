@@ -1,6 +1,7 @@
 [![build and analyse](https://github.com/gunnarro/todo-service/actions/workflows/build.yml/badge.svg)](https://github.com/gunnarro/todo-service/actions/workflows/build.yml)
 [![verify rest api](https://github.com/gunnarro/todo-service/actions/workflows/verify-service-rest-api.yml/badge.svg)](https://github.com/gunnarro/todo-service/actions/workflows/verify-service-rest-api.yml)
 [![build and deploy image to docker.hub](https://github.com/gunnarro/todo-service/actions/workflows/deploy-docker-hub.yml/badge.svg)](https://github.com/gunnarro/todo-service/actions/workflows/deploy-docker-hub.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=gunnarro_todo-service&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=gunnarro_todo-service)
 
 # Todo Rest Service
 Service for create and handle todo lists.
