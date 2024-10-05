@@ -20,7 +20,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <skip.integrationtests>true</skip.integrationtests>
         <!-- spring version -->
-        <spring.boot.version>3.3.2</spring.boot.version>
+        <spring.boot.version>3.3.4</spring.boot.version>
         <!-- spring library override version -->
         <snakeyaml.version>2.2</snakeyaml.version>
         <!-- dependencies version properties -->
@@ -245,6 +245,7 @@
                             <configuration>
                                 <formats>
                                     <format>XML</format>
+                                    <format>HTML</format>
                                 </formats>
                                 <excludes>
                                     <exclude>**/Application.class</exclude>
