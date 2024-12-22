@@ -214,10 +214,11 @@
         </dependency>
         -->
         <!-- Spring Boot 3.x requires to use version 2 of springdoc-openapi -->
+        <!-- https://springdoc.org/#what-is-the-compatibility-matrix-of-springdoc-openapi-with-spring-boot -->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>2.7.0</version>
+            <version>2.6.0</version>
         </dependency>
         <!-- Rate limiting -->
         <dependency>
