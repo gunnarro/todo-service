@@ -33,6 +33,26 @@
           }
         } ],
         "responses" : {
+          "500" : {
+            "description" : "Internal Server Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Service Unavailable",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "200" : {
             "description" : "Found the todo",
             "content" : {
@@ -53,38 +73,8 @@
               }
             }
           },
-          "429" : {
-            "description" : "Too Many Requests",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "404" : {
             "description" : "Not Found",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "Accessing the resource you were trying to reach is forbidden",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "503" : {
-            "description" : "Service Unavailable",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -103,8 +93,18 @@
               }
             }
           },
-          "500" : {
-            "description" : "Internal Server Error",
+          "429" : {
+            "description" : "Too Many Requests",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Accessing the resource you were trying to reach is forbidden",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -139,38 +139,8 @@
           "required" : true
         },
         "responses" : {
-          "401" : {
-            "description" : "You are not authorized to view the resource",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "429" : {
-            "description" : "Too Many Requests",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "Not Found",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "Accessing the resource you were trying to reach is forbidden",
+          "500" : {
+            "description" : "Internal Server Error",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -189,6 +159,26 @@
               }
             }
           },
+          "401" : {
+            "description" : "You are not authorized to view the resource",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad Request",
             "content" : {
@@ -199,8 +189,8 @@
               }
             }
           },
-          "500" : {
-            "description" : "Internal Server Error",
+          "429" : {
+            "description" : "Too Many Requests",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -215,6 +205,16 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/TodoDto"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Accessing the resource you were trying to reach is forbidden",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -235,41 +235,8 @@
           }
         } ],
         "responses" : {
-          "401" : {
-            "description" : "You are not authorized to view the resource",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "429" : {
-            "description" : "Too Many Requests",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "Not Found",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "204" : {
-            "description" : "todo is deleted"
-          },
-          "403" : {
-            "description" : "Accessing the resource you were trying to reach is forbidden",
+          "500" : {
+            "description" : "Internal Server Error",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -288,6 +255,29 @@
               }
             }
           },
+          "204" : {
+            "description" : "todo is deleted"
+          },
+          "401" : {
+            "description" : "You are not authorized to view the resource",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad Request",
             "content" : {
@@ -298,8 +288,18 @@
               }
             }
           },
-          "500" : {
-            "description" : "Internal Server Error",
+          "429" : {
+            "description" : "Too Many Requests",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Accessing the resource you were trying to reach is forbidden",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -326,38 +326,8 @@
           }
         } ],
         "responses" : {
-          "401" : {
-            "description" : "You are not authorized to view the resource",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "429" : {
-            "description" : "Too Many Requests",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "Not Found",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "Accessing the resource you were trying to reach is forbidden",
+          "500" : {
+            "description" : "Internal Server Error",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -376,6 +346,26 @@
               }
             }
           },
+          "401" : {
+            "description" : "You are not authorized to view the resource",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad Request",
             "content" : {
@@ -386,8 +376,8 @@
               }
             }
           },
-          "500" : {
-            "description" : "Internal Server Error",
+          "429" : {
+            "description" : "Too Many Requests",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -402,6 +392,16 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ParticipantDto"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Accessing the resource you were trying to reach is forbidden",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -432,8 +432,8 @@
           "required" : true
         },
         "responses" : {
-          "401" : {
-            "description" : "You are not authorized to view the resource",
+          "500" : {
+            "description" : "Internal Server Error",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -442,8 +442,28 @@
               }
             }
           },
-          "429" : {
-            "description" : "Too Many Requests",
+          "201" : {
+            "description" : "Updated participant",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ParticipantDto"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Service Unavailable",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "You are not authorized to view the resource",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -462,26 +482,6 @@
               }
             }
           },
-          "403" : {
-            "description" : "Accessing the resource you were trying to reach is forbidden",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "503" : {
-            "description" : "Service Unavailable",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "400" : {
             "description" : "Bad Request",
             "content" : {
@@ -492,8 +492,8 @@
               }
             }
           },
-          "500" : {
-            "description" : "Internal Server Error",
+          "429" : {
+            "description" : "Too Many Requests",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -502,12 +502,12 @@
               }
             }
           },
-          "201" : {
-            "description" : "Updated participant",
+          "403" : {
+            "description" : "Accessing the resource you were trying to reach is forbidden",
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/ParticipantDto"
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -538,38 +538,8 @@
           "required" : true
         },
         "responses" : {
-          "401" : {
-            "description" : "You are not authorized to view the resource",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "429" : {
-            "description" : "Too Many Requests",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "Not Found",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "Accessing the resource you were trying to reach is forbidden",
+          "500" : {
+            "description" : "Internal Server Error",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -588,6 +558,36 @@
               }
             }
           },
+          "201" : {
+            "description" : "Created participant",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ParticipantDto"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "You are not authorized to view the resource",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad Request",
             "content" : {
@@ -598,8 +598,8 @@
               }
             }
           },
-          "500" : {
-            "description" : "Internal Server Error",
+          "429" : {
+            "description" : "Too Many Requests",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -608,12 +608,12 @@
               }
             }
           },
-          "201" : {
-            "description" : "Created participant",
+          "403" : {
+            "description" : "Accessing the resource you were trying to reach is forbidden",
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/ParticipantDto"
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -651,38 +651,8 @@
           "required" : true
         },
         "responses" : {
-          "401" : {
-            "description" : "You are not authorized to view the resource",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "429" : {
-            "description" : "Too Many Requests",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "Not Found",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "Accessing the resource you were trying to reach is forbidden",
+          "500" : {
+            "description" : "Internal Server Error",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -701,6 +671,26 @@
               }
             }
           },
+          "401" : {
+            "description" : "You are not authorized to view the resource",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad Request",
             "content" : {
@@ -711,8 +701,8 @@
               }
             }
           },
-          "500" : {
-            "description" : "Internal Server Error",
+          "429" : {
+            "description" : "Too Many Requests",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -727,6 +717,16 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/TodoItemDto"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Accessing the resource you were trying to reach is forbidden",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -762,38 +762,8 @@
           "required" : true
         },
         "responses" : {
-          "401" : {
-            "description" : "You are not authorized to view the resource",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "429" : {
-            "description" : "Too Many Requests",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "Not Found",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "Accessing the resource you were trying to reach is forbidden",
+          "500" : {
+            "description" : "Internal Server Error",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -812,6 +782,36 @@
               }
             }
           },
+          "201" : {
+            "description" : "Created todo item",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TodoItemDto"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "You are not authorized to view the resource",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad Request",
             "content" : {
@@ -822,8 +822,8 @@
               }
             }
           },
-          "500" : {
-            "description" : "Internal Server Error",
+          "429" : {
+            "description" : "Too Many Requests",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -832,12 +832,12 @@
               }
             }
           },
-          "201" : {
-            "description" : "Created todo item",
+          "403" : {
+            "description" : "Accessing the resource you were trying to reach is forbidden",
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/TodoItemDto"
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -867,38 +867,8 @@
           }
         } ],
         "responses" : {
-          "401" : {
-            "description" : "You are not authorized to view the resource",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "429" : {
-            "description" : "Too Many Requests",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "Not Found",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "Accessing the resource you were trying to reach is forbidden",
+          "500" : {
+            "description" : "Internal Server Error",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -917,6 +887,26 @@
               }
             }
           },
+          "401" : {
+            "description" : "You are not authorized to view the resource",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad Request",
             "content" : {
@@ -927,8 +917,8 @@
               }
             }
           },
-          "500" : {
-            "description" : "Internal Server Error",
+          "429" : {
+            "description" : "Too Many Requests",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -943,6 +933,16 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ApprovalDto"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Accessing the resource you were trying to reach is forbidden",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -980,38 +980,8 @@
           "required" : true
         },
         "responses" : {
-          "401" : {
-            "description" : "You are not authorized to view the resource",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "429" : {
-            "description" : "Too Many Requests",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "Not Found",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "Accessing the resource you were trying to reach is forbidden",
+          "500" : {
+            "description" : "Internal Server Error",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1030,6 +1000,26 @@
               }
             }
           },
+          "401" : {
+            "description" : "You are not authorized to view the resource",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad Request",
             "content" : {
@@ -1040,8 +1030,8 @@
               }
             }
           },
-          "500" : {
-            "description" : "Internal Server Error",
+          "429" : {
+            "description" : "Too Many Requests",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1056,6 +1046,16 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ApprovalDto"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Accessing the resource you were trying to reach is forbidden",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -1093,6 +1093,26 @@
           "required" : true
         },
         "responses" : {
+          "500" : {
+            "description" : "Internal Server Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Service Unavailable",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "200" : {
             "description" : "Approved todo item",
             "content" : {
@@ -1113,38 +1133,8 @@
               }
             }
           },
-          "429" : {
-            "description" : "Too Many Requests",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "404" : {
             "description" : "Not Found",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "Accessing the resource you were trying to reach is forbidden",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "503" : {
-            "description" : "Service Unavailable",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1163,8 +1153,18 @@
               }
             }
           },
-          "500" : {
-            "description" : "Internal Server Error",
+          "429" : {
+            "description" : "Too Many Requests",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Accessing the resource you were trying to reach is forbidden",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1193,8 +1193,18 @@
           "required" : true
         },
         "responses" : {
-          "401" : {
-            "description" : "You are not authorized to view the resource",
+          "201" : {
+            "description" : "Created todo",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TodoDto"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1203,8 +1213,18 @@
               }
             }
           },
-          "429" : {
-            "description" : "Too Many Requests",
+          "503" : {
+            "description" : "Service Unavailable",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "You are not authorized to view the resource",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1223,36 +1243,6 @@
               }
             }
           },
-          "403" : {
-            "description" : "Accessing the resource you were trying to reach is forbidden",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "201" : {
-            "description" : "Created todo",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/TodoDto"
-                }
-              }
-            }
-          },
-          "503" : {
-            "description" : "Service Unavailable",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "400" : {
             "description" : "Bad Request",
             "content" : {
@@ -1263,8 +1253,18 @@
               }
             }
           },
-          "500" : {
-            "description" : "Internal Server Error",
+          "429" : {
+            "description" : "Too Many Requests",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Accessing the resource you were trying to reach is forbidden",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1298,48 +1298,8 @@
           }
         } ],
         "responses" : {
-          "401" : {
-            "description" : "You are not authorized to view the resource",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "429" : {
-            "description" : "Too Many Requests",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "Not Found",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "200" : {
-            "description" : "Found todo item",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/TodoItemDto"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "Accessing the resource you were trying to reach is forbidden",
+          "500" : {
+            "description" : "Internal Server Error",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1358,6 +1318,36 @@
               }
             }
           },
+          "200" : {
+            "description" : "Found todo item",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TodoItemDto"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "You are not authorized to view the resource",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad Request",
             "content" : {
@@ -1368,8 +1358,18 @@
               }
             }
           },
-          "500" : {
-            "description" : "Internal Server Error",
+          "429" : {
+            "description" : "Too Many Requests",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Accessing the resource you were trying to reach is forbidden",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1401,18 +1401,8 @@
           }
         } ],
         "responses" : {
-          "401" : {
-            "description" : "You are not authorized to view the resource",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "429" : {
-            "description" : "Too Many Requests",
+          "500" : {
+            "description" : "Internal Server Error",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1424,28 +1414,28 @@
           "204" : {
             "description" : "todo item is deleted"
           },
-          "404" : {
-            "description" : "Not Found",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "Accessing the resource you were trying to reach is forbidden",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "503" : {
             "description" : "Service Unavailable",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "You are not authorized to view the resource",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1464,8 +1454,18 @@
               }
             }
           },
-          "500" : {
-            "description" : "Internal Server Error",
+          "429" : {
+            "description" : "Too Many Requests",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Accessing the resource you were trying to reach is forbidden",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1499,16 +1499,6 @@
           }
         } ],
         "responses" : {
-          "401" : {
-            "description" : "You are not authorized to view the resource",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200" : {
             "description" : "Found the todo history",
             "content" : {
@@ -1519,28 +1509,8 @@
               }
             }
           },
-          "429" : {
-            "description" : "Too Many Requests",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "Not Found",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "Accessing the resource you were trying to reach is forbidden",
+          "500" : {
+            "description" : "Internal Server Error",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1559,6 +1529,26 @@
               }
             }
           },
+          "401" : {
+            "description" : "You are not authorized to view the resource",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad Request",
             "content" : {
@@ -1569,8 +1559,18 @@
               }
             }
           },
-          "500" : {
-            "description" : "Internal Server Error",
+          "429" : {
+            "description" : "Too Many Requests",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Accessing the resource you were trying to reach is forbidden",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1597,38 +1597,8 @@
           }
         } ],
         "responses" : {
-          "401" : {
-            "description" : "You are not authorized to view the resource",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "429" : {
-            "description" : "Too Many Requests",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "Not Found",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "Accessing the resource you were trying to reach is forbidden",
+          "500" : {
+            "description" : "Internal Server Error",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1647,6 +1617,36 @@
               }
             }
           },
+          "200" : {
+            "description" : "Found the todo history",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TodoHistoryDto"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "You are not authorized to view the resource",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad Request",
             "content" : {
@@ -1657,8 +1657,8 @@
               }
             }
           },
-          "500" : {
-            "description" : "Internal Server Error",
+          "429" : {
+            "description" : "Too Many Requests",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1667,12 +1667,12 @@
               }
             }
           },
-          "200" : {
-            "description" : "Found the todo history",
+          "403" : {
+            "description" : "Accessing the resource you were trying to reach is forbidden",
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/TodoHistoryDto"
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -1695,48 +1695,8 @@
           }
         } ],
         "responses" : {
-          "401" : {
-            "description" : "You are not authorized to view the resource",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "429" : {
-            "description" : "Too Many Requests",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "200" : {
-            "description" : "Found todos for user",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/TodoDto"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "Not Found",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "Accessing the resource you were trying to reach is forbidden",
+          "500" : {
+            "description" : "Internal Server Error",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1755,6 +1715,36 @@
               }
             }
           },
+          "200" : {
+            "description" : "Found todos for user",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TodoDto"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "You are not authorized to view the resource",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad Request",
             "content" : {
@@ -1765,8 +1755,18 @@
               }
             }
           },
-          "500" : {
-            "description" : "Internal Server Error",
+          "429" : {
+            "description" : "Too Many Requests",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Accessing the resource you were trying to reach is forbidden",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1800,38 +1800,8 @@
           }
         } ],
         "responses" : {
-          "401" : {
-            "description" : "You are not authorized to view the resource",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "429" : {
-            "description" : "Too Many Requests",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "Not Found",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "Accessing the resource you were trying to reach is forbidden",
+          "500" : {
+            "description" : "Internal Server Error",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1850,6 +1820,29 @@
               }
             }
           },
+          "204" : {
+            "description" : "participant is deleted"
+          },
+          "401" : {
+            "description" : "You are not authorized to view the resource",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad Request",
             "content" : {
@@ -1860,8 +1853,8 @@
               }
             }
           },
-          "500" : {
-            "description" : "Internal Server Error",
+          "429" : {
+            "description" : "Too Many Requests",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1870,8 +1863,15 @@
               }
             }
           },
-          "204" : {
-            "description" : "participant is deleted"
+          "403" : {
+            "description" : "Accessing the resource you were trying to reach is forbidden",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -1905,18 +1905,8 @@
           }
         } ],
         "responses" : {
-          "401" : {
-            "description" : "You are not authorized to view the resource",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "429" : {
-            "description" : "Too Many Requests",
+          "500" : {
+            "description" : "Internal Server Error",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1928,28 +1918,28 @@
           "204" : {
             "description" : "approval is deleted"
           },
-          "404" : {
-            "description" : "Not Found",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "Accessing the resource you were trying to reach is forbidden",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "503" : {
             "description" : "Service Unavailable",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "You are not authorized to view the resource",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1968,8 +1958,18 @@
               }
             }
           },
-          "500" : {
-            "description" : "Internal Server Error",
+          "429" : {
+            "description" : "Too Many Requests",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Accessing the resource you were trying to reach is forbidden",
             "content" : {
               "application/json" : {
                 "schema" : {

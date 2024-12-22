@@ -219,3 +219,28 @@ https://spar.no/nettbutikk/varer/drikke/brus/coca-cola-5000112636864
   "url": "https://spar.no/nettbutikk/varer/drikke/brus/coca-cola-5000112636864"
 }
 ```
+
+
+# Ordre
+ OrdreTyper | VareTyper    |
+|------------|--------------|
+| AML        | AML, CYT-AML |
+| KØL        | KØL, CYT-KØL |
+| NAR        | NAR          |
+| VAREPRØVE  | AML,KØL, NAR |
+
+
+## Lager
+- lager             TDB
+  - seksjon         ALM, KØL, NARK, Kjemiromm
+    - lokasjon      Hyllenrummer
+      - varetype    ALM, KØL, NAR, CYT
+        - vare      paracett 150 mg
+
+## Vare
+|VareType | Oppbevarings krav|
+|---|---|
+|AML|AML|
+|KØL|KØL|
+|NAR|NAR|
+|CYT|AML,KØL|

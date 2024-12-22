@@ -85,7 +85,7 @@ DROP TABLE IF EXISTS todo_participant;
 		created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 		last_modified_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 		created_by_user VARCHAR(100) NOT NULL,
-		last_modified_by_user VARCHAR(100) NOT NULL,
+		last_modified_by_user VARCHAR(100) NOT NULL,-
 		name VARCHAR(100) NOT NULL,
 		email VARCHAR(100),
 		enabled INTEGER DEFAULT 0,
