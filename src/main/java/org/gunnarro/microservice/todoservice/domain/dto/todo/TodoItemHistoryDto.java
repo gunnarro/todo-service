@@ -9,7 +9,7 @@ import lombok.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Schema(description = "Holds audit log for Todo item")
+@Schema(description = "Holds audit log for Todo item.")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,26 +18,26 @@ import java.time.LocalDateTime;
 @Builder
 public class TodoItemHistoryDto implements Serializable {
     // revision info
-    @Schema(description = "Unique identifier of the revision")
+    @Schema(description = "Unique identifier of the revision.")
     private Long revisionNumber;
     private Integer revisionEndId;
-    @Schema(description = "the revision type, update, delete")
+    @Schema(description = "The revision type, update, delete.")
     private String revisionType;
     // end revision info
     @Schema(description = "Global unique identifier of the todo item. Should not be set for new todo item.")
     @Pattern(regexp = "[0-9]{1,25}", message = "can only contain integers, min 1 and max 25")
     private String id;
-    @Schema(description = "Global unique identifier for the todo that this item belongs to.")
+    @Schema(description = "Global unique identifier for the todo item that this item belongs to.")
     @Pattern(regexp = "[0-9]{1,25}", message = "can only contain integers, min 1 and max 25")
     @NotNull
     private String todoId;
-    @Schema(description = "date when todo was created")
+    @Schema(description = "Date when todo item was created.")
     private LocalDateTime createdDate;
-    @Schema(description = "date when todo was last modified")
+    @Schema(description = "Date when todo item was last modified.")
     private LocalDateTime lastModifiedDate;
-    @Schema(description = "user that created the todo")
+    @Schema(description = "User that created the todo item.")
     private String createdByUser;
-    @Schema(description = "user that last modified the todo")
+    @Schema(description = "User that last modified the todo item.")
     private String lastModifiedByUser;
     @Schema(description = "doc me")
     @Pattern(regexp = "[\\w\\s\\dæÆøØåÅ_-]{1,50}", message = "Name can only contain lower and uppercase alphabetic chars. Min 1 char, max 50 chars.")
@@ -45,13 +45,13 @@ public class TodoItemHistoryDto implements Serializable {
     @Schema(description = "description of the task to do")
     @Pattern(regexp = "[\\w\\s\\dæÆøØåÅ_-]{1,100}", message = "Description can only contain lower and uppercase alphabetic chars. Min 1 char, max 100 chars.")
     private String description;
-    @Schema(description = "Status of todo, OPEN, IN_PROGRESS or FINISHED")
+    @Schema(description = "Status of todo item, OPEN, IN_PROGRESS or FINISHED")
     private String status;
-    @Schema(description = "The action that should be done for this item")
+    @Schema(description = "The action that should be done for this item.")
     private String action;
-    @Schema(description = "the person that is responsible to follow up and fulfill this task")
+    @Schema(description = "The person that is responsible to follow up and fulfill this task.")
     private String assignedTo;
-    @Schema(description = "the priority of this task, can be any integer, typically from 1- 10")
+    @Schema(description = "The priority of this task, can be any integer, typically from 1- 10.")
     private Priority priority;
 
 }

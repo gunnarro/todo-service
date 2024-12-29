@@ -22,8 +22,10 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class TodoControllerTest {
+
     @Mock
     private TodoService todoServiceMock;
+
     @InjectMocks
     private TodoController todoController;
 

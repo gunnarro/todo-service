@@ -7,7 +7,7 @@ import lombok.*;
 /**
  * Common error response for rest services
  */
-@Schema(description = "Holds rest service error description")
+@Schema(description = "Holds rest service error description.")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,12 +15,12 @@ import lombok.*;
 @ToString
 @Builder
 public class ErrorResponse {
-    @Schema(description = "http status code", example = "404")
+    @Schema(description = "http status code.", example = "404")
     private Integer httpStatus;
-    @Schema(description = "Http message", example = "Not Found")
+    @Schema(description = "Http message.", example = "Not Found")
     private String httpMessage;
-    @Schema(description = "Internal error code", example = "4041001")
+    @Schema(description = "Internal error code.", example = "4041001")
     private Integer errorCode;
-    @Schema(description = "Description of the error", example = "Customer not found")
+    @Schema(description = "Description of the error.", example = "Customer not found")
     private String description;
 }

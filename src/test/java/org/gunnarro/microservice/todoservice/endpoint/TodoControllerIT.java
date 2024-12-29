@@ -97,7 +97,7 @@ public class TodoControllerIT {
     @Test
     void getTodoById() {
         TodoDto todoDtoResponse = restClient.get()
-                .uri(createURLWithPort("https", "todos/543855162824364902"))
+                .uri(createURLWithPort("https", "todos/562652859753120501"))
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .onStatus(status -> status.value() == 404, (request, response) -> {
@@ -106,7 +106,7 @@ public class TodoControllerIT {
                 .body(TodoDto.class);
 
         ResponseEntity<TodoDto> todoDtoResponseEntity = restClient.get()
-                .uri(createURLWithPort("https", "todos/543855162824364902"))
+                .uri(createURLWithPort("https", "todos/562652859753120501"))
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .toEntity(TodoDto.class);
@@ -137,6 +137,23 @@ public class TodoControllerIT {
     }
 
     @Test
+    void getTodo() {
+        HttpEntity<TodoDto> requestEntity = new HttpEntity<>(null, requestHeaders);
+        ParameterizedTypeReference<TodoDto> responseEntity = new ParameterizedTypeReference<>() {};
+
+        ResponseEntity<TodoDto> todoPostResponse = testRestTemplate.exchange(createURLWithPort("https", "/todos/562652859753120501"), HttpMethod.GET, requestEntity, responseEntity);
+        assertEquals("200 OK", todoPostResponse.getStatusCode().toString());
+        assertEquals("b39", todoPostResponse.getBody().getName());
+        assertEquals(4, todoPostResponse.getBody().getParticipantDtoList().size());
+        assertEquals(4, todoPostResponse.getBody().getTodoItemDtoList().size());
+        assertEquals("stol", todoPostResponse.getBody().getTodoItemDtoList().get(0).getName());
+        assertEquals(1, todoPostResponse.getBody().getTodoItemDtoList().get(0).getApprovalList().size());
+        assertEquals("564821726293783289", todoPostResponse.getBody().getTodoItemDtoList().get(0).getApprovalList().get(0).getParticipantId());
+        assertTrue(todoPostResponse.getBody().getTodoItemDtoList().get(0).getApprovalList().get(0).getApproved());
+    }
+
+
+    @Test
     void getTodoItem_not_found() throws JsonProcessingException {
         HttpEntity<TodoItemDto> requestEntity = new HttpEntity<>(null, requestHeaders);
         ParameterizedTypeReference<TodoItemDto> responseEntity = new ParameterizedTypeReference<>() {
@@ -163,8 +180,8 @@ public class TodoControllerIT {
                 .description("my todo list")
                 //       .createdDate(LocalDateTime.of(2024, 2, 1, 10, 0, 0))
                 //       .lastModifiedDate(LocalDateTime.of(2024, 2, 1, 10, 0, 0))
-                .createdByUser("guro")
-                .lastModifiedByUser("guro-2")
+                //.createdByUser("guro")
+                //.lastModifiedByUser("guro-2")
                 .build();
 
         Assertions.assertEquals("[Basic bXktc2VydmljZS1uYW1lOmNoYW5nZS1tZQ==]", requestHeaders.get("Authorization").toString());
@@ -227,8 +244,6 @@ public class TodoControllerIT {
                 .approvalRequired(false)
                 .priority(Priority.HIGHEST)
                 .assignedTo("guro")
-                .createdByUser("guro")
-                .lastModifiedByUser("guro")
                 .build();
 
         ResponseEntity<TodoItemDto> todoItemResponse1 = testRestTemplate.exchange(createURLWithPort("https", "/todos/" + todoPostResponse.getBody().getId() + "/items"), HttpMethod.POST, new HttpEntity<>(todoItemDto1, requestHeaders), TodoItemDto.class);
@@ -249,8 +264,6 @@ public class TodoControllerIT {
                 .approvalRequired(true)
                 .priority(Priority.MEDIUM)
                 .assignedTo("guro")
-                .createdByUser("guro")
-                .lastModifiedByUser("guro")
                 .build();
 
         ResponseEntity<TodoItemDto> todoItemResponse2 = testRestTemplate.exchange(createURLWithPort("https", "/todos/" + todoPostResponse.getBody().getId() + "/items"), HttpMethod.POST, new HttpEntity<>(todoItemDto2, requestHeaders), TodoItemDto.class);
@@ -290,8 +303,6 @@ public class TodoControllerIT {
                 .priority(todoItemResponse2.getBody().getPriority())
                 .approvalRequired(todoItemResponse2.getBody().getApprovalRequired())
                 .assignedTo("guro")
-                .createdByUser("guro")
-                .lastModifiedByUser("guro")
                 .build();
 
         ResponseEntity<TodoItemDto> updateTodoItemResponse2 = testRestTemplate.exchange(createURLWithPort("https", "/todos/" + todoPostResponse.getBody().getId() + "/items"), HttpMethod.PUT, new HttpEntity<>(updateTodoItemDto2, requestHeaders), TodoItemDto.class);
@@ -351,8 +362,6 @@ public class TodoControllerIT {
                 .name("todo-test-participant")
                 .status(TodoStatus.OPEN)
                 .description("my todo list with participant")
-                .createdByUser("guro")
-                .lastModifiedByUser("guro-2")
                 .build();
 
         HttpEntity<TodoDto> todoEntity = new HttpEntity<>(todoDto, requestHeaders);

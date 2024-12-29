@@ -42,10 +42,6 @@ public class TodoMapper {
                 .name(toDoDto.getName())
                 .status(toDoDto.getStatus().name())
                 .description(toDoDto.getDescription())
-                .createdDate(toDoDto.getCreatedDate())
-                .lastModifiedDate(toDoDto.getLastModifiedDate())
-                .createdByUser(toDoDto.getCreatedByUser())
-                .lastModifiedByUser(toDoDto.getLastModifiedByUser())
                 .todoItemList(List.of())
                 .build();
     }
@@ -100,8 +96,6 @@ public class TodoMapper {
                 .status(todoItemDto.getStatus().name())
                 .action(todoItemDto.getAction().name())
                 .assignedTo(todoItemDto.getAssignedTo())
-                .createdByUser(todoItemDto.getCreatedByUser())
-                .lastModifiedByUser(todoItemDto.getLastModifiedByUser())
                 .priority(todoItemDto.getPriority().name())
                 .approvalRequired(todoItemDto.getApprovalRequired())
                 .build();
@@ -204,8 +198,6 @@ public class TodoMapper {
                 .name(participantDto.getName())
                 .email(participantDto.getEmail())
                 .enabled(participantDto.getEnabled())
-                .createdByUser("test")
-                .lastModifiedByUser("test")
                 .build();
     }
 
@@ -239,5 +231,4 @@ public class TodoMapper {
                 .approved(approval.getApproved())
                 .build();
     }
-
 }

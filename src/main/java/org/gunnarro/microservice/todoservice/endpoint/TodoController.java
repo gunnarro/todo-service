@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.gunnarro.microservice.todoservice.domain.dto.ErrorResponse;
 import org.gunnarro.microservice.todoservice.domain.dto.todo.*;
 import org.gunnarro.microservice.todoservice.service.TodoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -54,6 +55,9 @@ public class TodoController {
     private static final String REST_SERVICE_METRIC_NAME = "todo.service.api";
     private static final int TOKEN_TO_CONSUME = 1;
 
+    @Autowired
+    protected AuthenticationFacade authenticationFacade;
+
     private final TodoService toDoService;
 
     private final Bucket bucket;
@@ -68,8 +72,29 @@ public class TodoController {
                 .build();
     }
 
+
     // ---------------------------------------------------------
-    // todo items
+    // todo admin
+    // ---------------------------------------------------------
+    @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
+    @Operation(summary = "Get all todos", description = "return all todos for all users")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found todos",
+                    content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = TodoDto.class))})
+    })
+    @GetMapping(path = "/todos", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
+    public ResponseEntity<List<TodoDto>> getTodos() {
+        // check that this is admin user
+        if (bucket.tryConsume(TOKEN_TO_CONSUME)) {
+            return ResponseEntity.ok(toDoService.getTodos());
+        }
+        return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build();
+    }
+
+
+    // ---------------------------------------------------------
+    // todo
     // ---------------------------------------------------------
 
     @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
@@ -196,7 +221,6 @@ public class TodoController {
     @GetMapping(path = "/todos/{todoId}/items/{todoItemId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
     public TodoItemDto getTodoItem(@PathVariable("todoId") @NotNull String todoId, @PathVariable("todoItemId") @NotNull String todoItemId) {
         if (bucket.tryConsume(TOKEN_TO_CONSUME)) {
-            log.info("delete: todoId={}, todoItemId={}", todoId, todoItemId);
             return toDoService.getTodoItem(Long.valueOf(todoId), Long.valueOf(todoItemId));
         } else {
             throw new HttpClientErrorException(HttpStatus.TOO_MANY_REQUESTS);

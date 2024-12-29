@@ -21,7 +21,15 @@ public interface TodoItemRepository extends JpaRepository<TodoItem, Long>, Revis
     Optional<TodoItem> getTodoItem(@Param("todoId") Long todoId, @Param("todoItemId") Long todoItemId);
 
     @Modifying
-    @Query("DELETE FROM TodoItem i WHERE i.id = :id")
-    void deleteByUuid(@Param("id") Long id);
+    @Query("DELETE FROM TodoItem i WHERE i.id = :todoItemId")
+    void deleteByUuid(@Param("todoItemId") Long todoItemId);
 
+    /*
+    @Query("SELECT count(p.id) participants"
+            + ", (SELECT count(a.id) FROM todo_item_approval a WHERE a.fk_todo_item_id = i.id) approvals"
+            + " FROM todo_item i"
+            + " RIGHT JOIN todo_participant p ON i.fk_todo_id = p.fk_todo_id"
+            + " WHERE i.id = :todoItemId")
+    boolean isApprovedByAll(@Param("todoItemId") Long todoItemId);
+*/
 }

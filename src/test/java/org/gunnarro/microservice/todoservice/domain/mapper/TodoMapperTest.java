@@ -10,12 +10,16 @@ import java.util.List;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class TodoMapperTest {
+
+    private final Random random = new Random();
+
     @Test
     void toTodoDto() {
         Todo todo = new Todo();
-        todo.setId(new Random().nextLong());
+        todo.setId(random.nextLong());
         todo.setCreatedByUser("guro");
         todo.setLastModifiedByUser("guro-2");
         todo.setCreatedDate(LocalDateTime.of(2024, 2, 1, 10, 0, 0));
@@ -47,19 +51,15 @@ public class TodoMapperTest {
                 .name("guro")
                 .status(TodoStatus.IN_PROGRESS)
                 .description("my todo list")
-                .createdDate(LocalDateTime.of(2024, 2, 1, 10, 0, 0))
-                .lastModifiedDate(LocalDateTime.of(2024, 2, 1, 10, 0, 0))
-                .createdByUser("guro")
-                .lastModifiedByUser("guro-2")
                 .build();
 
         Todo toDo = TodoMapper.fromTodoDto(todoDto);
         assertEquals(todoDto.getId(), toDo.getId().toString());
         assertEquals(todoDto.getName(), toDo.getName());
-        assertEquals(todoDto.getCreatedByUser(), toDo.getCreatedByUser());
-        assertEquals(todoDto.getCreatedByUser(), toDo.getCreatedByUser());
-        assertEquals(todoDto.getLastModifiedByUser(), toDo.getLastModifiedByUser());
-        assertEquals(todoDto.getLastModifiedDate(), toDo.getLastModifiedDate());
+        assertNull(todoDto.getCreatedByUser());
+        assertNull(todoDto.getCreatedByUser());
+        assertNull(todoDto.getLastModifiedByUser());
+        assertNull(todoDto.getLastModifiedDate());
         assertEquals(todoDto.getDescription(), toDo.getDescription());
         assertEquals(todoDto.getStatus().name(), toDo.getStatus());
     }
@@ -101,8 +101,8 @@ public class TodoMapperTest {
     @Test
     void fromTodoItemDto() {
         TodoItemDto todoItemDto = TodoItemDto.builder()
-                .id(String.valueOf(new Random().nextLong()))
-                .todoId(String.valueOf(new Random().nextLong()))
+                .id(String.valueOf(random.nextLong()))
+                .todoId(String.valueOf(random.nextLong()))
                 .name("tv")
                 .category("stue")
                 .status(TodoItemStatus.IN_PROGRESS)

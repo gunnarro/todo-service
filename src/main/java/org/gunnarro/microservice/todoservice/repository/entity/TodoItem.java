@@ -13,7 +13,7 @@ import java.util.List;
 @Table(name = "TODO_ITEM", schema = "todo")
 @Entity
 @Audited
-@AuditOverride(forClass=BaseEntity.class)
+@AuditOverride(forClass = BaseEntity.class)
 @Getter
 @Setter
 @SuperBuilder
@@ -60,17 +60,18 @@ public class TodoItem extends BaseEntity {
     @Column(name = "APPROVAL_REQUIRED", nullable = false)
     private Boolean approvalRequired;
 
-   // @Convert(converter = NumericBooleanConverter.class)
-   // @Column(name = "APPROVED", nullable = false)
-   // private Boolean approved;
+    // @Convert(converter = NumericBooleanConverter.class)
+    // @Column(name = "APPROVED", nullable = false)
+    // private Boolean approved;
 
     /**
+     * A todo item may have approvals
      * A todo list can have many participants.
-     *
+     */
     @NotAudited
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = false)
     @JoinColumn(name = "FK_TODO_ITEM_ID", updatable = false, insertable = false)
-    @ToString.Exclude*/
-    @Transient
+    @ToString.Exclude
+    //@Transient
     private List<Approval> approvalList;
 }

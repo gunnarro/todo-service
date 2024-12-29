@@ -44,10 +44,13 @@ public class TodoControllerValidationTest extends DefaultTestConfig {
     private ObjectMapper objectMapper;
 
     @MockBean
+    private AuthenticationFacade AuthenticationFacadeMock;
+
+    @MockBean
     private TodoService todoServiceMock;
 
     @MockBean
-    TodoRepository todoRepositoryMock;
+    private TodoRepository todoRepositoryMock;
 
     @Override
     @BeforeEach
@@ -70,8 +73,6 @@ public class TodoControllerValidationTest extends DefaultTestConfig {
                 .description("my todo list")
                 .createdDate(LocalDateTime.of(2024, 2, 1, 10, 0, 0))
                 .lastModifiedDate(LocalDateTime.of(2024, 2, 1, 10, 0, 0))
-                .createdByUser("guro")
-                .lastModifiedByUser("guro-2")
                 .build();
         mockMvc.perform(MockMvcRequestBuilders.post("/todoservice/v1/todos")
                         .content(objectMapper.writeValueAsString(todoDto))

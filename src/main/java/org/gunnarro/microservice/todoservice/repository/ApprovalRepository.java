@@ -16,11 +16,13 @@ public interface ApprovalRepository extends JpaRepository<Approval, Long> {
     @Query("SELECT a FROM Approval a WHERE a.todoItemId = :todoItemId ")
     List<Approval> getApprovals(@Param("todoItemId") Long todoItemId);
 
+    @Query("SELECT count(a) FROM Approval a WHERE a.todoItemId = :todoItemId ")
+    Integer countApprovals(@Param("todoItemId") Long todoItemId);
+
     @Query("SELECT a FROM Approval a WHERE a.id = :id")
     Optional<Approval> getApproval(@Param("id") Long id);
 
     @Modifying
     @Query("DELETE FROM Approval a WHERE a.todoItemId = :todoItemId AND a.participantId = :participantId")
     void deleteApproval(@Param("todoItemId") Long todoItemId, @Param("participantId") Long participantId);
-
 }

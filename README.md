@@ -9,6 +9,7 @@ Service for create and handle todo lists.
 | Name      | Firm     | Mobile          | Email               |
 |-----------|----------|-----------------|---------------------|
 | developer | Company  | +47 00 00 00 00 | myname@company.com  |
+|
 
  * Check out from git:
    * git clone git@github.com:<user>/todoservice.git
@@ -31,7 +32,10 @@ static {
  * ```mvn spring-boot:run -Dspring-boot.run.arguments=--spring.profiles.active=sit,--spring.config.location=file:config/*```
  *  or 
  * ```java -jar -Dspring.profiles.active=sit -Dspring.config.location=file:config/ target/todoservice.jar```
- 
+
+Swagger
+Build swagger yml doc file
+
    
 [rest service api](https://localhost:xxxx/api-docs/swagger-ui.html)
 [service documentation](https://github.com/gunnarro/microservice-archetype/wiki/documentation/todoservice)
@@ -47,7 +51,7 @@ target/rest-service-api_validation_result.yaml
 
 ## API definition
 ```
-curl -v -u "my-service-name:change-me" --insecure https://localhost:9999/v3/api-docs | json_pp >todo-service-api.yaml
+curl -v -u "my-service-name:change-me" --insecure https://localhost:9999/v3/api-docs | json_pp > todo-service-api.yaml
 ```
 
 ## Service call
@@ -55,6 +59,14 @@ curl -v -u "my-service-name:change-me" --insecure https://localhost:9999/v3/api-
 curl -v -H "Access-Control-Request-Method: GET" -H "Origin: http://localhost:3000" -X OPTIONS https://localhost:9999/todoservice/v1/todos/guro --insecure
 curl -X DELETE https://localhost:9999/todoservice/v1/todos/11eec40c-c279-03fd-b266-cc2f713aeb66 -H accept: */* 
 ```
+
+## Start
+mvn clean install
+service url: https://localhost:9999/todoservice/v1
+swagger: https://localhost:9999/swagger-ui/index.html
+monitoring: http://localhost:9998/actuator
+logs : tail -400f logs/todo-service.log
+
 
 ## Docker
 

@@ -28,6 +28,8 @@ import java.util.Optional;
 @Service
 public class TodoServiceImpl implements TodoService {
 
+    private final static String DEFAULT_USER = "guest";
+
     private final TodoRepository todoRepository;
     private final TodoItemRepository todoItemRepository;
     private final ParticipantRepository participantRepository;
@@ -38,6 +40,14 @@ public class TodoServiceImpl implements TodoService {
         this.todoItemRepository = todoItemRepository;
         this.participantRepository = participantRepository;
         this.approvalRepository = approvalRepository;
+    }
+
+    //-------------------------------------------------------------------
+    // Todo admin
+    //-------------------------------------------------------------------
+    @Override
+    public List<TodoDto> getTodos() {
+        return TodoMapper.toTodoDtoList(todoRepository.getTodos());
     }
 
     //-------------------------------------------------------------------
@@ -70,7 +80,7 @@ public class TodoServiceImpl implements TodoService {
     @Override
     public TodoDto updateTodo(TodoDto todoDto) {
         try {
-            return TodoMapper.toTodoDto(todoRepository.save(TodoMapper.fromTodoDto(todoDto)));
+            return TodoMapper.toTodoDto(TodoMapper.fromTodoDto(todoDto));
         } catch (DataIntegrityViolationException ex) {
             throw new RestInputValidationException(ex.getMessage());
         } catch (Exception e) {
@@ -118,12 +128,19 @@ public class TodoServiceImpl implements TodoService {
     @Transactional
     @Override
     public TodoItemDto updateTodoItem(TodoItemDto todoItemDto) {
-        return TodoMapper.toTodoItemDto(todoItemRepository.save(TodoMapper.fromTodoItemDto(todoItemDto)));
+        TodoItem todoItem = TodoMapper.fromTodoItemDto(todoItemDto);
+        log.debug("{}", todoItem);
+        return TodoMapper.toTodoItemDto(todoItemRepository.save(todoItem));
     }
 
     @Override
     public void deleteTodoItem(Long todoId, Long todoItemId) {
         todoItemRepository.deleteById(todoItemId);
+    }
+
+
+    public boolean isApprovedByAll(Long todoItemId) {
+        return false;
     }
 
     //-------------------------------------------------------------------

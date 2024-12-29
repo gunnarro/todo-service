@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
-@Schema(description = "Holds audit log for Todo")
+@Schema(description = "Holds audit log for Todo.")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
 @NoArgsConstructor
@@ -36,31 +36,31 @@ public class TodoHistoryDto implements Serializable {
     }
 
     // revision info
-    @Schema(description = "Unique identifier of the revision")
+    @Schema(description = "Unique identifier of the revision.")
     private Long revisionNumber;
     private Integer revisionEndId;
-    @Schema(description = "the revision type, update, delete")
+    @Schema(description = "The revision type, update, delete.")
     private String revisionType;
     // end revision info
     @Schema(description = "Unique identifier of the todo. Should not be set for new Todo.")
     @Pattern(regexp = "[0-9]{1,25}", message = "can only contain integers, min 1 and max 25")
     private String id;
-    @Schema(description = "date when todo was created")
+    @Schema(description = "Date when todo was created.")
     private LocalDateTime createdDate;
-    @Schema(description = "date when todo was last modified")
+    @Schema(description = "Date when todo was last modified.")
     private LocalDateTime lastModifiedDate;
-    @Schema(description = "user that created the todo")
+    @Schema(description = "User that created the todo.")
     @Pattern(regexp = "[a-zA-Z]{1,50}", message = "can only contain lower and uppercase characters from a-z and A-Z.")
     private String createdByUser;
-    @Schema(description = "user that last modified the todo")
+    @Schema(description = "User that last modified the todo.")
     private String lastModifiedByUser;
-    @Schema(description = "Name of todo")
+    @Schema(description = "Name of todo.")
     @Pattern(regexp = "[\\w\\s\\d-_]{1,50}", message = "can only contain lower and uppercase alphabetic chars. Min 1 char, max 50 chars.")
     private String name;
     @Schema(description = "Status of todo, OPEN, IN_PROGRESS or FINISHED")
     @NotNull
     private String status;
-    @Schema(description = "description of this to do task")
+    @Schema(description = "Description of this to do task.")
     @Pattern(regexp = "[\\w\\s\\d-_]{1,100}", message = "Description can only contain lower and uppercase alphabetic chars. Min 1 char, max 100 chars.")
     private String description;
 
