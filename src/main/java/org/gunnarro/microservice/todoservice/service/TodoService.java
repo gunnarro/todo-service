@@ -12,13 +12,13 @@ public interface TodoService {
 
     TodoDto getTodo(Long todoId);
 
-    void deleteTodo(Long todoId);
+    TodoDto createTodo(TodoDto toDoDto);
 
     TodoDto updateTodo(TodoDto toDoDto);
 
-    TodoDto addTodo(TodoDto toDoDto);
+    void deleteTodo(Long todoId);
 
-    TodoItemDto addTodoItem(TodoItemDto todoItemDto);
+    TodoItemDto createTodoItem(TodoItemDto todoItemDto);
 
     TodoItemDto updateTodoItem(TodoItemDto todoItemDto);
 
@@ -32,7 +32,7 @@ public interface TodoService {
 
     List<ParticipantDto> getParticipants(Long todoId);
 
-    ParticipantDto addParticipant(ParticipantDto participantDto);
+    ParticipantDto createParticipant(ParticipantDto participantDto);
 
     ParticipantDto updateParticipant(ParticipantDto participantDto);
 
@@ -40,7 +40,7 @@ public interface TodoService {
 
     List<ApprovalDto> getApprovals(Long todoId, Long todoItemId);
 
-    ApprovalDto addApproval(ApprovalDto approvalDto);
+    ApprovalDto createApproval(ApprovalDto approvalDto);
 
     ApprovalDto updateApproval(ApprovalDto approvalDto);
 

@@ -62,11 +62,20 @@ public class TodoServiceImpl implements TodoService {
         }
     }
 
+    // @Mapper(componentModel = "spring") may also use mapstruct
+    @Transactional
     @Override
-    public void deleteTodo(Long todoId) {
-        todoRepository.deleteById(todoId);
-        log.debug("deleted todo, todoId={}", todoId);
+    public TodoDto createTodo(TodoDto todoDto) {
+        try {
+            log.debug("save todo, {}", todoDto);
+            return TodoMapper.toTodoDto(todoRepository.save(TodoMapper.fromTodoDto(todoDto)));
+        } catch (DataIntegrityViolationException ex) {
+            throw new RestInputValidationException(ex.getMessage());
+        } catch (Exception e) {
+            throw new ApplicationException(String.format("error add todo! error: %s", e.getMessage()), e.getCause());
+        }
     }
+
 
     @Transactional
     @Override
@@ -80,18 +89,10 @@ public class TodoServiceImpl implements TodoService {
         }
     }
 
-    // @Mapper(componentModel = "spring") may also use mapstruct
-    @Transactional
     @Override
-    public TodoDto addTodo(TodoDto todoDto) {
-        try {
-            log.debug("save todo, {}", todoDto);
-            return TodoMapper.toTodoDto(todoRepository.save(TodoMapper.fromTodoDto(todoDto)));
-        } catch (DataIntegrityViolationException ex) {
-            throw new RestInputValidationException(ex.getMessage());
-        } catch (Exception e) {
-            throw new ApplicationException(String.format("error add todo! error: %s", e.getMessage()), e.getCause());
-        }
+    public void deleteTodo(Long todoId) {
+        todoRepository.deleteById(todoId);
+        log.debug("deleted todo, todoId={}", todoId);
     }
 
     //-------------------------------------------------------------------
@@ -104,7 +105,7 @@ public class TodoServiceImpl implements TodoService {
 
     @Transactional
     @Override
-    public TodoItemDto addTodoItem(TodoItemDto todoItemDto) {
+    public TodoItemDto createTodoItem(TodoItemDto todoItemDto) {
         try {
             log.debug("{}", todoItemDto);
             TodoItem todoItem = TodoMapper.fromTodoItemDto(todoItemDto);
@@ -144,7 +145,7 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
-    public ParticipantDto addParticipant(ParticipantDto participantDto) {
+    public ParticipantDto createParticipant(ParticipantDto participantDto) {
         return TodoMapper.toParticipantDto(participantRepository.save(TodoMapper.fromParticipantDto(participantDto)));
     }
 
@@ -168,7 +169,7 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
-    public ApprovalDto addApproval(ApprovalDto approvalDto) {
+    public ApprovalDto createApproval(ApprovalDto approvalDto) {
         return TodoMapper.toApprovalDto(approvalRepository.save(TodoMapper.fromApprovalDto(approvalDto)));
     }
 

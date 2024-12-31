@@ -14,7 +14,7 @@ import org.hibernate.envers.Audited;
 import org.hibernate.type.NumericBooleanConverter;
 
 /*
-*  A todo list can have many participants, but a participant is unique for each todo list.
+ *  A todo list can have many participants, but a participant is unique for each todo list.
  */
 @Table(name = "TODO_ITEM_APPROVAL", schema = "todo")
 @Entity
@@ -37,4 +37,8 @@ public class Approval extends BaseEntity {
     @Convert(converter = NumericBooleanConverter.class)
     @Column(name = "APPROVED", nullable = false)
     private Boolean approved;
+
+   // @Audited(withModifiedFlag = true)
+   // @Column(name = "REJECT_REASON", nullable = false)
+   // private String rejectReason;
 }

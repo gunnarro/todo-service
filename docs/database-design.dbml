@@ -13,6 +13,7 @@ Table user_account_participant_lnk {
 
 Table todo {
     id long [primary key]
+    fk_user_id long
     name varchar
     description varchar
     status varchar
@@ -50,6 +51,7 @@ Table todo_item_approval {
     approved boolean
 }
 
+Ref: todo.fk_user_id > user_account.id  // many-to-one
 Ref: todo_item.fk_todo_id > todo.id  // many-to-one
 Ref: todo_participant_lnk.fk_todo_id > todo.id // many to one
 Ref: todo_participant_lnk.fk_todo_participant_id > todo_participant.id // many to one

@@ -118,7 +118,7 @@ public class TodoController {
     @PostMapping(path = "/todos", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
     public @ResponseBody TodoDto createTodo(@RequestBody @Valid TodoDto todoDto) {
         if (bucket.tryConsume(TOKEN_TO_CONSUME)) {
-            return todoService.addTodo(todoDto);
+            return todoService.createTodo(todoDto);
         }
         throw new HttpClientErrorException(HttpStatus.TOO_MANY_REQUESTS);
     }
@@ -168,7 +168,7 @@ public class TodoController {
     @PostMapping(path = "/todos/{todoId}/items", produces = MediaType.APPLICATION_JSON_VALUE, consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
     public TodoItemDto createTodoItem(@PathVariable("todoId") String todoId, @RequestBody @Valid TodoItemDto todoItemDto) {
         if (bucket.tryConsume(TOKEN_TO_CONSUME)) {
-            TodoItemDto createdTodoItemDto = todoService.addTodoItem(todoItemDto);
+            TodoItemDto createdTodoItemDto = todoService.createTodoItem(todoItemDto);
             URI resourceUri = ServletUriComponentsBuilder.fromCurrentRequest().path("/todoItemId}").buildAndExpand(createdTodoItemDto.getId()).toUri();
             return createdTodoItemDto;
         }
@@ -251,7 +251,7 @@ public class TodoController {
     @PostMapping(path = "/todos/{todoId}/participants", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ParticipantDto createParticipant(@PathVariable("todoId") String todoId, @RequestBody @Valid ParticipantDto participantDto) {
         if (bucket.tryConsume(TOKEN_TO_CONSUME)) {
-            return todoService.addParticipant(participantDto);
+            return todoService.createParticipant(participantDto);
         }
         throw new HttpClientErrorException(HttpStatus.TOO_MANY_REQUESTS);
     }
@@ -302,7 +302,7 @@ public class TodoController {
                                                               @PathVariable("todoItemId") @NotNull String todoItemId,
                                                               @RequestBody @Valid ApprovalDto ApprovalDto) {
         if (bucket.tryConsume(TOKEN_TO_CONSUME)) {
-            return ResponseEntity.ok(todoService.addApproval(ApprovalDto));
+            return ResponseEntity.ok(todoService.createApproval(ApprovalDto));
         }
         return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build();
     }
