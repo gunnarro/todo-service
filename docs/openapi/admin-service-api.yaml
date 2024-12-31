@@ -1,0 +1,676 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Todo Service",
+    "description": "Rest Api for todo services",
+    "contact": {
+      "name": "gunnarro",
+      "url": "https://gunnarroas.org",
+      "email": "gunnarro@gunnarroas.org"
+    },
+    "version": "V1"
+  },
+  "servers": [
+    {
+      "url": "https://localhost:9999"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Admin Service",
+      "description": "Rest API for administration of todo."
+    }
+  ],
+  "paths": {
+    "/adminservice/v1/users": {
+      "get": {
+        "tags": [
+          "Admin Service"
+        ],
+        "summary": "Get all users",
+        "description": "return all users",
+        "operationId": "getUsers",
+        "responses": {
+          "200": {
+            "description": "Found users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TodoDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You are not authorized to view the resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Accessing the resource you were trying to reach is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/adminservice/v1/todos": {
+      "get": {
+        "tags": [
+          "Admin Service"
+        ],
+        "summary": "Get all todos",
+        "description": "return all todos",
+        "operationId": "getTodos",
+        "responses": {
+          "200": {
+            "description": "Found todos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TodoDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You are not authorized to view the resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Accessing the resource you were trying to reach is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/adminservice/v1/users/{userId}": {
+      "delete": {
+        "tags": [
+          "Admin Service"
+        ],
+        "summary": "delete user",
+        "description": "id of user to be deleted",
+        "operationId": "deleteUser",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "user is deleted"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You are not authorized to view the resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Accessing the resource you were trying to reach is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/adminservice/v1/todos/{todoId}": {
+      "delete": {
+        "tags": [
+          "Admin Service"
+        ],
+        "summary": "delete todo",
+        "description": "id of todo to be deleted",
+        "operationId": "deleteTodo",
+        "parameters": [
+          {
+            "name": "todoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "todo is deleted"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You are not authorized to view the resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Accessing the resource you were trying to reach is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "httpStatus": {
+            "type": "integer",
+            "description": "http status code.",
+            "format": "int32",
+            "example": 404
+          },
+          "httpMessage": {
+            "type": "string",
+            "description": "Http message.",
+            "example": "Not Found"
+          },
+          "errorCode": {
+            "type": "integer",
+            "description": "Internal error code.",
+            "format": "int32",
+            "example": 4041001
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the error.",
+            "example": "Customer not found"
+          }
+        },
+        "description": "Holds rest service error description."
+      },
+      "ApprovalDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier of the approval."
+          },
+          "todoItemId": {
+            "type": "string",
+            "description": "Unique identifier of the todo item that must be approved by all participants of the todo list."
+          },
+          "participantId": {
+            "type": "string",
+            "description": "Unique identifier of the participant that have to approve the todo item."
+          },
+          "approved": {
+            "type": "boolean",
+            "description": "Set equal to true if approved by the participant, false otherwise."
+          }
+        },
+        "description": "Holds a participant that have to approve the todo item."
+      },
+      "ParticipantDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Global unique identifier of a participant. Should not be set for new todo item."
+          },
+          "todoId": {
+            "type": "string",
+            "description": "Unique identifier of the todo the participant is assigned to."
+          },
+          "name": {
+            "type": "string",
+            "description": "The participant name"
+          },
+          "email": {
+            "type": "string",
+            "description": "The participant email address"
+          },
+          "enabled": {
+            "type": "integer",
+            "description": "Is the participant enabled or not",
+            "format": "int32"
+          }
+        },
+        "description": "Holds information about a todo list participant."
+      },
+      "TodoDto": {
+        "required": [
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "pattern": "[0-9]{1,25}",
+            "type": "string",
+            "description": "Unique identifier of the todo. Should not be set for new Todo."
+          },
+          "uuid": {
+            "type": "string",
+            "description": "Unique global identifier of the todo. Used by guest users to access the todo, i.e, unidentified users"
+          },
+          "createdDate": {
+            "type": "string",
+            "description": "date when todo was created",
+            "format": "date-time"
+          },
+          "lastModifiedDate": {
+            "type": "string",
+            "description": "date when todo was last modified",
+            "format": "date-time"
+          },
+          "createdByUser": {
+            "pattern": "[a-zA-Z]{1,50}",
+            "type": "string",
+            "description": "user that created the todo"
+          },
+          "lastModifiedByUser": {
+            "type": "string",
+            "description": "user that last modified the todo"
+          },
+          "name": {
+            "pattern": "[\\w\\sæÆøØåÅ_-]{2,50}",
+            "type": "string",
+            "description": "Name of todo"
+          },
+          "status": {
+            "type": "string",
+            "description": "Holds all possible statues for a todo task.",
+            "enum": [
+              "OPEN",
+              "IN_PROGRESS",
+              "ON_HOLD",
+              "DONE",
+              "CANCELLED"
+            ]
+          },
+          "description": {
+            "pattern": "[\\w\\sæÆøØåÅ_-]{0,100}",
+            "type": "string",
+            "description": "description of this to do task"
+          },
+          "todoItemDtoList": {
+            "type": "array",
+            "description": "List of task for the todo list",
+            "items": {
+              "$ref": "#/components/schemas/TodoItemDto"
+            }
+          },
+          "participantDtoList": {
+            "type": "array",
+            "description": "The todo list can have many participants and a participant is unique for a todo list.",
+            "items": {
+              "$ref": "#/components/schemas/ParticipantDto"
+            }
+          }
+        },
+        "description": "Holds information about a todo"
+      },
+      "TodoItemDto": {
+        "required": [
+          "action",
+          "priority",
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "pattern": "[0-9]{1,25}",
+            "type": "string",
+            "description": "Global unique identifier of the todo item. Should not be set for new todo item."
+          },
+          "todoId": {
+            "pattern": "[0-9]{1,25}",
+            "type": "string",
+            "description": "Global unique identifier for the todo that this item belongs to."
+          },
+          "createdDate": {
+            "type": "string",
+            "description": "Date when todo item was created.",
+            "format": "date-time"
+          },
+          "lastModifiedDate": {
+            "type": "string",
+            "description": "Date when todo item was last modified.",
+            "format": "date-time"
+          },
+          "createdByUser": {
+            "type": "string",
+            "description": "User that created the todo item."
+          },
+          "lastModifiedByUser": {
+            "type": "string",
+            "description": "User that last modified the todo item."
+          },
+          "name": {
+            "pattern": "[\\w\\sæÆøØåÅ_-]{2,50}",
+            "type": "string",
+            "description": "Name of the task."
+          },
+          "category": {
+            "pattern": "[\\w\\sæÆøØåÅ_-]{0,50}",
+            "type": "string"
+          },
+          "description": {
+            "pattern": "[\\w\\sæÆøØåÅ_-]{0,100}",
+            "type": "string",
+            "description": "Description of the task to do."
+          },
+          "status": {
+            "type": "string",
+            "description": "Holds all possible statues for a todo item.",
+            "enum": [
+              "OPEN",
+              "APPROVED",
+              "IN_PROGRESS",
+              "ON_HOLD",
+              "DONE",
+              "CANCELLED"
+            ]
+          },
+          "action": {
+            "type": "string",
+            "description": "Holds all possible actions for a todo task.",
+            "enum": [
+              "TO_BE_SOLD",
+              "GIVES_AWAY",
+              "THROW_AWAY",
+              "OWNED_BY",
+              "GIVEN_TO",
+              "STAY_AS_IS"
+            ]
+          },
+          "assignedTo": {
+            "type": "string",
+            "description": "The person that is responsible to follow up and fulfill this task."
+          },
+          "priority": {
+            "type": "string",
+            "description": "Holds all possible priority levels for a todo item. Where default level is MEDIUM.",
+            "enum": [
+              "LOWEST",
+              "LOW",
+              "MEDIUM",
+              "HIGH",
+              "HIGHEST"
+            ]
+          },
+          "price": {
+            "type": "integer",
+            "description": "The price of this item.",
+            "format": "int32"
+          },
+          "workedMinutes": {
+            "type": "integer",
+            "description": "Number of minutes worked with this task.",
+            "format": "int32"
+          },
+          "approvalRequired": {
+            "type": "boolean",
+            "description": "Indicates it this task must be approved ba all participants or not, Default is no need for approval."
+          },
+          "approvalList": {
+            "type": "array",
+            "description": "Holds a list of participants that have approved or not approved the todo item.",
+            "items": {
+              "$ref": "#/components/schemas/ApprovalDto"
+            }
+          },
+          "approvedByAll": {
+            "type": "boolean"
+          }
+        },
+        "description": "Holds information about a todo item."
+      }
+    },
+    "securitySchemes": {
+      "api": {
+        "type": "http",
+        "in": "header",
+        "scheme": "basic"
+      }
+    }
+  }
+}

@@ -58,12 +58,12 @@ public class TodoController {
     @Autowired
     protected AuthenticationFacade authenticationFacade;
 
-    private final TodoService toDoService;
+    private final TodoService todoService;
 
     private final Bucket bucket;
 
-    public TodoController(TodoService toDoService) {
-        this.toDoService = toDoService;
+    public TodoController(TodoService todoService) {
+        this.todoService = todoService;
         // allowing the API 5 requests per minute. In other words, the API rejects a request if it’s already received 5 requests in a time window of 1 minute.
         this.bucket = Bucket.builder()
                 .addLimit(limit -> limit.capacity(50)
@@ -71,27 +71,6 @@ public class TodoController {
                         .initialTokens(20))
                 .build();
     }
-
-
-    // ---------------------------------------------------------
-    // todo admin
-    // ---------------------------------------------------------
-    @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
-    @Operation(summary = "Get all todos", description = "return all todos for all users")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found todos",
-                    content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = TodoDto.class))})
-    })
-    @GetMapping(path = "/todos", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
-    public ResponseEntity<List<TodoDto>> getTodos() {
-        // check that this is admin user
-        if (bucket.tryConsume(TOKEN_TO_CONSUME)) {
-            return ResponseEntity.ok(toDoService.getTodos());
-        }
-        return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build();
-    }
-
 
     // ---------------------------------------------------------
     // todo
@@ -108,7 +87,7 @@ public class TodoController {
     public ResponseEntity<List<TodoDto>> getTodosByUserName(@PathVariable("userName") @NotNull String userName) {
         if (bucket.tryConsume(TOKEN_TO_CONSUME)) {
             log.debug("userName={}", userName);
-            return ResponseEntity.ok(toDoService.getTodosByUserName(userName));
+            return ResponseEntity.ok(todoService.getTodosByUserName(userName));
         }
         return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build();
     }
@@ -124,7 +103,7 @@ public class TodoController {
     public @ResponseBody TodoDto getTodoById(@PathVariable("todoId") String todoId) {
         log.info("bucket4j available tokens: {}", bucket.getAvailableTokens());
         if (bucket.tryConsume(TOKEN_TO_CONSUME)) {
-            return toDoService.getTodo(Long.valueOf(todoId));
+            return todoService.getTodo(Long.valueOf(todoId));
         }
         throw new HttpClientErrorException(HttpStatus.TOO_MANY_REQUESTS);
     }
@@ -139,7 +118,7 @@ public class TodoController {
     @PostMapping(path = "/todos", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
     public @ResponseBody TodoDto createTodo(@RequestBody @Valid TodoDto todoDto) {
         if (bucket.tryConsume(TOKEN_TO_CONSUME)) {
-            return toDoService.addTodo(todoDto);
+            return todoService.addTodo(todoDto);
         }
         throw new HttpClientErrorException(HttpStatus.TOO_MANY_REQUESTS);
     }
@@ -154,7 +133,7 @@ public class TodoController {
     @PutMapping(path = "/todos/{todoId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public TodoDto updateTodo(@PathVariable("todoId") String todoId, @RequestBody @Valid TodoDto todoDto) {
         if (bucket.tryConsume(TOKEN_TO_CONSUME)) {
-            return toDoService.updateTodo(todoDto);
+            return todoService.updateTodo(todoDto);
         }
         throw new HttpClientErrorException(HttpStatus.TOO_MANY_REQUESTS);
     }
@@ -169,7 +148,7 @@ public class TodoController {
     public void deleteTodo(@PathVariable("todoId") @NotNull String todoId) {
         if (bucket.tryConsume(TOKEN_TO_CONSUME)) {
             log.info("delete: todoId={} ", todoId);
-            toDoService.deleteTodo(Long.valueOf(todoId));
+            todoService.deleteTodo(Long.valueOf(todoId));
         } else {
             throw new HttpClientErrorException(HttpStatus.TOO_MANY_REQUESTS);
         }
@@ -189,7 +168,7 @@ public class TodoController {
     @PostMapping(path = "/todos/{todoId}/items", produces = MediaType.APPLICATION_JSON_VALUE, consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
     public TodoItemDto createTodoItem(@PathVariable("todoId") String todoId, @RequestBody @Valid TodoItemDto todoItemDto) {
         if (bucket.tryConsume(TOKEN_TO_CONSUME)) {
-            TodoItemDto createdTodoItemDto = toDoService.addTodoItem(todoItemDto);
+            TodoItemDto createdTodoItemDto = todoService.addTodoItem(todoItemDto);
             URI resourceUri = ServletUriComponentsBuilder.fromCurrentRequest().path("/todoItemId}").buildAndExpand(createdTodoItemDto.getId()).toUri();
             return createdTodoItemDto;
         }
@@ -206,7 +185,7 @@ public class TodoController {
     @PutMapping(path = "/todos/{todoId}/items", produces = MediaType.APPLICATION_JSON_VALUE, consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PROBLEM_JSON_VALUE})
     public TodoItemDto updateTodoItem(@PathVariable("todoId") String todoId, @RequestBody @Valid TodoItemDto toDoItemDto) {
         if (bucket.tryConsume(TOKEN_TO_CONSUME)) {
-            return toDoService.updateTodoItem(toDoItemDto);
+            return todoService.updateTodoItem(toDoItemDto);
         }
         throw new HttpClientErrorException(HttpStatus.TOO_MANY_REQUESTS);
     }
@@ -221,7 +200,7 @@ public class TodoController {
     @GetMapping(path = "/todos/{todoId}/items/{todoItemId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
     public TodoItemDto getTodoItem(@PathVariable("todoId") @NotNull String todoId, @PathVariable("todoItemId") @NotNull String todoItemId) {
         if (bucket.tryConsume(TOKEN_TO_CONSUME)) {
-            return toDoService.getTodoItem(Long.valueOf(todoId), Long.valueOf(todoItemId));
+            return todoService.getTodoItem(Long.valueOf(todoId), Long.valueOf(todoItemId));
         } else {
             throw new HttpClientErrorException(HttpStatus.TOO_MANY_REQUESTS);
         }
@@ -237,7 +216,7 @@ public class TodoController {
     public void deleteTodoItem(@PathVariable("todoId") @NotNull String todoId, @PathVariable("todoItemId") @NotNull String todoItemId) {
         if (bucket.tryConsume(TOKEN_TO_CONSUME)) {
             log.info("delete: todoId={}, todoItemId={}", todoId, todoItemId);
-            toDoService.deleteTodoItem(Long.valueOf(todoId), Long.valueOf(todoItemId));
+            todoService.deleteTodoItem(Long.valueOf(todoId), Long.valueOf(todoItemId));
         } else {
             throw new HttpClientErrorException(HttpStatus.TOO_MANY_REQUESTS);
         }
@@ -257,7 +236,7 @@ public class TodoController {
     @GetMapping(path = "/todos/{todoId}/participants", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
     public ResponseEntity<List<ParticipantDto>> getTodoParticipants(@PathVariable("todoId") @NotNull String todoId) {
         if (bucket.tryConsume(TOKEN_TO_CONSUME)) {
-            return ResponseEntity.ok(toDoService.getParticipants(Long.valueOf(todoId)));
+            return ResponseEntity.ok(todoService.getParticipants(Long.valueOf(todoId)));
         }
         return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build();
     }
@@ -272,7 +251,7 @@ public class TodoController {
     @PostMapping(path = "/todos/{todoId}/participants", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ParticipantDto createParticipant(@PathVariable("todoId") String todoId, @RequestBody @Valid ParticipantDto participantDto) {
         if (bucket.tryConsume(TOKEN_TO_CONSUME)) {
-            return toDoService.addParticipant(participantDto);
+            return todoService.addParticipant(participantDto);
         }
         throw new HttpClientErrorException(HttpStatus.TOO_MANY_REQUESTS);
     }
@@ -287,7 +266,7 @@ public class TodoController {
     @PutMapping(path = "/todos/{todoId}/participants", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ParticipantDto updateParticipant(@PathVariable("todoId") String todoId, @RequestBody @Valid ParticipantDto participantDto) {
         if (bucket.tryConsume(TOKEN_TO_CONSUME)) {
-            return toDoService.updateParticipant(participantDto);
+            return todoService.updateParticipant(participantDto);
         }
         throw new HttpClientErrorException(HttpStatus.TOO_MANY_REQUESTS);
     }
@@ -302,7 +281,7 @@ public class TodoController {
     public void deleteParticipant(@PathVariable("todoId") @NotNull String todoId, @PathVariable("participantId") @NotNull String participantId) {
         if (bucket.tryConsume(TOKEN_TO_CONSUME)) {
             log.info("delete: todoId={}, participantId={}", todoId, participantId);
-            toDoService.deleteParticipant(Long.valueOf(todoId), Long.valueOf(participantId));
+            todoService.deleteParticipant(Long.valueOf(todoId), Long.valueOf(participantId));
         } else {
             throw new HttpClientErrorException(HttpStatus.TOO_MANY_REQUESTS);
         }
@@ -323,7 +302,7 @@ public class TodoController {
                                                               @PathVariable("todoItemId") @NotNull String todoItemId,
                                                               @RequestBody @Valid ApprovalDto ApprovalDto) {
         if (bucket.tryConsume(TOKEN_TO_CONSUME)) {
-            return ResponseEntity.ok(toDoService.addApproval(ApprovalDto));
+            return ResponseEntity.ok(todoService.addApproval(ApprovalDto));
         }
         return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build();
     }
@@ -340,7 +319,7 @@ public class TodoController {
                                                               @PathVariable("todoItemId") @NotNull String todoItemId,
                                                               @RequestBody @Valid ApprovalDto ApprovalDto) {
         if (bucket.tryConsume(TOKEN_TO_CONSUME)) {
-            return ResponseEntity.ok(toDoService.updateApproval(ApprovalDto));
+            return ResponseEntity.ok(todoService.updateApproval(ApprovalDto));
         }
         return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build();
     }
@@ -355,7 +334,7 @@ public class TodoController {
     @GetMapping(path = "/todos/{todoId}/items/{todoItemId}/approvals", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
     public ResponseEntity<List<ApprovalDto>> getTodoItemApprovals(@PathVariable("todoId") @NotNull String todoId, @PathVariable("todoItemId") @NotNull String todoItemId) {
         if (bucket.tryConsume(TOKEN_TO_CONSUME)) {
-            return ResponseEntity.ok(toDoService.getApprovals(Long.valueOf(todoId), Long.valueOf(todoItemId)));
+            return ResponseEntity.ok(todoService.getApprovals(Long.valueOf(todoId), Long.valueOf(todoItemId)));
         }
         return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build();
     }
@@ -370,7 +349,7 @@ public class TodoController {
     public void deleteApproval(@PathVariable("todoId") @NotNull String todoId, @PathVariable("todoItemId") @NotNull String todoItemId, @PathVariable("participantId") @NotNull String participantId) {
         if (bucket.tryConsume(TOKEN_TO_CONSUME)) {
             log.info("delete: todoId={}, todoItemId={}, participantId={}", todoId, todoItemId, participantId);
-            toDoService.deleteApproval(Long.valueOf(todoItemId), Long.valueOf(participantId));
+            todoService.deleteApproval(Long.valueOf(todoItemId), Long.valueOf(participantId));
         } else {
             throw new HttpClientErrorException(HttpStatus.TOO_MANY_REQUESTS);
         }
@@ -389,7 +368,7 @@ public class TodoController {
     @GetMapping(path = "/todos/{todoId}/history", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
     public List<TodoHistoryDto> getTodoHistoryById(@PathVariable("todoId") String todoId) {
         if (bucket.tryConsume(TOKEN_TO_CONSUME)) {
-            return toDoService.getTodoHistory(Long.valueOf(todoId));
+            return todoService.getTodoHistory(Long.valueOf(todoId));
         }
         throw new HttpClientErrorException(HttpStatus.TOO_MANY_REQUESTS);
     }
@@ -404,7 +383,7 @@ public class TodoController {
     @GetMapping(path = "/todos/{todoId}/items/{todoItemId}/history", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
     public List<TodoItemHistoryDto> getTodoItemHistoryById(@PathVariable("todoId") String todoId, @PathVariable("todoItemId") String todoItemId) {
         if (bucket.tryConsume(TOKEN_TO_CONSUME)) {
-            return toDoService.getTodoItemHistory(Long.valueOf(todoId), Long.valueOf(todoItemId));
+            return todoService.getTodoItemHistory(Long.valueOf(todoId), Long.valueOf(todoItemId));
         }
         throw new HttpClientErrorException(HttpStatus.TOO_MANY_REQUESTS);
     }

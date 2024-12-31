@@ -43,14 +43,6 @@ public class TodoServiceImpl implements TodoService {
     }
 
     //-------------------------------------------------------------------
-    // Todo admin
-    //-------------------------------------------------------------------
-    @Override
-    public List<TodoDto> getTodos() {
-        return TodoMapper.toTodoDtoList(todoRepository.getTodos());
-    }
-
-    //-------------------------------------------------------------------
     // Todo
     //-------------------------------------------------------------------
     @Override
