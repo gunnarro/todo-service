@@ -37,7 +37,7 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/adminservice/v1/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 public class AdminController {
-    private static final String REST_SERVICE_METRIC_NAME = "todo.service.api";
+    private static final String REST_SERVICE_METRIC_NAME = "todo.admin.service.api";
     private static final int TOKEN_TO_CONSUME = 1;
 
     @Autowired
@@ -52,7 +52,7 @@ public class AdminController {
     // ---------------------------------------------------------
     // todo
     // ---------------------------------------------------------
-    @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
+    @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get todos request")
     @Operation(summary = "Get all todos", description = "return all todos")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found todos",
@@ -64,7 +64,7 @@ public class AdminController {
         return ResponseEntity.ok(adminService.getTodos());
     }
 
-    @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
+    @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for delete todo request")
     @Operation(summary = "delete todo", description = "id of todo to be deleted")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "todo is deleted")
@@ -78,19 +78,55 @@ public class AdminController {
     // ---------------------------------------------------------
     // user
     // ---------------------------------------------------------
-    @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
+    @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get users request")
     @Operation(summary = "Get all users", description = "return all users")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found users",
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = TodoDto.class))})
+                            schema = @Schema(implementation = UserDto.class))})
     })
     @GetMapping(path = "/users", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
     public ResponseEntity<List<UserDto>> getUsers() {
         return ResponseEntity.ok(adminService.getUsers());
     }
 
-    @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
+    @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get user request")
+    @Operation(summary = "Get specific user", description = "return requested user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found user",
+                    content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = UserDto.class))})
+    })
+    @GetMapping(path = "/users/{userId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
+    public ResponseEntity<UserDto> getUser(@PathVariable("userId") Long userId) {
+        return ResponseEntity.ok(adminService.getUser(userId));
+    }
+
+    @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for create user request")
+    @Operation(summary = "Create new user", description = "Create a new user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User is created",
+                    content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = UserDto.class))})
+    })
+    @PostMapping(path = "/users/{userId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
+    public void createUser(@PathVariable("userId") Long userId, UserDto userDto) {
+        ResponseEntity.ok(adminService.getUser(userId));
+    }
+
+    @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for update user request")
+    @Operation(summary = "Update user", description = "Update a user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User is updated",
+                    content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = UserDto.class))})
+    })
+    @PutMapping(path = "/users/{userId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.ALL_VALUE)
+    public void updateUser(@PathVariable("userId") Long userId, UserDto userDto) {
+        ResponseEntity.ok(adminService.getUser(userId));
+    }
+
+    @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for delete user request")
     @Operation(summary = "delete user", description = "id of user to be deleted")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "user is deleted")

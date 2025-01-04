@@ -14,5 +14,7 @@ public interface AdminService {
 
     List<UserDto> getUsers();
 
-    public void deleteUser(Long userId);
+    UserDto getUser(Long userId);
+
+    void deleteUser(Long userId);
 }

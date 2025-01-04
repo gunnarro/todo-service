@@ -48,7 +48,12 @@ public class AdminServiceImpl implements AdminService {
     //-------------------------------------------------------------------
     @Override
     public List<UserDto> getUsers() {
-        return List.of();
+        return List.of(new UserDto(), new UserDto());
+    }
+
+    @Override
+    public UserDto getUser(Long userId) {
+        return new UserDto();
     }
 
     @Override

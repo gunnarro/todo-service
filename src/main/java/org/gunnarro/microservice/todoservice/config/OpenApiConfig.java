@@ -1,5 +1,6 @@
 package org.gunnarro.microservice.todoservice.config;
 
+import com.sun.jdi.event.MethodEntryEvent;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
@@ -11,14 +12,16 @@ import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.io.PipedOutputStream;
+
 
 /**
  * ref: <a href="https://springdoc.org/faq.html">Springdoc faq</a>
  */
 @OpenAPIDefinition(
         info = @Info(
-                title = "Todo Service",
-                description = "Rest Api for todo services",
+                title = "Todo",
+                description = "Rest Api for todo",
                 version = "V1",
                 contact = @Contact(
                         name = "gunnarro",
@@ -32,23 +35,24 @@ import org.springframework.context.annotation.Configuration;
         scheme = "basic",
         type = SecuritySchemeType.HTTP,
         in = SecuritySchemeIn.HEADER)
+
 @Configuration
 public class OpenApiConfig {
 
     @Bean
     public GroupedOpenApi adminOpenApi() {
-        return GroupedOpenApi.builder().group("admin")
+        return GroupedOpenApi.builder()
+                .group("admin")
                 .pathsToMatch("/adminservice/v1/**")
-                //.packagesToScan("org.gunnarro.microservice.todoservice.endpoint")
                 .displayName("Administration")
                 .build();
     }
 
     @Bean
     public GroupedOpenApi todoOpenApi() {
-        return GroupedOpenApi.builder().group("todo")
+        return GroupedOpenApi.builder()
+                .group("todo")
                 .pathsToMatch("/todoservice/v1/**")
-                //.packagesToScan("org.gunnarro.microservice.todoservice.endpoint")
                 .displayName("Todo services")
                 .build();
     }
