@@ -1,6 +1,7 @@
 package org.gunnarro.microservice.todoservice.service.impl;
 
 
+import com.itextpdf.html2pdf.HtmlConverter;
 import lombok.extern.slf4j.Slf4j;
 import org.gunnarro.microservice.todoservice.domain.dto.todo.*;
 import org.gunnarro.microservice.todoservice.domain.mapper.TodoMapper;
@@ -13,16 +14,22 @@ import org.gunnarro.microservice.todoservice.repository.TodoRepository;
 import org.gunnarro.microservice.todoservice.repository.entity.Todo;
 import org.gunnarro.microservice.todoservice.repository.entity.TodoItem;
 import org.gunnarro.microservice.todoservice.service.TodoService;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.history.Revision;
 import org.springframework.data.history.Revisions;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.github.mustachejava.DefaultMustacheFactory;
+import com.github.mustachejava.Mustache;
+import com.github.mustachejava.MustacheFactory;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.nio.file.Files;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -45,6 +52,27 @@ public class TodoServiceImpl implements TodoService {
     //-------------------------------------------------------------------
     // Todo
     //-------------------------------------------------------------------
+
+    /**
+     * We don't store the HTML on disk; the method below creates the HTML file in memory.
+     */
+    @Override
+    public byte[] getTodoAsPdf(Long todoId) {
+        TodoDto todo = getTodo(todoId);
+        try {
+            File resource = new ClassPathResource("todo-template.mustache").getFile();
+            String todoTemplate = new String(Files.readAllBytes(resource.toPath()));
+            String html = createHtml(todo, todoTemplate);
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            HtmlConverter.convertToPdf(html, outputStream);
+            outputStream.close();
+            return outputStream.toByteArray();
+        } catch (Exception e) {
+            log.error("", e);
+            return null;
+        }
+    }
+
     @Override
     public List<TodoDto> getTodosByUserName(String userName) {
         return TodoMapper.toTodoDtoList(todoRepository.getTodosByUserName(userName));
@@ -165,7 +193,7 @@ public class TodoServiceImpl implements TodoService {
     //-------------------------------------------------------------------
     @Override
     public List<ApprovalDto> getApprovals(Long todoId, Long todoItemId) {
-       return TodoMapper.toApprovalDtoList(approvalRepository.getApprovals(todoItemId));
+        return TodoMapper.toApprovalDtoList(approvalRepository.getApprovals(todoItemId));
     }
 
     @Override
@@ -207,5 +235,15 @@ public class TodoServiceImpl implements TodoService {
             todoItemHistoryDtoList.add(TodoMapper.toTodoItemHistoryDto(rev.getEntity(), null, rev.getMetadata().getRevisionType().name()));
         }
         return todoItemHistoryDtoList;
+    }
+
+    private String createHtml(TodoDto todoDto, String todoMustacheTemplate) {
+        MustacheFactory mf = new DefaultMustacheFactory();
+        Mustache mustache = mf.compile(new StringReader(todoMustacheTemplate), "");
+        Map<String, Object> context = new HashMap<>();
+        context.put("todo", todoDto);
+        StringWriter writer = new StringWriter();
+        mustache.execute(writer, context);
+        return writer.toString();
     }
 }

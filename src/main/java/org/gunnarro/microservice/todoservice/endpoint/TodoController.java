@@ -53,7 +53,7 @@ import java.util.List;
 @RequestMapping(path = "/todoservice/v1", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 public class TodoController {
     private static final String REST_SERVICE_METRIC_NAME = "todo.service.api";
-    private static final int TOKEN_TO_CONSUME = 1;
+    private static final int TOKEN_TO_CONSUME = 10;
 
     @Autowired
     protected AuthenticationFacade authenticationFacade;
@@ -384,6 +384,24 @@ public class TodoController {
     public List<TodoItemHistoryDto> getTodoItemHistoryById(@PathVariable("todoId") String todoId, @PathVariable("todoItemId") String todoItemId) {
         if (bucket.tryConsume(TOKEN_TO_CONSUME)) {
             return todoService.getTodoItemHistory(Long.valueOf(todoId), Long.valueOf(todoItemId));
+        }
+        throw new HttpClientErrorException(HttpStatus.TOO_MANY_REQUESTS);
+    }
+
+    @Timed(value = REST_SERVICE_METRIC_NAME, description = "Measure frequency and latency for get subscription request")
+    @Operation(summary = "Get todo as pdf", description = "return todo as pdf")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found todo pdf",
+                    content = {@Content(mediaType = MediaType.APPLICATION_PDF_VALUE,
+                            schema = @Schema(implementation = Byte[].class))})
+    })
+    @GetMapping(path = "/todos/{todoId}/pdf", produces = MediaType.APPLICATION_PDF_VALUE, consumes = MediaType.ALL_VALUE)
+    public ResponseEntity<byte[]> getTodoPdf(@PathVariable("todoId") String todoId) {
+        if (bucket.tryConsume(TOKEN_TO_CONSUME)) {
+
+            return ResponseEntity.ok()
+                    .contentType(org.springframework.http.MediaType.APPLICATION_PDF)
+                    .body(todoService.getTodoAsPdf(Long.valueOf(todoId)));
         }
         throw new HttpClientErrorException(HttpStatus.TOO_MANY_REQUESTS);
     }

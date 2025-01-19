@@ -8,6 +8,8 @@ import java.util.List;
 @Service
 public interface TodoService {
 
+    byte[] getTodoAsPdf(Long todoId);
+
     List<TodoDto> getTodosByUserName(String userName);
 
     TodoDto getTodo(Long todoId);

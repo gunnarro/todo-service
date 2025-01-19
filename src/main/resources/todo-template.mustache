@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Todo</title>
+    <style>
+        /* form bootstrap 5.3.3 */
+            .container,
+.navbar>.container-fluid,
+.navbar>.container-lg,
+.navbar>.container-md,
+.navbar>.container-sm,
+.navbar>.container-xl,
+.navbar>.container-xxl {
+	display: flex;
+	flex-wrap: inherit;
+	align-items: center;
+	justify-content: space-between
+}
+
+table-borderless>:not(caption)>*>* {
+	border-bottom-width: 0
+}
+
+.table-borderless>:not(:first-child) {
+	border-top-width: 0
+}
+
+table-responsive {
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch
+}
+
+.text-start {
+	text-align: left !important
+}
+
+.text-end {
+	text-align: right !important
+}
+
+.text-center {
+	text-align: center !important
+}
+
+.text-muted {
+	--bs-text-opacity: 1;
+	color: var(--bs-secondary-color) !important
+}
+
+.float-start {
+	float: left !important
+}
+
+.float-end {
+	float: right !important
+}
+
+        /* end bootstrap */
+
+        .thick-line-top {
+           border-top: 2px solid black;
+       }
+       .line-top {
+           border-top: 1px solid gray;
+       }
+       .line-bottom {
+           border-bottom: 1px solid gray;
+       }
+       .thick-line-bottom {
+           border-bottom: 2px solid black;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- header -->
+    <div class="row mt-3">
+        <div class="col-md">
+            <img class="img-fluid float-start" src="image/gunnarroas.png" alt="gunnarro:as">
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md">
+            <h3>{{title}} {{timesheetPeriod}}</h3>
+        </div>
+    </div>
+    <!-- information -->
+    <div class="row mt3">
+        <div class="col-md">
+            <address>
+                <strong>Kunde</strong><br>
+                {{customer.organizationDto.name}}<br>
+                {{customer.organizationDto.businessAddress.streetAddress}}<br>
+                {{customer.organizationDto.businessAddress.postalCode}} {{invoiceReceiver.organizationDto.businessAddress.city}}
+            </address>
+        </div>
+        <div class="col-md">
+            <address>
+                <strong>Konsulent</strong><br>
+                {{consultant.organizationDto.contactPerson.fullName}}<br>
+                {{consultant.organizationDto.name}}<br>
+            </address>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md">
+            <address>
+                <strong>Oppdrag</strong><br>
+                {{customerProjectName}}<br>
+                <strong>Kontaktperson</strong><br>
+                {{customer.contactPersonDto.fullName}}
+            </address>
+        </div>
+    </div>
+    <!-- table -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-borderless table-fixed">
+                            <caption></caption>
+                            <thead>
+                            <tr class="line-bottom">
+                                <th class="text-center" style="width: 5%">Dato</th>
+                                <th class="text-center" style="width: 15%">Dag</th>
+                                <th class="text-center" style="width: 15%">Tid</th>
+                                <th class="text-center" style="width: 5%">Timer</th>
+                                <th class="text-center">Beskrivelse</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{#todo.todoItemDtoList}}
+                                <tr>
+                                    <td class="text-start ps-5">{{name}}</td>
+                                    <td class="text-start ps-5">{{category}}</td>
+                                    <td class="text-start ps-5">{{status}}</td>
+                                    <td class="text-start ps-5">{{action}}</td>
+                                    <td class="text-start ps-5">{{assignedTo}}</td>
+                                    <td class="text-start ps-5">{{priority}}</td>
+                                    <td class="text-start ps-5">{{approvalRequired}}</td>
+                                    <td class="text-start ps-5">{{description}}</td>
+                                </tr>
+                            {{/todo.todoItemDtoList}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- footer -->
+    <div class="row">
+        <div class="col-md">
+            <div class="fs-6 text-muted">
+                <p class="float-end">&copy; 2023 powered by <a class="text-reset" href="https://github.com/gunnarro/terex">Todo</a></p>
+            </div>
+            <div class="fs-6 text-muted">
+                <span>generated {{generatedDate}}</span>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
