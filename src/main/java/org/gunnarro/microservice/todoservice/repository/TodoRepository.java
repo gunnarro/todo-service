@@ -21,4 +21,14 @@ public interface TodoRepository extends JpaRepository<Todo, Long>, RevisionRepos
 
     @Query("SELECT t FROM Todo t WHERE t.id = :id")
     Optional<Todo> getTodoById(@Param("id") Long id);
+
+    @Query("SELECT name"
+            + " , sum(CASE WHEN status = 'OPEN' THEN 1 ELSE 0 END) AS open"
+            + " , sum(CASE WHEN status = 'IN_PROGRESS' THEN 1 ELSE 0 END) AS in_progress"
+            + " , sum(CASE WHEN status = 'ON_HOLD' THEN 1 ELSE 0 END) AS on_hold"
+            + " , sum(CASE WHEN status = 'DONE' THEN 1 ELSE 0 END) AS done"
+            + " , sum(CASE WHEN status = 'CANCELLED' THEN 1 ELSE 0 END) AS cancelled"
+            + " FROM todo"
+            + " GROUP BY name")
+    void getTodoStatestikkByStatus();
 }
