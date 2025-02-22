@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Freight letter</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paper-css/0.4.1/paper.css">
+    <style>
+        @page { size: A4 }
+        .sheet {
+            padding: 2mm;
+            background-color: #fff;
+        }
+        body {
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Georgia', serif;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: .0rem;
+        }
+
+        .row-border-1 {
+            border: 1px solid #000;
+        }
+
+        .col-2 {
+            flex: 0 0 auto;
+            width: 19%
+        }
+
+        .col-4 {
+            flex: 0 0 auto;
+            width: 48%
+        }
+
+        .col-6 {
+            flex: 0 0 auto;
+            width: 51%
+        }
+
+        .col-8 {
+            flex: 0 0 auto;
+            width: 79%
+        }
+
+        .col-12 {
+            flex: 0 0 auto;
+            width: 99%
+        }
+
+        .table {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            vertical-align: top;
+            border-spacing: 0;
+        }
+
+        .table > tbody {
+            border-color: inherit;
+            vertical-align: inherit
+        }
+
+        .table > thead {
+            vertical-align: bottom
+        }
+
+        .table-bordered > tbody > tr > td {
+            border-color: #000;
+            border-style: solid;
+            border-width: 1px;
+            border-spacing: 0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .table-borderless > tbody > tr > td {
+            border: none;
+        }
+
+        .table-striped > tbody > tr:nth-of-type(odd) > * {
+            border: none;
+            background-color: lavender;
+        }
+
+        .m-0 {
+            margin: 0 !important;
+        }
+        .m-2 {
+            margin: 2px !important;
+        }
+        .p-0 {
+            padding: 0;
+        }
+        .p-1 {
+            padding: 1px;
+        }
+        .p-2 {
+            padding: 2px !important;
+        }
+        .fs-10 {
+            font-size: 10px;
+        }
+        .fs-12 {
+            font-size: 1.2em;
+        }
+        .fs-16 {
+            font-size: 1.6em;
+        }
+
+        .w-10 {
+            width: 10%;
+        }
+
+        .w-20 {
+            width: 20%;
+        }
+
+        .w-50 {
+            width: 50%;
+        }
+
+        span {
+            display: block;
+        }
+
+        .square {
+            border: 1px solid black;
+            width: 12px;
+            height: 12px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .text-warning {
+            color: #997404;
+        }
+        .float-start {
+            float: left !important;
+        }
+    </style>
+</head>
+<body class="a4m">
+<div class="sheet">
+    <div>
+        <div class="row m-2 p-2">
+            <div class="col-12">
+                <div style="float: left;">
+                    <img src="a1-logo-25.svg" height="20" alt="">
+                </div>
+                <div style="float: right;">
+                    <span class="fs-16"><b>Freight letter</b></span>
+                </div>
+            </div>
+        </div>
+        <!-- start grid row -->
+        <div class="row row-border-1 fs-10">
+            <!-- start grid col 1 -->
+            <div class="col-4 p-1">
+                <table class="table table-bordered border-warning table-sm">
+                    <tr>
+                        <td colspan="3" style="height: 80px;">
+                            <label class="font-monospace text-warning">1 Sender name/Code</label>
+                            <br>Apotek 1 Gruppen AS
+                            <br>Skårerslette 55
+                            <br>1473 Lørenskog
+                            <br>Norway
+                        </td>
+                    </tr>
+                    <!-- dummy for rowspan=2 i raden over -->
+                    <tr></tr>
+                    <tr>
+                        <td colspan="3">
+                            <label class="font-monospace text-warning">4 Recipient name/Code</label>
+                            <span>{{4-recipientName}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <label class="font-monospace text-warning">5 Address</label>
+                            <span>{{5-address}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="font-monospace text-warning">6 Place nr.</label>
+                            <span>{{6-placeNr}}</span>
+                        </td>
+                        <td colspan="2">
+                            <label class="font-monospace text-warning">Place</label>
+                            <span>{{6-place}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <label class="font-monospace text-warning">7 Delivered to: name/code</label>
+                            <span>{{7-deliveredTo}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <label class="font-monospace text-warning">8 Delivery address</label>
+                            <span>{{8-deliveryAddress}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 100px;">
+                            <label class="font-monospace text-warning">9 Place no.</label>
+                            <span>{{9-placeNr}}</span>
+                        </td>
+                        <td colspan="2">
+                            <label class="font-monospace text-warning">Place of delivery</label>
+                            <span>{{9-PlaceOfDelivery}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <label class="font-monospace text-warning">10 Transporter</label>
+                            <span>{{9-utleveringssted}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="font-monospace text-warning">11 Over</label>
+                            <span>{{9-utleveringssted}}</span>
+                        </td>
+                        <td style="width: 100px;">
+                            <label class="font-monospace text-warning">12 Exchange pallets</label>
+                            <span>{{9-utleveringssted}}</span>
+                        </td>
+                        <td style="width: 100px;">
+                            <label class="font-monospace text-warning">13 Other pallets</label>
+                            <span>{{9-utleveringssted}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" rowspan="2" style="height: 142px;">
+                            <label class="text-left font-monospace text-warning">14 Transport product</label>
+                            <span>{{14-transportProduct}}</span>
+                        </td>
+                    </tr>
+                </table>
+            </div> <!-- end grid col 1 -->
+            <!-- start grid col 2 -->
+            <div class="col-6 p-1">
+                <table class="table table-bordered border-warning table-sm">
+                    <tr>
+                        <td style="border: none;"></td>
+                        <td style="text-align: center;border: none;">
+                            <img src="barcode.gif" alt="" height="80">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 350px;">
+                            <label class="font-monospace text-warning">15 Sender's customer no. with the carrier</label>
+                            <span>{{9-utleveringssted}}</span>
+                        </td>
+                        <td>
+                            <label class="font-monospace text-warning">17 Date of issue</label>
+                            <span>{{17-DateOfIssue}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="font-monospace text-warning">16 Sender's reference</label>
+                            <span>{{16-senderRef}}</span>
+                        </td>
+                        <td>
+                            <label class="font-monospace text-warning">18 Booking reference</label>
+                            <span>{{18-bookingRef}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="font-monospace text-warning">19 Other shipping pays name/code</label>
+                            <span>{{9-utleveringssted}}</span>
+                        </td>
+                        <td>
+                            <label class="font-monospace text-warning">20 Customer no.</label>
+                            <span>{{20-customerNr}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label class="font-monospace text-warning">21 Address</label>
+                            <span>{{9-utleveringssted}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="font-monospace text-warning">22 Place no.</label>
+                            <span>{{9-utleveringssted}}</span>
+                        </td>
+                        <td>
+                            <label class="font-monospace text-warning">Place</label>
+                            <span>{{9-utleveringssted}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="font-monospace text-warning">23 Recipient's customer no. with the
+                                carrier</label>
+                            <span>{{9-utleveringssted}}</span>
+                        </td>
+                        <td>
+                            <label class="font-monospace text-warning">25 Recipient's reference</label>
+                            <span>{{9-utleveringssted}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="font-monospace text-warning">24 Item Insurance value</label>
+                            <label class="font-monospace text-warning">Category</label>
+                            <span>{{9-utleveringssted}}</span>
+                        </td>
+                        <td>
+                            <label class="font-monospace text-warning">26 Police no.</label>
+                            <label class="font-monospace text-warning">Must be insured</label>
+                            <br><i class="fa fa-square-o"></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label class="font-monospace text-warning">27 Delivery condition</label>
+                            <span>{{9-utleveringssted}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label class="font-monospace text-warning">28 Shipping and costs</label>
+                            <div style="white-space: nowrap;justify-items: left;text-wrap: nowrap;flex-wrap: nowrap;overflow-wrap: revert;">
+                                <label class="font-monospace text-warning">Charged:&nbsp;</label>
+                                <span class="square"></span>
+                                <label class="font-monospace text-warning form-check-label">Sender</label>
+                                &nbsp;&nbsp;
+                                <span class="square"></span>
+                                <label class="font-monospace text-warning form-check-label">Recipient</label>
+                                &nbsp;&nbsp;
+                                <span class="square"></span>
+                                <label class="font-monospace text-warning form-check-label ">Other freight payer</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="font-monospace text-warning">29 Transport codes</label>
+                        </td>
+                        <td>
+                            <table class="table-borderless">
+                                <tr>
+                                    <td class="text-center text-warning">
+                                        <span>A</span>
+                                        <span class="square"></span>
+                                    </td>
+                                    <td class="text-center text-warning">
+                                        <span>B</span>
+                                        <span class="square"></span>
+                                    </td>
+                                    <td class="text-center text-warning">
+                                        <span>C</span>
+                                        <span class="square"></span>
+                                    </td>
+                                    <td class="text-center text-warning">
+                                        <span>D</span>
+                                        <span class="square"></span>
+                                    </td>
+                                    <td class="text-center text-warning">
+                                        <span>E</span>
+                                        <span class="square"></span>
+                                    </td>
+                                    <td class="text-center text-warning">
+                                        <span>F</span>
+                                        <span class="square"></span>
+                                    </td>
+                                    <td class="text-center text-warning">
+                                        <span>G</span>
+                                        <span class="square"></span>
+                                    </td>
+                                    <td class="text-center text-warning">
+                                        <span>H</span>
+                                        <span class="square"></span>
+                                    </td>
+                                    <td class="text-center text-warning">
+                                        <span>I</span>
+                                        <span class="square"></span>
+                                    </td>
+                                    <td class="text-center text-warning">
+                                        <span>J</span>
+                                        <span class="square"></span>
+                                    </td>
+                                    <td class="text-center text-warning">
+                                        <span>K</span>
+                                        <span class="square"></span>
+                                    </td>
+                                    <td class="text-center text-warning">
+                                        <span>L</span>
+                                        <span class="square"></span>
+                                    </td>
+                                    <td class="text-center text-warning">
+                                        <span>M</span>
+                                        <span class="square"></span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label class="font-monospace text-warning">30 Delivery instructions</label>
+                            <span>{{30-leveringsinstruks}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="font-monospace text-warning">31 Sender's mail/bank account no.</label>
+                            <span>{{31-sendresPost}}</span>
+                        </td>
+                        <td>
+                            <label class="font-monospace text-warning">32 Giro amount</label>
+                            <span>{{32-girobeløp}}</span>
+                        </td>
+                    </tr>
+                </table>
+            </div> <!-- end grid col -->
+        </div>
+    </div> <!-- end grid row 1 -->
+    <!-- grid row 2 -->
+    <div class="row row-border-1 fs-10">
+        <div class="col-12 p-1">
+            <!-- kolli -->
+            <table class="table table-striped border-warning table-sm" style="border: 1px !important;">
+                <tr>
+                    <td>
+                        <label class="font-monospace text-warning">33 Marking</label>
+                    </td>
+                    <td>
+                        <label class="font-monospace text-warning">34 No. of parcels</label>
+                    </td>
+                    <td>
+                        <label class="font-monospace text-warning">35 Type of packing / type of goods</label>
+                    </td>
+                    <td>
+                        <label class="font-monospace text-warning">36 Gross weight kg</label>
+                    </td>
+                    <td>
+                        <label class="font-monospace text-warning">37 Measurements (l x b x h dm3)</label>
+                    </td>
+                </tr>
+                {{#kolliListe}}
+                <tr>
+                    <td></td>
+                    <td>{{kolliNr}}</td>
+                    <td><span class="{{#isAlm}}text-success{{/isAlm}}{{#isKjøl}}text-primary{{/isKjøl}}{{#isNarko}}text-danger{{/isNarko}}">{{vareType}}</span>
+                    </td>
+                    <td>{{vektKg}}</td>
+                    <td>{{lengdeCm}} x {{breddeCm}} x {{høydeCm}}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>{{kolliNr}}</td>
+                    <td><span class="{{#isAlm}}text-success{{/isAlm}}{{#isKjøl}}text-primary{{/isKjøl}}{{#isNarko}}text-danger{{/isNarko}}">{{vareType}}</span>
+                    </td>
+                    <td>{{vektKg}}</td>
+                    <td>{{lengdeCm}} x {{breddeCm}} x {{høydeCm}}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>{{kolliNr}}</td>
+                    <td><span class="{{#isAlm}}text-success{{/isAlm}}{{#isKjøl}}text-primary{{/isKjøl}}{{#isNarko}}text-danger{{/isNarko}}">{{vareType}}</span>
+                    </td>
+                    <td>{{vektKg}}</td>
+                    <td>{{lengdeCm}} x {{breddeCm}} x {{høydeCm}}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>{{kolliNr}}</td>
+                    <td><span class="{{#isAlm}}text-success{{/isAlm}}{{#isKjøl}}text-primary{{/isKjøl}}{{#isNarko}}text-danger{{/isNarko}}">{{vareType}}</span>
+                    </td>
+                    <td>{{vektKg}}</td>
+                    <td>{{lengdeCm}} x {{breddeCm}} x {{høydeCm}}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>{{kolliNr}}</td>
+                    <td><span class="{{#isAlm}}text-success{{/isAlm}}{{#isKjøl}}text-primary{{/isKjøl}}{{#isNarko}}text-danger{{/isNarko}}">{{vareType}}</span>
+                    </td>
+                    <td>{{vektKg}}</td>
+                    <td>{{lengdeCm}} x {{breddeCm}} x {{høydeCm}}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>{{kolliNr}}</td>
+                    <td><span class="{{#isAlm}}text-success{{/isAlm}}{{#isKjøl}}text-primary{{/isKjøl}}{{#isNarko}}text-danger{{/isNarko}}">{{vareType}}</span>
+                    </td>
+                    <td>{{vektKg}}</td>
+                    <td>{{lengdeCm}} x {{breddeCm}} x {{høydeCm}}</td>
+                </tr>
+                {{/kolliListe}}
+            </table>
+        </div> <!-- end col 2 in row 2 -->
+    </div> <!-- end grid row 2 -->
+    <div class="row row-border-1 p-0" style="align-content: flex-end">
+        <div class="col-12">
+            <table class="table table-borderless">
+                <tr>
+                    <td>
+                        <table class="table table-borderless fs-10">
+                            <tr>
+                                <td colspan="2" rowspan="2">
+                                    <label class="font-monospace text-warning">38</label>
+                                    <table class="table table-borderless m-2">
+                                        {{#tileggsInfoListe}}
+                                        <tr>
+                                            <td>{{key}}</td>
+                                            <td>{{value}}</td>
+                                        </tr>
+                                        {{/tileggsInfoListe}}
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td rowspan="2">
+                        <table class="table table-bordered fs-10" style="border-color: black; border-width: 2px;">
+                            <tr>
+                                <td colspan="2">
+                                    <label class="font-monospace fs-10">39 Shipping calculation weight</label>
+                                    <span>{{39-fraktberegningsvekt}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="font-monospace fs-10">40 Text</label>
+                                    <span>{{40-tekst}}</span>
+                                </td>
+                                <td>
+                                    <label class="font-monospace fs-10">41 Amount</label>
+                                    <span>{{41-beløp}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td class="fs-12">Freight</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="fs-12">Utkjøring</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="fs-12">SUM</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="fs-12">VAT</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td><span class="fs-16"><b>TOTAL</b></span></td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: bottom;">
+                        <table class="table table-bordered fs-10">
+                            <tbody>
+                                <tr style="background-color: steelblue;">
+                                    <th class="">TRANSMITTING PLACE</th>
+                                    <th class="">PLACE OF DELIVERY</th>
+                                    <th class="">GOODS RECEIVED</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label class="font-monospace text-warning">42 Date stamp / stamp paid / sign.</label>
+                                        <span>{{42-signatur-sender}}</span>
+                                    </td>
+                                    <td>
+                                        <label class="font-monospace text-warning">43 Date stamp / stamp paid / sign.</label>
+                                        <span>{{43-signatur-utlevert}}</span>
+                                    </td>
+                                    <td>
+                                        <span class="font-monospace text-warning">44 Date</span>
+                                        <span>{{44-signatur-mottatt}}</span>
+                                        <br><label class="font-monospace text-warning">Receipt (full name)</label>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
