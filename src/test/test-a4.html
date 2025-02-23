@@ -11,6 +11,7 @@
         .sheet {
             padding: 2mm;
             background-color: #fff;
+            width: 210mm;
             min-height: 296mm;
             height: 296mm;
         }
@@ -24,66 +25,50 @@
             margin: 0;
             font-family: 'Georgia', serif;
         }
-
         .row {
             display: flex;
             flex-wrap: wrap;
             margin-top: .0rem;
         }
-
-        .row-border-1 {
-            border: 1px solid #000;
-        }
-
         .border-1 {
             border: 1px solid #000;
         }
-
         .col-1 {
             flex: 0 0 auto;
             width: 3.5%
         }
-
         .col-2 {
             flex: 0 0 auto;
             width: 19%
         }
-
         .col-3 {
             flex: 0 0 auto;
             width: 43.5%
         }
-
         .col-4 {
             flex: 0 0 auto;
             width: 48%
         }
-
-          .col-5 {
+        .col-5 {
             flex: 0 0 auto;
             width: 48.5%
         }
-
         .col-6 {
             flex: 0 0 auto;
             width: 52%
         }
-
         .col-8 {
             flex: 0 0 auto;
             width: 79%
         }
-
         .col-11 {
             flex: 0 0 auto;
             width: 96%
         }
-
         .col-12 {
             flex: 0 0 auto;
             width: 100%
         }
-
         .table {
             width: 100%;
             margin: 0;
@@ -91,16 +76,13 @@
             vertical-align: top;
             border-spacing: 0;
         }
-
         .table > tbody {
             border-color: inherit;
             vertical-align: inherit
         }
-
         .table > thead {
             vertical-align: bottom
         }
-
         .table-bordered > tbody > tr > td {
             border-color: #000;
             border-style: solid;
@@ -108,20 +90,19 @@
             border-spacing: 0;
             margin: 0;
             padding: 0;
+            padding-left: 1px;
         }
-
         .table-borderless > tbody > tr > td {
             border: none;
             border-spacing: 0;
             margin: 0;
             padding: 0;
+            padding-left: 1px;
         }
-
         .table-striped > tbody > tr:nth-of-type(odd) > * {
             border: none;
             background-color: lavender;
         }
-
         .m-0 {
             margin: 0 !important;
         }
@@ -149,23 +130,18 @@
         .fs-16 {
             font-size: 1.6em;
         }
-
         .w-10 {
             width: 10%;
         }
-
         .w-20 {
             width: 20%;
         }
-
         .w-50 {
             width: 50%;
         }
-
         span {
             display: block;
         }
-
         .square {
             border: 1px solid black;
             width: 12px;
@@ -173,7 +149,6 @@
             position: relative;
             display: inline-block;
         }
-
         .text-rotate-90 {
             display: inline-block;
             vertical-align: top;
@@ -181,14 +156,12 @@
             writing-mode: vertical-lr;
             background: lightgray;
         }
-
         .text-warning {
             color: #997404;
         }
         .float-start {
             float: left !important;
         }
-
         .bottom-div {
             margin-top: auto;
         }
@@ -214,7 +187,8 @@
         </div>
         <!-- start grid col 1 -->
         <div class="col-3 border-1">
-            <table class="table table-bordered border-warning table-sm">
+            <table class="table table-bordered">
+                <tbody>
                 <tr>
                     <td colspan="3" style="height: 80px;">
                         <label class="font-monospace text-warning">1 Sender name/Code</label>
@@ -296,11 +270,13 @@
                         <span>{{14-transportProduct}}</span>
                     </td>
                 </tr>
+                </tbody>
             </table>
         </div> <!-- end grid col 1 -->
         <!-- start grid col 2 -->
         <div class="col-6 border-1">
-            <table class="table table-bordered border-warning table-sm">
+            <table class="table table-bordered">
+                <tbody>
                 <tr>
                     <td style="border: none;"></td>
                     <td style="text-align: center;border: none;">
@@ -404,6 +380,7 @@
                     </td>
                     <td>
                         <table class="table-borderless">
+                            <tbody>
                             <tr>
                                 <td class="text-center text-warning">
                                     <span>A</span>
@@ -458,6 +435,7 @@
                                     <span class="square"></span>
                                 </td>
                             </tr>
+                            </tbody>
                         </table>
                     </td>
                 </tr>
@@ -477,6 +455,7 @@
                         <span>{{32-girobeløp}}</span>
                     </td>
                 </tr>
+                </tbody>
             </table>
         </div> <!-- end grid col -->
     </div> <!-- end grid row 1 -->
@@ -486,6 +465,7 @@
         <div class="col-11 border-1">
             <!-- kolli -->
             <table class="table table-borderless fs-10">
+                <tbody>
                 <tr>
                     <td>
                         <label class="font-monospace text-warning">33 Marking</label>
@@ -559,6 +539,7 @@
                     <td>{{lengdeCm}} x {{breddeCm}} x {{høydeCm}}</td>
                 </tr>
                 {{/kolliListe}}
+                </tbody>
             </table>
         </div> <!-- end col 2 in row 2 -->
     </div> <!-- end grid row 2 -->
@@ -573,6 +554,7 @@
                 <tr>
                     <td>
                         <table class="table table-borderless fs-10">
+                            <tbody>
                             <tr>
                                 <td colspan="2" rowspan="2">
                                     <label class="font-monospace text-warning">38</label>
@@ -586,6 +568,7 @@
                                     </table>
                                 </td>
                             </tr>
+                            </tbody>
                         </table>
                     </td>
                 </tr>
@@ -648,9 +631,9 @@
                         <table class="table table-bordered fs-10">
                             <tbody>
                             <tr style="background-color: green;">
-                                <th class="">TRANSMITTING PLACE</th>
-                                <th class="">PLACE OF DELIVERY</th>
-                                <th class="">GOODS RECEIVED</th>
+                                <th class="fs-12">TRANSMITTING PLACE</th>
+                                <th class="fs-12">PLACE OF DELIVERY</th>
+                                <th class="fs-12">GOODS RECEIVED</th>
                             </tr>
                             <tr>
                                 <td>
