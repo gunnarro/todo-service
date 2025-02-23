@@ -122,7 +122,7 @@
             font-size: 8px;
         }
         .fs-10 {
-            font-size: 10px;
+            font-size: 11px;
         }
         .fs-12 {
             font-size: 1.2em;
@@ -214,7 +214,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <label class="font-monospace text-warning">6 Place nr.</label>
+                        <label class="font-monospace text-warning">6 Place no.</label>
                         <span>{{6-placeNr}}</span>
                     </td>
                     <td colspan="2">
@@ -275,18 +275,18 @@
         </div> <!-- end grid col 1 -->
         <!-- start grid col 2 -->
         <div class="col-6 border-1">
-            <table class="table table-bordered">
+            <table class="table table-bordered" style="table-layout: fixed;">
                 <tbody>
                 <tr>
-                    <td style="border: none;"></td>
+                    <td  style="width: 175px;border: none;"></td>
                     <td style="text-align: center;border: none;">
                         <img src="barcode.gif" alt="" height="80">
                     </td>
                 </tr>
                 <tr>
-                    <td style="width: 350px;">
-                        <label class="font-monospace text-warning">15 Sender's customer no. with the carrier</label>
-                        <span>{{9-utleveringssted}}</span>
+                    <td>
+                        <span class="font-monospace text-warning">15 Sender's carrier customer no.</span>
+                        <span>{{15-sendersTransportKundeNr}}</span>
                     </td>
                     <td>
                         <label class="font-monospace text-warning">17 Date of issue</label>
@@ -305,46 +305,45 @@
                 </tr>
                 <tr>
                     <td>
-                        <label class="font-monospace text-warning">19 Other shipping pays name/code</label>
-                        <span>{{9-utleveringssted}}</span>
+                        <label class="font-monospace text-warning">19 Other shipping pays method</label>
+                        <span>{{19-betalingsmåte}}</span>
                     </td>
                     <td>
                         <label class="font-monospace text-warning">20 Customer no.</label>
-                        <span>{{20-customerNr}}</span>
+                        <span>{{20-kundeNr}}</span>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
                         <label class="font-monospace text-warning">21 Address</label>
-                        <span>{{9-utleveringssted}}</span>
+                        <span>{{21-adresse}}</span>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <label class="font-monospace text-warning">22 Place no.</label>
-                        <span>{{9-utleveringssted}}</span>
+                        <span>{{22-placeNr}}</span>
                     </td>
                     <td>
                         <label class="font-monospace text-warning">Place</label>
-                        <span>{{9-utleveringssted}}</span>
+                        <span>{22-place}}</span>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <label class="font-monospace text-warning">23 Recipient's customer no. with the
-                            carrier</label>
-                        <span>{{9-utleveringssted}}</span>
+                        <label class="font-monospace text-warning">23 Recipient's carrier customer no.</label>
+                        <span>{{23-mottakerTransportørKundeNr}}</span>
                     </td>
                     <td>
                         <label class="font-monospace text-warning">25 Recipient's reference</label>
-                        <span>{{9-utleveringssted}}</span>
+                        <span>{{25-mottakerRef}}</span>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <label class="font-monospace text-warning">24 Item Insurance value</label>
                         <label class="font-monospace text-warning">Category</label>
-                        <span>{{9-utleveringssted}}</span>
+                        <span>{{24-utleveringssted}}</span>
                     </td>
                     <td>
                         <label class="font-monospace text-warning">26 Police no.</label>
@@ -355,7 +354,7 @@
                 <tr>
                     <td colspan="2">
                         <label class="font-monospace text-warning">27 Delivery condition</label>
-                        <span>{{9-utleveringssted}}</span>
+                        <span>{{27-leveringsBetingelser}}</span>
                     </td>
                 </tr>
                 <tr>
@@ -464,28 +463,30 @@
         <div class="col-1"></div>
         <div class="col-11 border-1">
             <!-- kolli -->
-            <table class="table table-borderless fs-10">
-                <tbody>
+            <table class="table table-borderless" style="table-layout: auto;">
+                <thead style="background-color: lightgray;">
                 <tr>
-                    <td>
+                    <th>
                         <label class="font-monospace text-warning">33 Marking</label>
-                    </td>
-                    <td>
+                    </th>
+                    <th>
                         <label class="font-monospace text-warning">34 No. of parcels</label>
-                    </td>
-                    <td>
+                    </th>
+                    <th>
                         <label class="font-monospace text-warning">35 Type of packing / type of goods</label>
-                    </td>
-                    <td>
+                    </th>
+                    <th>
                         <label class="font-monospace text-warning">36 Gross weight kg</label>
-                    </td>
-                    <td>
+                    </th>
+                    <th>
                         <label class="font-monospace text-warning">37 Measurements (l x b x h dm3)</label>
-                    </td>
+                    </th>
                 </tr>
+                </thead>
+                <tbody>
                 {{#kolliListe}}
                 <tr>
-                    <td></td>
+                    <td>{{marking}}</td>
                     <td>{{kolliNr}}</td>
                     <td><span
                             class="{{#isAlm}}text-success{{/isAlm}}{{#isKjøl}}text-primary{{/isKjøl}}{{#isNarko}}text-danger{{/isNarko}}">{{vareType}}</span>
@@ -575,22 +576,21 @@
                 <tr>
                     <td>&nbsp;</td>
                     <td rowspan="2">
-                        <table class="table table-bordered fs-10"
-                               style="border-color: red; border-width: 2px !important;">
+                        <table class="table table-bordered" style="border-width: 2px;">
                             <tbody>
                             <tr>
                                 <td colspan="2">
-                                    <label class="font-monospace fs-10">39 Shipping calculation weight</label>
+                                    <label class="font-monospace fs-11">39 Shipping calculation weight</label>
                                     <span>{{39-fraktberegningsvekt}}</span>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <label class="font-monospace fs-10">40 Text</label>
+                                    <label class="font-monospace">40 Text</label>
                                     <span>{{40-tekst}}</span>
                                 </td>
                                 <td>
-                                    <label class="font-monospace fs-10">41 Amount</label>
+                                    <label class="font-monospace">41 Amount</label>
                                     <span>{{41-beløp}}</span>
                                 </td>
                             </tr>
