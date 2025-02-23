@@ -46,7 +46,7 @@
 
         .col-6 {
             flex: 0 0 auto;
-            width: 51%
+            width: 52%
         }
 
         .col-8 {
@@ -56,7 +56,7 @@
 
         .col-12 {
             flex: 0 0 auto;
-            width: 99%
+            width: 100%
         }
 
         .table {
@@ -87,6 +87,9 @@
 
         .table-borderless > tbody > tr > td {
             border: none;
+            border-spacing: 0;
+            margin: 0;
+            padding: 0;
         }
 
         .table-striped > tbody > tr:nth-of-type(odd) > * {
@@ -157,291 +160,290 @@
 </head>
 <body class="a4">
 <div class="sheet">
-    <div>
-        <div class="row m-2 p-2">
-            <div class="col-12">
-                <div style="float: left;">
-                    <img src="a1-logo-25.svg" height="20" alt="">
-                </div>
-                <div style="float: right;">
-                    <span class="fs-16"><b>Freight letter</b></span>
-                </div>
+    <!-- page header -->
+    <div class="row m-2 p-2">
+        <div class="col-12">
+            <div style="float: left;">
+                <img src="a1-logo-25.svg" height="20" alt="">
+            </div>
+            <div style="float: right;">
+                <span class="fs-16"><b>Freight letter</b></span>
             </div>
         </div>
-        <!-- start grid row -->
-        <div class="row row-border-1 fs-10">
-            <!-- start grid col 1 -->
-            <div class="col-4 p-1">
-                <table class="table table-bordered border-warning table-sm">
-                    <tr>
-                        <td colspan="3" style="height: 80px;">
-                            <label class="font-monospace text-warning">1 Sender name/Code</label>
-                            <br>Apotek 1 Gruppen AS
-                            <br>Skårerslette 55
-                            <br>1473 Lørenskog
-                            <br>Norway
-                        </td>
-                    </tr>
-                    <!-- dummy for rowspan=2 i raden over -->
-                    <tr></tr>
-                    <tr>
-                        <td colspan="3">
-                            <label class="font-monospace text-warning">4 Recipient name/Code</label>
-                            <span>{{4-recipientName}}</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="3">
-                            <label class="font-monospace text-warning">5 Address</label>
-                            <span>{{5-address}}</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label class="font-monospace text-warning">6 Place nr.</label>
-                            <span>{{6-placeNr}}</span>
-                        </td>
-                        <td colspan="2">
-                            <label class="font-monospace text-warning">Place</label>
-                            <span>{{6-place}}</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="3">
-                            <label class="font-monospace text-warning">7 Delivered to: name/code</label>
-                            <span>{{7-deliveredTo}}</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="3">
-                            <label class="font-monospace text-warning">8 Delivery address</label>
-                            <span>{{8-deliveryAddress}}</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 100px;">
-                            <label class="font-monospace text-warning">9 Place no.</label>
-                            <span>{{9-placeNr}}</span>
-                        </td>
-                        <td colspan="2">
-                            <label class="font-monospace text-warning">Place of delivery</label>
-                            <span>{{9-PlaceOfDelivery}}</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="3">
-                            <label class="font-monospace text-warning">10 Transporter</label>
-                            <span>{{9-utleveringssted}}</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label class="font-monospace text-warning">11 Over</label>
-                            <span>{{9-utleveringssted}}</span>
-                        </td>
-                        <td style="width: 100px;">
-                            <label class="font-monospace text-warning">12 Exchange pallets</label>
-                            <span>{{9-utleveringssted}}</span>
-                        </td>
-                        <td style="width: 100px;">
-                            <label class="font-monospace text-warning">13 Other pallets</label>
-                            <span>{{9-utleveringssted}}</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="3" rowspan="2" style="border: none;">
-                            <label class="text-left font-monospace text-warning">14 Transport product</label>
-                            <span>{{14-transportProduct}}</span>
-                        </td>
-                    </tr>
-                </table>
-            </div> <!-- end grid col 1 -->
-            <!-- start grid col 2 -->
-            <div class="col-6 p-1">
-                <table class="table table-bordered border-warning table-sm">
-                    <tr>
-                        <td style="border: none;"></td>
-                        <td style="text-align: center;border: none;">
-                            <img src="barcode.gif" alt="" height="80">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 350px;">
-                            <label class="font-monospace text-warning">15 Sender's customer no. with the carrier</label>
-                            <span>{{9-utleveringssted}}</span>
-                        </td>
-                        <td>
-                            <label class="font-monospace text-warning">17 Date of issue</label>
-                            <span>{{17-DateOfIssue}}</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label class="font-monospace text-warning">16 Sender's reference</label>
-                            <span>{{16-senderRef}}</span>
-                        </td>
-                        <td>
-                            <label class="font-monospace text-warning">18 Booking reference</label>
-                            <span>{{18-bookingRef}}</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label class="font-monospace text-warning">19 Other shipping pays name/code</label>
-                            <span>{{9-utleveringssted}}</span>
-                        </td>
-                        <td>
-                            <label class="font-monospace text-warning">20 Customer no.</label>
-                            <span>{{20-customerNr}}</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <label class="font-monospace text-warning">21 Address</label>
-                            <span>{{9-utleveringssted}}</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label class="font-monospace text-warning">22 Place no.</label>
-                            <span>{{9-utleveringssted}}</span>
-                        </td>
-                        <td>
-                            <label class="font-monospace text-warning">Place</label>
-                            <span>{{9-utleveringssted}}</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label class="font-monospace text-warning">23 Recipient's customer no. with the
-                                carrier</label>
-                            <span>{{9-utleveringssted}}</span>
-                        </td>
-                        <td>
-                            <label class="font-monospace text-warning">25 Recipient's reference</label>
-                            <span>{{9-utleveringssted}}</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label class="font-monospace text-warning">24 Item Insurance value</label>
-                            <label class="font-monospace text-warning">Category</label>
-                            <span>{{9-utleveringssted}}</span>
-                        </td>
-                        <td>
-                            <label class="font-monospace text-warning">26 Police no.</label>
-                            <label class="font-monospace text-warning">Must be insured</label>
-                            <br><i class="fa fa-square-o"></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <label class="font-monospace text-warning">27 Delivery condition</label>
-                            <span>{{9-utleveringssted}}</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <label class="font-monospace text-warning">28 Shipping and costs</label>
-                            <div style="white-space: nowrap;justify-items: left;text-wrap: nowrap;flex-wrap: nowrap;overflow-wrap: revert;">
-                                <label class="font-monospace text-warning">Charged:&nbsp;</label>
-                                <span class="square"></span>
-                                <label class="font-monospace text-warning form-check-label">Sender</label>
-                                &nbsp;&nbsp;
-                                <span class="square"></span>
-                                <label class="font-monospace text-warning form-check-label">Recipient</label>
-                                &nbsp;&nbsp;
-                                <span class="square"></span>
-                                <label class="font-monospace text-warning form-check-label ">Other freight payer</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label class="font-monospace text-warning">29 Transport codes</label>
-                        </td>
-                        <td>
-                            <table class="table-borderless">
-                                <tr>
-                                    <td class="text-center text-warning">
-                                        <span>A</span>
-                                        <span class="square"></span>
-                                    </td>
-                                    <td class="text-center text-warning">
-                                        <span>B</span>
-                                        <span class="square"></span>
-                                    </td>
-                                    <td class="text-center text-warning">
-                                        <span>C</span>
-                                        <span class="square"></span>
-                                    </td>
-                                    <td class="text-center text-warning">
-                                        <span>D</span>
-                                        <span class="square"></span>
-                                    </td>
-                                    <td class="text-center text-warning">
-                                        <span>E</span>
-                                        <span class="square"></span>
-                                    </td>
-                                    <td class="text-center text-warning">
-                                        <span>F</span>
-                                        <span class="square"></span>
-                                    </td>
-                                    <td class="text-center text-warning">
-                                        <span>G</span>
-                                        <span class="square"></span>
-                                    </td>
-                                    <td class="text-center text-warning">
-                                        <span>H</span>
-                                        <span class="square"></span>
-                                    </td>
-                                    <td class="text-center text-warning">
-                                        <span>I</span>
-                                        <span class="square"></span>
-                                    </td>
-                                    <td class="text-center text-warning">
-                                        <span>J</span>
-                                        <span class="square"></span>
-                                    </td>
-                                    <td class="text-center text-warning">
-                                        <span>K</span>
-                                        <span class="square"></span>
-                                    </td>
-                                    <td class="text-center text-warning">
-                                        <span>L</span>
-                                        <span class="square"></span>
-                                    </td>
-                                    <td class="text-center text-warning">
-                                        <span>M</span>
-                                        <span class="square"></span>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <label class="font-monospace text-warning">30 Delivery instructions</label>
-                            <span>{{30-leveringsinstruks}}</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label class="font-monospace text-warning">31 Sender's mail/bank account no.</label>
-                            <span>{{31-sendresPost}}</span>
-                        </td>
-                        <td>
-                            <label class="font-monospace text-warning">32 Giro amount</label>
-                            <span>{{32-girobeløp}}</span>
-                        </td>
-                    </tr>
-                </table>
-            </div> <!-- end grid col -->
-        </div>
-    </div> <!-- end grid row 1 -->
-    <!-- grid row 2 -->
+    </div>
+    <!-- start grid row 1 -->
     <div class="row row-border-1 fs-10">
-        <div class="col-12 p-1">
+        <!-- start grid col 1 -->
+        <div class="col-4">
+            <table class="table table-bordered border-warning table-sm">
+                <tr>
+                    <td colspan="3" style="height: 80px;">
+                        <label class="font-monospace text-warning">1 Sender name/Code</label>
+                        <br>Apotek 1 Gruppen AS
+                        <br>Skårerslette 55
+                        <br>1473 Lørenskog
+                        <br>Norway
+                    </td>
+                </tr>
+                <!-- dummy for rowspan=2 i raden over -->
+                <tr></tr>
+                <tr>
+                    <td colspan="3">
+                        <label class="font-monospace text-warning">4 Recipient name/Code</label>
+                        <span>{{4-recipientName}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <label class="font-monospace text-warning">5 Address</label>
+                        <span>{{5-address}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="font-monospace text-warning">6 Place nr.</label>
+                        <span>{{6-placeNr}}</span>
+                    </td>
+                    <td colspan="2">
+                        <label class="font-monospace text-warning">Place</label>
+                        <span>{{6-place}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <label class="font-monospace text-warning">7 Delivered to: name/code</label>
+                        <span>{{7-deliveredTo}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <label class="font-monospace text-warning">8 Delivery address</label>
+                        <span>{{8-deliveryAddress}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 100px;">
+                        <label class="font-monospace text-warning">9 Place no.</label>
+                        <span>{{9-placeNr}}</span>
+                    </td>
+                    <td colspan="2">
+                        <label class="font-monospace text-warning">Place of delivery</label>
+                        <span>{{9-PlaceOfDelivery}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <label class="font-monospace text-warning">10 Transporter</label>
+                        <span>{{9-utleveringssted}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="font-monospace text-warning">11 Over</label>
+                        <span>{{9-utleveringssted}}</span>
+                    </td>
+                    <td style="width: 100px;">
+                        <label class="font-monospace text-warning">12 Exchange pallets</label>
+                        <span>{{9-utleveringssted}}</span>
+                    </td>
+                    <td style="width: 100px;">
+                        <label class="font-monospace text-warning">13 Other pallets</label>
+                        <span>{{9-utleveringssted}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" rowspan="2" style="border: none;">
+                        <label class="text-left font-monospace text-warning">14 Transport product</label>
+                        <span>{{14-transportProduct}}</span>
+                    </td>
+                </tr>
+            </table>
+        </div> <!-- end grid col 1 -->
+        <!-- start grid col 2 -->
+        <div class="col-6">
+            <table class="table table-bordered border-warning table-sm">
+                <tr>
+                    <td style="border: none;"></td>
+                    <td style="text-align: center;border: none;">
+                        <img src="barcode.gif" alt="" height="80">
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 350px;">
+                        <label class="font-monospace text-warning">15 Sender's customer no. with the carrier</label>
+                        <span>{{9-utleveringssted}}</span>
+                    </td>
+                    <td>
+                        <label class="font-monospace text-warning">17 Date of issue</label>
+                        <span>{{17-DateOfIssue}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="font-monospace text-warning">16 Sender's reference</label>
+                        <span>{{16-senderRef}}</span>
+                    </td>
+                    <td>
+                        <label class="font-monospace text-warning">18 Booking reference</label>
+                        <span>{{18-bookingRef}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="font-monospace text-warning">19 Other shipping pays name/code</label>
+                        <span>{{9-utleveringssted}}</span>
+                    </td>
+                    <td>
+                        <label class="font-monospace text-warning">20 Customer no.</label>
+                        <span>{{20-customerNr}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label class="font-monospace text-warning">21 Address</label>
+                        <span>{{9-utleveringssted}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="font-monospace text-warning">22 Place no.</label>
+                        <span>{{9-utleveringssted}}</span>
+                    </td>
+                    <td>
+                        <label class="font-monospace text-warning">Place</label>
+                        <span>{{9-utleveringssted}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="font-monospace text-warning">23 Recipient's customer no. with the
+                            carrier</label>
+                        <span>{{9-utleveringssted}}</span>
+                    </td>
+                    <td>
+                        <label class="font-monospace text-warning">25 Recipient's reference</label>
+                        <span>{{9-utleveringssted}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="font-monospace text-warning">24 Item Insurance value</label>
+                        <label class="font-monospace text-warning">Category</label>
+                        <span>{{9-utleveringssted}}</span>
+                    </td>
+                    <td>
+                        <label class="font-monospace text-warning">26 Police no.</label>
+                        <label class="font-monospace text-warning">Must be insured</label>
+                        <br><i class="fa fa-square-o"></i>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label class="font-monospace text-warning">27 Delivery condition</label>
+                        <span>{{9-utleveringssted}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label class="font-monospace text-warning">28 Shipping and costs</label>
+                        <div style="white-space: nowrap;justify-items: left;text-wrap: nowrap;flex-wrap: nowrap;overflow-wrap: revert;">
+                            <label class="font-monospace text-warning">Charged:&nbsp;</label>
+                            <span class="square"></span>
+                            <label class="font-monospace text-warning form-check-label">Sender</label>
+                            &nbsp;&nbsp;
+                            <span class="square"></span>
+                            <label class="font-monospace text-warning form-check-label">Recipient</label>
+                            &nbsp;&nbsp;
+                            <span class="square"></span>
+                            <label class="font-monospace text-warning form-check-label ">Other freight payer</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="font-monospace text-warning">29 Transport codes</label>
+                    </td>
+                    <td>
+                        <table class="table-borderless">
+                            <tr>
+                                <td class="text-center text-warning">
+                                    <span>A</span>
+                                    <span class="square"></span>
+                                </td>
+                                <td class="text-center text-warning">
+                                    <span>B</span>
+                                    <span class="square"></span>
+                                </td>
+                                <td class="text-center text-warning">
+                                    <span>C</span>
+                                    <span class="square"></span>
+                                </td>
+                                <td class="text-center text-warning">
+                                    <span>D</span>
+                                    <span class="square"></span>
+                                </td>
+                                <td class="text-center text-warning">
+                                    <span>E</span>
+                                    <span class="square"></span>
+                                </td>
+                                <td class="text-center text-warning">
+                                    <span>F</span>
+                                    <span class="square"></span>
+                                </td>
+                                <td class="text-center text-warning">
+                                    <span>G</span>
+                                    <span class="square"></span>
+                                </td>
+                                <td class="text-center text-warning">
+                                    <span>H</span>
+                                    <span class="square"></span>
+                                </td>
+                                <td class="text-center text-warning">
+                                    <span>I</span>
+                                    <span class="square"></span>
+                                </td>
+                                <td class="text-center text-warning">
+                                    <span>J</span>
+                                    <span class="square"></span>
+                                </td>
+                                <td class="text-center text-warning">
+                                    <span>K</span>
+                                    <span class="square"></span>
+                                </td>
+                                <td class="text-center text-warning">
+                                    <span>L</span>
+                                    <span class="square"></span>
+                                </td>
+                                <td class="text-center text-warning">
+                                    <span>M</span>
+                                    <span class="square"></span>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label class="font-monospace text-warning">30 Delivery instructions</label>
+                        <span>{{30-leveringsinstruks}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="font-monospace text-warning">31 Sender's mail/bank account no.</label>
+                        <span>{{31-sendresPost}}</span>
+                    </td>
+                    <td>
+                        <label class="font-monospace text-warning">32 Giro amount</label>
+                        <span>{{32-girobeløp}}</span>
+                    </td>
+                </tr>
+            </table>
+        </div> <!-- end grid col -->
+    </div> <!-- end grid row 1 -->
+    <!-- start grid row 2 -->
+    <div class="row row-border-1 fs-10">
+        <div class="col-12">
             <!-- kolli -->
             <table class="table table-borderless fs-10">
                 <tr>
@@ -524,13 +526,14 @@
     <div class="row row-border-1">
         <div class="col-12">
             <table class="table table-borderless">
+                <tbody>
                 <tr>
                     <td>
                         <table class="table table-borderless fs-10">
                             <tr>
                                 <td colspan="2" rowspan="2">
                                     <label class="font-monospace text-warning">38</label>
-                                    <table class="table table-borderless m-2">
+                                    <table class="table table-borderless">
                                         {{#tileggsInfoListe}}
                                         <tr>
                                             <td>{{key}}</td>
@@ -546,7 +549,9 @@
                 <tr>
                     <td>&nbsp;</td>
                     <td rowspan="2">
-                        <table class="table table-bordered fs-10" style="border-color: black; border-width: 2px;">
+                        <table class="table table-bordered fs-10"
+                               style="border-color: red; border-width: 2px !important;">
+                            <tbody>
                             <tr>
                                 <td colspan="2">
                                     <label class="font-monospace fs-10">39 Shipping calculation weight</label>
@@ -591,6 +596,7 @@
                                 <td><span class="fs-16"><b>TOTAL</b></span></td>
                                 <td></td>
                             </tr>
+                            </tbody>
                         </table>
                     </td>
                 </tr>
@@ -625,6 +631,7 @@
                     </td>
                     <td></td>
                 </tr>
+                </tbody>
             </table>
         </div>
     </div> <!-- end rid row 3 -->
