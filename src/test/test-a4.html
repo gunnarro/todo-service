@@ -15,9 +15,11 @@
         body {
             background-color: #f0f0f0;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: flex-start;
             min-height: 100vh;
+
+            height: 296mm;
             margin: 0;
             font-family: 'Georgia', serif;
         }
@@ -147,9 +149,13 @@
         .float-start {
             float: left !important;
         }
+
+        .bottom-div {
+            margin-top: auto;
+        }
     </style>
 </head>
-<body class="a4m">
+<body class="a4">
 <div class="sheet">
     <div>
         <div class="row m-2 p-2">
@@ -243,7 +249,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="3" rowspan="2" style="height: 142px;">
+                        <td colspan="3" rowspan="2" style="border: none;">
                             <label class="text-left font-monospace text-warning">14 Transport product</label>
                             <span>{{14-transportProduct}}</span>
                         </td>
@@ -437,7 +443,7 @@
     <div class="row row-border-1 fs-10">
         <div class="col-12 p-1">
             <!-- kolli -->
-            <table class="table table-striped border-warning table-sm" style="border: 1px !important;">
+            <table class="table table-borderless fs-10">
                 <tr>
                     <td>
                         <label class="font-monospace text-warning">33 Marking</label>
@@ -459,7 +465,8 @@
                 <tr>
                     <td></td>
                     <td>{{kolliNr}}</td>
-                    <td><span class="{{#isAlm}}text-success{{/isAlm}}{{#isKjøl}}text-primary{{/isKjøl}}{{#isNarko}}text-danger{{/isNarko}}">{{vareType}}</span>
+                    <td><span
+                            class="{{#isAlm}}text-success{{/isAlm}}{{#isKjøl}}text-primary{{/isKjøl}}{{#isNarko}}text-danger{{/isNarko}}">{{vareType}}</span>
                     </td>
                     <td>{{vektKg}}</td>
                     <td>{{lengdeCm}} x {{breddeCm}} x {{høydeCm}}</td>
@@ -467,7 +474,8 @@
                 <tr>
                     <td></td>
                     <td>{{kolliNr}}</td>
-                    <td><span class="{{#isAlm}}text-success{{/isAlm}}{{#isKjøl}}text-primary{{/isKjøl}}{{#isNarko}}text-danger{{/isNarko}}">{{vareType}}</span>
+                    <td><span
+                            class="{{#isAlm}}text-success{{/isAlm}}{{#isKjøl}}text-primary{{/isKjøl}}{{#isNarko}}text-danger{{/isNarko}}">{{vareType}}</span>
                     </td>
                     <td>{{vektKg}}</td>
                     <td>{{lengdeCm}} x {{breddeCm}} x {{høydeCm}}</td>
@@ -475,7 +483,8 @@
                 <tr>
                     <td></td>
                     <td>{{kolliNr}}</td>
-                    <td><span class="{{#isAlm}}text-success{{/isAlm}}{{#isKjøl}}text-primary{{/isKjøl}}{{#isNarko}}text-danger{{/isNarko}}">{{vareType}}</span>
+                    <td><span
+                            class="{{#isAlm}}text-success{{/isAlm}}{{#isKjøl}}text-primary{{/isKjøl}}{{#isNarko}}text-danger{{/isNarko}}">{{vareType}}</span>
                     </td>
                     <td>{{vektKg}}</td>
                     <td>{{lengdeCm}} x {{breddeCm}} x {{høydeCm}}</td>
@@ -483,7 +492,8 @@
                 <tr>
                     <td></td>
                     <td>{{kolliNr}}</td>
-                    <td><span class="{{#isAlm}}text-success{{/isAlm}}{{#isKjøl}}text-primary{{/isKjøl}}{{#isNarko}}text-danger{{/isNarko}}">{{vareType}}</span>
+                    <td><span
+                            class="{{#isAlm}}text-success{{/isAlm}}{{#isKjøl}}text-primary{{/isKjøl}}{{#isNarko}}text-danger{{/isNarko}}">{{vareType}}</span>
                     </td>
                     <td>{{vektKg}}</td>
                     <td>{{lengdeCm}} x {{breddeCm}} x {{høydeCm}}</td>
@@ -491,7 +501,8 @@
                 <tr>
                     <td></td>
                     <td>{{kolliNr}}</td>
-                    <td><span class="{{#isAlm}}text-success{{/isAlm}}{{#isKjøl}}text-primary{{/isKjøl}}{{#isNarko}}text-danger{{/isNarko}}">{{vareType}}</span>
+                    <td><span
+                            class="{{#isAlm}}text-success{{/isAlm}}{{#isKjøl}}text-primary{{/isKjøl}}{{#isNarko}}text-danger{{/isNarko}}">{{vareType}}</span>
                     </td>
                     <td>{{vektKg}}</td>
                     <td>{{lengdeCm}} x {{breddeCm}} x {{høydeCm}}</td>
@@ -499,7 +510,8 @@
                 <tr>
                     <td></td>
                     <td>{{kolliNr}}</td>
-                    <td><span class="{{#isAlm}}text-success{{/isAlm}}{{#isKjøl}}text-primary{{/isKjøl}}{{#isNarko}}text-danger{{/isNarko}}">{{vareType}}</span>
+                    <td><span
+                            class="{{#isAlm}}text-success{{/isAlm}}{{#isKjøl}}text-primary{{/isKjøl}}{{#isNarko}}text-danger{{/isNarko}}">{{vareType}}</span>
                     </td>
                     <td>{{vektKg}}</td>
                     <td>{{lengdeCm}} x {{breddeCm}} x {{høydeCm}}</td>
@@ -508,7 +520,8 @@
             </table>
         </div> <!-- end col 2 in row 2 -->
     </div> <!-- end grid row 2 -->
-    <div class="row row-border-1 p-0" style="align-content: flex-end">
+    <!-- start grid row 3 -->
+    <div class="row row-border-1">
         <div class="col-12">
             <table class="table table-borderless">
                 <tr>
@@ -585,26 +598,28 @@
                     <td style="vertical-align: bottom;">
                         <table class="table table-bordered fs-10">
                             <tbody>
-                                <tr style="background-color: steelblue;">
-                                    <th class="">TRANSMITTING PLACE</th>
-                                    <th class="">PLACE OF DELIVERY</th>
-                                    <th class="">GOODS RECEIVED</th>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <label class="font-monospace text-warning">42 Date stamp / stamp paid / sign.</label>
-                                        <span>{{42-signatur-sender}}</span>
-                                    </td>
-                                    <td>
-                                        <label class="font-monospace text-warning">43 Date stamp / stamp paid / sign.</label>
-                                        <span>{{43-signatur-utlevert}}</span>
-                                    </td>
-                                    <td>
-                                        <span class="font-monospace text-warning">44 Date</span>
-                                        <span>{{44-signatur-mottatt}}</span>
-                                        <br><label class="font-monospace text-warning">Receipt (full name)</label>
-                                    </td>
-                                </tr>
+                            <tr style="background-color: green;">
+                                <th class="">TRANSMITTING PLACE</th>
+                                <th class="">PLACE OF DELIVERY</th>
+                                <th class="">GOODS RECEIVED</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="font-monospace text-warning">42 Date stamp / stamp paid /
+                                        sign.</label>
+                                    <span>{{42-signatur-sender}}</span>
+                                </td>
+                                <td>
+                                    <label class="font-monospace text-warning">43 Date stamp / stamp paid /
+                                        sign.</label>
+                                    <span>{{43-signatur-utlevert}}</span>
+                                </td>
+                                <td>
+                                    <span class="font-monospace text-warning">44 Date</span>
+                                    <span>{{44-signatur-mottatt}}</span>
+                                    <br><label class="font-monospace text-warning">Receipt (full name)</label>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </td>
@@ -612,7 +627,15 @@
                 </tr>
             </table>
         </div>
+    </div> <!-- end rid row 3 -->
+    <!--
+    <div class="row fs-10">
+        <div>NB! Transportvilk &#229; r : Det vises til transport&#248;rens til enhver tid gjeldende befordringsvedtekter. Transport&#248;ren har begrenset erstatningsansvar.</div>
+        <div>NB! Transport conditions: Reference is made to the carrier's transport regulations in force at all times. The carrier has limited liability for damages.</div>
+        <div>NB! Girosendinger p&#229; over kr. 100.000 m&#229; avtales s&#230;rskilt med transport&#248;ren. Transport&#248;ren tar forbehold mot manglende dakning p&#229; konto. Betalt/belastet bel&#248;p kan ikke omgj&#248;res.</div>
+        <div>NB! Giro remittances of over NOK. 100,000 must be agreed separately with the carrier. The carrier takes reservations against a lack of coverage on account. The amount paid/charged cannot be reversed.</div>
     </div>
+    -->
 </div>
 </body>
 </html>
