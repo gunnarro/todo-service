@@ -38,7 +38,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <mariadb.version>3.4.1</mariadb.version>
-        <hypersistence-utils.version>3.8.1</hypersistence-utils.version>
+        <hypersistence-utils.version>3.9.0</hypersistence-utils.version>
         <sonar.organization>gunnarro</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
