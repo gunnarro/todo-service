@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Test page</title>
+
+
+    <style>
+
+        table,tr,th,td {
+        border:1px solid black;
+        width: 100%;
+     }
+
+     td.w-last {
+    width: auto;
+}
+
+
+       .grid-containerx {
+           display: grid;
+           grid-gap: 5px;
+           grid-template-columns: 120px 40px; 40px; 40px auto auto auto auto auto auto auto;
+
+       }
+       .rowx {
+         grid-row: row;
+       }
+       .column-1x {
+         grid-column: auto / span 1;
+       }
+       .column-2x {
+          grid-column: auto / span 2;
+       }
+       .column-3x {
+          grid-column: auto / span 3;
+       }
+       .column-4x {
+          grid-column: auto / span 4;
+       }
+
+
+
+
+
+               .input-field {
+               margin: 2px;
+               padding: 2px;
+               }
+
+               .input-borderless {
+               border: 0;
+               margin: 2px;
+               }
+
+               .input-top-label {
+               font-size: .9em;
+               padding-left:4px;
+               padding-right: 4px;
+                color: gray;
+               }
+
+               .text-end {
+                   text-align: end;
+               }
+
+                .text-center {
+                   text-align: center;
+               }
+
+               input:disabled {
+                   background-color: lightgray;
+               }
+
+    </style>
+</head>
+<body>
+
+
+<div class="grid-container">
+    <table class="table">
+        <tbody>
+        <tr>
+            <!-- row 1 -->
+            <td class="column-4" style="width: 60px;" colspan="6">
+                <fieldset class="input-field">
+                    <legend class="input-top-label">Søk varenummer</legend>
+                    <input class="input-borderless" type="text" style="width: inherit;">
+                </fieldset>
+            </td>
+            <td class="column-1" style="width: 60px;">
+                <fieldset class="input-field">
+                    <legend class="input-top-label">Pakning</legend>
+                    <input class="input-borderless" type="text" size="6" style="width:inherited;" disabled="disabled">
+                </fieldset>
+            </td>
+            <td class="column-1" style="width: 60px;">
+                <fieldset class="input-field">
+                    <legend class="input-top-label">Kolli</legend>
+                    <input class="input-borderless" type="text"  size="6" disabled="disabled">
+                </fieldset>
+            </td>
+            <td class="column-1" style="width: 60px;">
+                <fieldset class="input-field disabled">
+                    <legend class="input-top-label">Pall</legend>
+                    <input class="input-borderless text-end"  type="text" size="6" disabled="disabled" value="3">
+                </fieldset>
+            </td>
+            <td class="column-4" colspan="6" style="width: auto;">
+            </td>
+        </tr>
+        <tr>
+            <td class="column-1" colspan="3">
+                <fieldset class="input-field disabled">
+                    <legend class="input-top-label">Varenummer</legend>
+                    <input class="input-borderless text-end"  type="text" value="323232" disabled="disabled">
+                </fieldset>
+            </td>
+            <td class="column-1">
+                <fieldset class="input-field disabled">
+                    <legend class="input-top-label">Type</legend>
+                    <input class="input-borderless text-center" type="text" value="ALM" size="6"
+                           disabled="disabled">
+                </fieldset>
+            </td>
+            <td class="column-1">
+                <fieldset class="input-field disabled">
+                    <legend class="input-top-label">Krav</legend>
+                    <input class="input-borderless text-center" type="text" value="ALM" size="6"
+                           disabled="disabled">
+                </fieldset>
+            </td>
+            <td class="column-1" style="width: 80px;">
+                <fieldset class="input-field disabled">
+                    <legend class="input-top-label">Antall</legend>
+                    <input class="input-borderless text-end" type="text" size="6" value="35">
+                </fieldset>
+            </td>
+            <td class="column-1" colspan="2">
+                <fieldset class="input-field disabled">
+                    <legend class="input-top-label">Gip</legend>
+                    <input class="input-borderless text-end" type="text"  value="323232">
+                </fieldset>
+            </td>
+            <td class="column-1" colspan="2">
+                <fieldset class="input-field disabled">
+                    <legend class="input-top-label">Pris</legend>
+                    <input class="input-borderless text-end" type="text"  size="14" value="323232">
+                </fieldset>
+            </td>
+            <td class="column-1" colspan="2">
+                <fieldset class="input-field disabled">
+                    <legend class="input-top-label">Batch</legend>
+                    <input class="input-borderless text-end" type="text" size="14" value="323232">
+                </fieldset>
+            </td>
+            <td class="column-1">
+                <fieldset class="input-field disabled">
+                    <legend class="input-top-label">Antall</legend>
+                    <input class="input-borderless text-end" type="text" size="6" value="323232">
+                </fieldset>
+            </td>
+            <td class="column-1">
+                <fieldset class="input-field disabled">
+                    <legend class="input-top-label">Holdbar</legend>
+                    <input class="input-borderless text-end" type="date" size="14">
+                </fieldset>
+            </td>
+            <td class="column-2" colspan="2" style="width: auto;">
+                <button type="button">Legg til</button>
+            </td>
+
+        </tr>
+        <tr>
+            <td class="column-1">
+                <fieldset class="input-field disabled">
+                    <legend class="input-top-label">FK antall</legend>
+                    <input class="input-borderless text-end" type="text" size="6" value="3">
+                </fieldset>
+            </td>
+            <td class="column-1">
+                <fieldset class="input-field disabled">
+                    <legend class="input-top-label">65</legend>
+                    <input class="input-borderless text-end" type="text" size="6" value="3">
+                </fieldset>
+            </td>
+            <td class="column-1">
+                <fieldset class="input-field disabled">
+                    <legend class="input-top-label">405</legend>
+                    <input class="input-borderless text-end" type="text" size="6" value="3">
+                </fieldset>
+            </td>
+            <td class="column-1">
+                <fieldset class="input-field disabled">
+                    <legend class="input-top-label">202</legend>
+                    <input class="input-borderless text-end" type="text" size="6" value="3">
+                </fieldset>
+            </td>
+            <td class="column-1">
+                <fieldset class="input-field disabled">
+                    <legend class="input-top-label">203</legend>
+                    <input class="input-borderless text-end" type="text" size="6" value="3">
+                </fieldset>
+            </td>
+            <td class="column-1">
+                <fieldset class="input-field disabled">
+                    <legend class="input-top-label">427</legend>
+                    <input class="input-borderless text-end" type="text" size="6" value="3">
+                </fieldset>
+            </td>
+            <td class="column-1">
+                <fieldset class="input-field disabled">
+                    <legend class="input-top-label">37</legend>
+                    <input class="input-borderless text-end" type="text" size="6" value="3">
+                </fieldset>
+            </td>
+            <td class="column-1">
+                <fieldset class="input-field disabled">
+                    <legend class="input-top-label">88</legend>
+                    <input class="input-borderless text-end" type="text" size="6" value="3">
+                </fieldset>
+            </td>
+            <td class="column-1">
+                <fieldset class="input-field disabled">
+                    <legend class="input-top-label">102</legend>
+                    <input class="input-borderless text-end" type="text" size="6" value="3">
+                </fieldset>
+            </td>
+            <td class="column-1">
+                <fieldset class="input-field disabled">
+                    <legend class="input-top-label">65</legend>
+                    <input class="input-borderless text-end" type="text" size="6" value="3">
+                </fieldset>
+            </td>
+            <td class="column-1">
+                <fieldset class="input-field disabled">
+                    <legend class="input-top-label">478</legend>
+                    <input class="input-borderless text-end" type="text" size="6" value="3" disabled="disabled">
+                </fieldset>
+            </td>
+            <td colspan="4" style="width: auto;"></td>
+        </tr>
+        </tbody>
+    </table>
+    <!-- row 2 -->
+
+
+    <!-- row 3 -->
+
+
+
+</div>
+
+</body>
+</html>
