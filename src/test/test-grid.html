@@ -9,7 +9,7 @@
     <style>
 
         table,tr,th,td {
-        border:1px solid black;
+        border:0px solid black;
         width: 100%;
      }
 
@@ -70,42 +70,66 @@
                }
 
                input:disabled {
-                   background-color: lightgray;
+                   background-color: #f9fafa;
                }
+
+
+.input-wrapper {
+  position: relative;
+}
+
+input {
+  border: 1px solid gray;
+  border-radius: 4px;
+  position: relative;
+  margin: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  line-height: 6ex;
+}
+
+label {
+  position: absolute;
+  color: gray;
+  top: 0.2ex;
+  z-index: 1;
+  left: 2em;
+  background-color: white;
+  padding: 0 5px;
+}
 
     </style>
 </head>
 <body>
-
 
 <div class="grid-container">
     <table class="table">
         <tbody>
         <tr>
             <!-- row 1 -->
-            <td class="column-4" style="width: 60px;" colspan="6">
-                <fieldset class="input-field">
-                    <legend class="input-top-label">Søk varenummer</legend>
-                    <input class="input-borderless" type="text" style="width: inherit;">
-                </fieldset>
+            <td class="column-4" style="width: 100%" colspan="6">
+                <div class="input-wrapper" >
+                    <label for="sokvarenummer">Søk varenummer</label>
+                    <input id="sokvarenummer" type="text" style="width: inherit;">
+                </div>
+            </td>
+            <td class="column-1" style="width: 100%;">
+                <div class="input-wrapper">
+                    <label for="pakning">Pakning</label>
+                    <input id="pakning" type="text" style="width: inherit;" disabled="disabled">
+                </div>
             </td>
             <td class="column-1" style="width: 60px;">
-                <fieldset class="input-field">
-                    <legend class="input-top-label">Pakning</legend>
-                    <input class="input-borderless" type="text" size="6" style="width:inherited;" disabled="disabled">
-                </fieldset>
+                <div class="input-wrapper">
+                    <label for="Kolli">Kolli</label>
+                    <input id="Kolli" type="text" style="width: inherit;" disabled="disabled">
+                </div>
             </td>
             <td class="column-1" style="width: 60px;">
-                <fieldset class="input-field">
-                    <legend class="input-top-label">Kolli</legend>
-                    <input class="input-borderless" type="text"  size="6" disabled="disabled">
-                </fieldset>
-            </td>
-            <td class="column-1" style="width: 60px;">
-                <fieldset class="input-field disabled">
-                    <legend class="input-top-label">Pall</legend>
-                    <input class="input-borderless text-end"  type="text" size="6" disabled="disabled" value="3">
-                </fieldset>
+                <div class="input-wrapper">
+                    <label for="pall">Pall</label>
+                    <input id="pall" type="text" style="width: inherit;" disabled="disabled">
+                </div>
             </td>
             <td class="column-4" colspan="6" style="width: auto;">
             </td>
@@ -170,7 +194,6 @@
             <td class="column-2" colspan="2" style="width: auto;">
                 <button type="button">Legg til</button>
             </td>
-
         </tr>
         <tr>
             <td class="column-1">
@@ -247,10 +270,24 @@
 
 
     <!-- row 3 -->
-
-
-
 </div>
+
+
+<div class="max-w-sm">
+  <span class="label justify-end">
+    <span class="label-text-alt">Top Right label</span>
+  </span>
+    <div class="relative">
+        <input type="text" placeholder="John Doe" class="input input-floating is-valid peer" id="successFloatingInput" />
+        <label class="input-floating-label" for="successFloatingInput">Full Name</label>
+    </div>
+    <span class="label">
+    <span class="label-text-alt">Bottom Left label</span>
+    <span class="label-text-alt">Bottom Right label</span>
+  </span>
+</div>
+
+
 
 </body>
 </html>
