@@ -1,6 +1,7 @@
 package org.gunnarro.microservice.todoservice.service;
 
 import org.gunnarro.microservice.todoservice.domain.dto.todo.*;
+import org.gunnarro.microservice.todoservice.repository.entity.TodoItemImage;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -47,4 +48,11 @@ public interface TodoService {
     ApprovalDto updateApproval(ApprovalDto approvalDto);
 
     void deleteApproval(Long todoItemId, Long participantId);
+
+    TodoItemImage createImage(TodoItemImage todoItemImage);
+
+    TodoItemImage updateImage(TodoItemImage todoItemImage);
+
+    void deleteImage(Long todoItemId, Long imageId);
+
 }

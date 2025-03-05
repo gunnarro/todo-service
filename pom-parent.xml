@@ -20,11 +20,11 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <skip.integrationtests>true</skip.integrationtests>
         <!-- spring version -->
-        <spring.boot.version>3.3.7</spring.boot.version>
+        <spring.boot.version>3.4.2</spring.boot.version>
         <!-- spring library override version -->
         <snakeyaml.version>2.2</snakeyaml.version>
         <!-- dependencies version properties -->
-        <springdoc-openapi.version>1.8.0</springdoc-openapi.version>
+       <!-- <springdoc-openapi.version>1.8.0</springdoc-openapi.version> -->
         <jasypt.version>3.0.5</jasypt.version>
         <disruptor.version>4.0.0</disruptor.version>
         <aspectjrt.version>1.9.22.1</aspectjrt.version>
@@ -75,11 +75,13 @@
         </dependency>
         <!-- For API documentation -->
         <!-- The springdoc-openapi dependency includes Swagger UI -->
+        <!--
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
             <version>${springdoc-openapi.version}</version>
         </dependency>
+        -->
         <!-- Needed for Async Logging with Log4j 2 -->
         <dependency>
             <groupId>com.lmax</groupId>

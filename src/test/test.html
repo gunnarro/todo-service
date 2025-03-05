@@ -8,8 +8,8 @@
     <style>
         .container {
             width: 100%;
-            margin-right: .1rem;
-            margin-left: .1rem;
+            margin-right: .0rem;
+            margin-left: .0rem;
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
         }
 
@@ -21,9 +21,14 @@
             margin-left: .1rem;
         }
 
+        .col-4 {
+            flex: 0 0 auto;
+            width: 48%
+        }
+
         .col-6 {
             flex: 0 0 auto;
-            width: 49%
+            width: 51%
         }
 
         .col-12 {
@@ -54,7 +59,6 @@
 
         .table-borderless tbody tr td {
             border: none;
-            padding: 2px;
         }
 
         .table-striped > tbody > tr:nth-of-type(odd) > * {
@@ -100,6 +104,9 @@
         .fs-10 {
             font-size: 10px;
         }
+        .fs-16 {
+            font-size: 1.6em;
+        }
 
         .w-10 {
             width: 10%;
@@ -136,20 +143,23 @@
 <body>
 <div class="container">
     <div>
-        <div class="m-0" >
-            <div class="m-2 p-2">
-                <img class="align-bottom" src="/apotek1-logo.svg" alt="">
-                <h2>Freight letter</h2>
+        <div class="row m-2 p-2">
+            <div class="col-12">
+                <div style="float: left;">
+                    <img src="a1-logo-25.svg" height="20" alt="">
+                </div>
+                <div style="float: right;">
+                    <span class="fs-16"><b>Freight letter</b></span>
+                </div>
             </div>
-
         </div>
         <!-- start grid row -->
         <div class="row fs-10">
             <!-- start grid col 1 -->
-            <div class="col-6 p-1">
-                <table class="table table-bordered border-warning table-sm" style="height: 400px;">
+            <div class="col-4 p-1">
+                <table class="table table-bordered border-warning table-sm">
                     <tr>
-                        <td colspan="3" rowspan="2" style="!important; height: 80px;">
+                        <td colspan="3" style="height: 80px;">
                             <label class="font-monospace text-warning">1 Sender name/Code</label>
                             <br>Apotek 1 Gruppen AS
                             <br>Skårerslette 55
@@ -172,7 +182,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="width: 100px;">
+                        <td>
                             <label class="font-monospace text-warning">6 Place nr.</label>
                             <span>{{6-placeNr}}</span>
                         </td>
@@ -218,13 +228,13 @@
                             <label class="font-monospace text-warning">12 Exchange pallets</label>
                             <span>{{9-utleveringssted}}</span>
                         </td>
-                        <td class="w-20">
+                        <td style="width: 100px;">
                             <label class="font-monospace text-warning">13 Other pallets</label>
                             <span>{{9-utleveringssted}}</span>
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="3" rowspan="2" style="height: 73px;">
+                        <td colspan="3" rowspan="2" style="height: 142px;">
                             <label class="text-left font-monospace text-warning">14 Transport product</label>
                             <span>{{14-transportProduct}}</span>
                         </td>
@@ -233,10 +243,11 @@
             </div> <!-- end grid col 1 -->
             <!-- start grid col 2 -->
             <div class="col-6 p-1">
-                <table class="table table-bordered border-warning table-sm" style="height: 400px;">
+                <table class="table table-sm" >
                     <tr>
-                        <td colspan="3" style="border: none;">
-                            <h1>barcode</h1>
+                        <td></td>
+                        <td style="text-align: center;border: none;">
+                            <img src="barcode.gif" alt="" height="80">
                         </td>
                     </tr>
                     <tr>
@@ -297,12 +308,12 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="w-50">
+                        <td>
                             <label class="font-monospace text-warning">24 Item Insurance value</label>
                             <label class="font-monospace text-warning">Category</label>
                             <span>{{9-utleveringssted}}</span>
                         </td>
-                        <td class="w-50">
+                        <td>
                             <label class="font-monospace text-warning">26 Police no.</label>
                             <label class="font-monospace text-warning">Must be insured</label>
                             <br><i class="fa fa-square-o"></i>
@@ -331,11 +342,11 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="w-20 m-0 p-0">
+                        <td>
                             <label class="font-monospace text-warning">29 Transport codes</label>
                         </td>
-                        <td class="p-0">
-                            <table class="table table-borderless border-warning m-0">
+                        <td>
+                            <table class="table-borderless" style="">
                                 <tr>
                                     <td class="text-center text-warning">
                                         <span>A</span>
@@ -448,7 +459,8 @@
                 <tr>
                     <td></td>
                     <td>{{kolliNr}}</td>
-                    <td><span class="{{#isAlm}}text-success{{/isAlm}}{{#isKjøl}}text-primary{{/isKjøl}}{{#isNarko}}text-danger{{/isNarko}}">{{vareType}}</span>
+                    <td><span
+                            class="{{#isAlm}}text-success{{/isAlm}}{{#isKjøl}}text-primary{{/isKjøl}}{{#isNarko}}text-danger{{/isNarko}}">{{vareType}}</span>
                     </td>
                     <td>{{vektKg}}</td>
                     <td>{{lengdeCm}} x {{breddeCm}} x {{høydeCm}}</td>
@@ -456,7 +468,8 @@
                 <tr>
                     <td></td>
                     <td>{{kolliNr}}</td>
-                    <td><span class="{{#isAlm}}text-success{{/isAlm}}{{#isKjøl}}text-primary{{/isKjøl}}{{#isNarko}}text-danger{{/isNarko}}">{{vareType}}</span>
+                    <td><span
+                            class="{{#isAlm}}text-success{{/isAlm}}{{#isKjøl}}text-primary{{/isKjøl}}{{#isNarko}}text-danger{{/isNarko}}">{{vareType}}</span>
                     </td>
                     <td>{{vektKg}}</td>
                     <td>{{lengdeCm}} x {{breddeCm}} x {{høydeCm}}</td>
@@ -464,7 +477,8 @@
                 <tr>
                     <td></td>
                     <td>{{kolliNr}}</td>
-                    <td><span class="{{#isAlm}}text-success{{/isAlm}}{{#isKjøl}}text-primary{{/isKjøl}}{{#isNarko}}text-danger{{/isNarko}}">{{vareType}}</span>
+                    <td><span
+                            class="{{#isAlm}}text-success{{/isAlm}}{{#isKjøl}}text-primary{{/isKjøl}}{{#isNarko}}text-danger{{/isNarko}}">{{vareType}}</span>
                     </td>
                     <td>{{vektKg}}</td>
                     <td>{{lengdeCm}} x {{breddeCm}} x {{høydeCm}}</td>
@@ -472,7 +486,8 @@
                 <tr>
                     <td></td>
                     <td>{{kolliNr}}</td>
-                    <td><span class="{{#isAlm}}text-success{{/isAlm}}{{#isKjøl}}text-primary{{/isKjøl}}{{#isNarko}}text-danger{{/isNarko}}">{{vareType}}</span>
+                    <td><span
+                            class="{{#isAlm}}text-success{{/isAlm}}{{#isKjøl}}text-primary{{/isKjøl}}{{#isNarko}}text-danger{{/isNarko}}">{{vareType}}</span>
                     </td>
                     <td>{{vektKg}}</td>
                     <td>{{lengdeCm}} x {{breddeCm}} x {{høydeCm}}</td>
@@ -480,7 +495,8 @@
                 <tr>
                     <td></td>
                     <td>{{kolliNr}}</td>
-                    <td><span class="{{#isAlm}}text-success{{/isAlm}}{{#isKjøl}}text-primary{{/isKjøl}}{{#isNarko}}text-danger{{/isNarko}}">{{vareType}}</span>
+                    <td><span
+                            class="{{#isAlm}}text-success{{/isAlm}}{{#isKjøl}}text-primary{{/isKjøl}}{{#isNarko}}text-danger{{/isNarko}}">{{vareType}}</span>
                     </td>
                     <td>{{vektKg}}</td>
                     <td>{{lengdeCm}} x {{breddeCm}} x {{høydeCm}}</td>
@@ -488,7 +504,8 @@
                 <tr>
                     <td></td>
                     <td>{{kolliNr}}</td>
-                    <td><span class="{{#isAlm}}text-success{{/isAlm}}{{#isKjøl}}text-primary{{/isKjøl}}{{#isNarko}}text-danger{{/isNarko}}">{{vareType}}</span>
+                    <td><span
+                            class="{{#isAlm}}text-success{{/isAlm}}{{#isKjøl}}text-primary{{/isKjøl}}{{#isNarko}}text-danger{{/isNarko}}">{{vareType}}</span>
                     </td>
                     <td>{{vektKg}}</td>
                     <td>{{lengdeCm}} x {{breddeCm}} x {{høydeCm}}</td>

@@ -38,7 +38,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <mariadb.version>3.4.1</mariadb.version>
-        <hypersistence-utils.version>3.8.1</hypersistence-utils.version>
+        <mysql.connector.j.version>9.2.0</mysql.connector.j.version>
+        <hypersistence-utils.version>3.9.2</hypersistence-utils.version>
         <sonar.organization>gunnarro</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
@@ -158,7 +159,7 @@
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
-            <version>9.2.0</version>
+            <version>${mysql.connector.j.version}</version>
         </dependency>
         <!-- database primary key -->
         <dependency>
@@ -218,7 +219,7 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>2.8.4</version>
+            <version>2.8.5</version>
         </dependency>
         <!-- Rate limiting -->
         <dependency>
@@ -241,6 +242,11 @@
             <groupId>com.itextpdf</groupId>
             <artifactId>html2pdf</artifactId>
             <version>6.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>2.18.2</version>
         </dependency>
         <!-- ================= -->
         <!-- Test dependencies -->
@@ -288,12 +294,6 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
-            <version>2.17.3</version>
             <scope>test</scope>
         </dependency>
         <dependency>

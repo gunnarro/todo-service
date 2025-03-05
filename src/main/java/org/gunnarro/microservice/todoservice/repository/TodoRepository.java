@@ -28,7 +28,7 @@ public interface TodoRepository extends JpaRepository<Todo, Long>, RevisionRepos
             + " , sum(CASE WHEN status = 'ON_HOLD' THEN 1 ELSE 0 END) AS on_hold"
             + " , sum(CASE WHEN status = 'DONE' THEN 1 ELSE 0 END) AS done"
             + " , sum(CASE WHEN status = 'CANCELLED' THEN 1 ELSE 0 END) AS cancelled"
-            + " FROM todo"
+            + " FROM Todo"
             + " GROUP BY name")
     void getTodoStatestikkByStatus();
 }

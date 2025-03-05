@@ -1,6 +1,6 @@
 package org.gunnarro.microservice.todoservice.repository.entity;
 
-import io.hypersistence.utils.hibernate.id.Tsid;
+import io.hypersistence.tsid.TSID;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Id;
@@ -31,7 +31,7 @@ public abstract class BaseEntity {
 
     @NotAudited
     @Id
-    @Tsid
+    //@Tsid
     @Column(name = "ID", updatable = false)
     private Long id;
 

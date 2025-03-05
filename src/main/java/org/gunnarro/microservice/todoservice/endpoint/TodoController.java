@@ -21,6 +21,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -405,4 +406,13 @@ public class TodoController {
         }
         throw new HttpClientErrorException(HttpStatus.TOO_MANY_REQUESTS);
     }
+
+
+    @PostMapping
+    public ResponseEntity<?> uploadImage(@RequestParam("image") MultipartFile file) {
+       // ImageUploadResponse response = imageDataService.uploadImage(file);
+
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
 }

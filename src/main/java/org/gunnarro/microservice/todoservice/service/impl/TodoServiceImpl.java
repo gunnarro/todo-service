@@ -1,18 +1,19 @@
 package org.gunnarro.microservice.todoservice.service.impl;
 
 
+import com.github.mustachejava.DefaultMustacheFactory;
+import com.github.mustachejava.Mustache;
+import com.github.mustachejava.MustacheFactory;
 import com.itextpdf.html2pdf.HtmlConverter;
 import lombok.extern.slf4j.Slf4j;
 import org.gunnarro.microservice.todoservice.domain.dto.todo.*;
 import org.gunnarro.microservice.todoservice.domain.mapper.TodoMapper;
 import org.gunnarro.microservice.todoservice.exception.ApplicationException;
 import org.gunnarro.microservice.todoservice.exception.RestInputValidationException;
-import org.gunnarro.microservice.todoservice.repository.ApprovalRepository;
-import org.gunnarro.microservice.todoservice.repository.ParticipantRepository;
-import org.gunnarro.microservice.todoservice.repository.TodoItemRepository;
-import org.gunnarro.microservice.todoservice.repository.TodoRepository;
+import org.gunnarro.microservice.todoservice.repository.*;
 import org.gunnarro.microservice.todoservice.repository.entity.Todo;
 import org.gunnarro.microservice.todoservice.repository.entity.TodoItem;
+import org.gunnarro.microservice.todoservice.repository.entity.TodoItemImage;
 import org.gunnarro.microservice.todoservice.service.TodoService;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -20,9 +21,6 @@ import org.springframework.data.history.Revision;
 import org.springframework.data.history.Revisions;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.github.mustachejava.DefaultMustacheFactory;
-import com.github.mustachejava.Mustache;
-import com.github.mustachejava.MustacheFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -41,12 +39,18 @@ public class TodoServiceImpl implements TodoService {
     private final TodoItemRepository todoItemRepository;
     private final ParticipantRepository participantRepository;
     private final ApprovalRepository approvalRepository;
+    private final ImageDataRepository imageDataRepository;
 
-    public TodoServiceImpl(TodoRepository todoRepository, TodoItemRepository todoItemRepository, ParticipantRepository participantRepository, ApprovalRepository approvalRepository) {
+    public TodoServiceImpl(TodoRepository todoRepository
+            , TodoItemRepository todoItemRepository
+            , ParticipantRepository participantRepository
+            , ApprovalRepository approvalRepository
+            , ImageDataRepository imageDataRepository) {
         this.todoRepository = todoRepository;
         this.todoItemRepository = todoItemRepository;
         this.participantRepository = participantRepository;
         this.approvalRepository = approvalRepository;
+        this.imageDataRepository = imageDataRepository;
     }
 
     //-------------------------------------------------------------------
@@ -245,5 +249,24 @@ public class TodoServiceImpl implements TodoService {
         StringWriter writer = new StringWriter();
         mustache.execute(writer, context);
         return writer.toString();
+    }
+
+    public TodoItemImage getImage(String name) {
+         //imageDataRepository.findByName(name);
+
+        return new TodoItemImage();
+    }
+
+
+    public TodoItemImage createImage(TodoItemImage todoItemImage) {
+        return null;
+    }
+
+    public TodoItemImage updateImage(TodoItemImage todoItemImage) {
+        return null;
+    }
+
+    public void deleteImage(Long todoItemId, Long imageId) {
+
     }
 }
