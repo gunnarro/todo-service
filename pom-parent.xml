@@ -20,7 +20,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <skip.integrationtests>true</skip.integrationtests>
         <!-- spring version -->
-        <spring.boot.version>3.4.2</spring.boot.version>
+        <spring.boot.version>3.4.5</spring.boot.version>
         <!-- spring library override version -->
         <snakeyaml.version>2.2</snakeyaml.version>
         <!-- dependencies version properties -->
