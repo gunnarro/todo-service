@@ -37,7 +37,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <mariadb.version>3.4.1</mariadb.version>
+        <mariadb.version>3.5.5</mariadb.version>
         <mysql.connector.j.version>9.4.0</mysql.connector.j.version>
         <hypersistence-utils.version>3.9.2</hypersistence-utils.version>
         <sonar.organization>gunnarro</sonar.organization>
@@ -224,8 +224,8 @@
         <!-- Rate limiting -->
         <dependency>
             <groupId>com.bucket4j</groupId>
-            <artifactId>bucket4j-core</artifactId>
-            <version>8.10.1</version>
+            <artifactId>bucket4j_jdk17-core</artifactId>
+            <version>8.15.0</version>
         </dependency>
         <!-- for reading and paring html page-->
         <dependency>
