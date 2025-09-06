@@ -28,7 +28,7 @@
         <jasypt.version>3.0.5</jasypt.version>
         <disruptor.version>4.0.0</disruptor.version>
         <aspectjrt.version>1.9.24</aspectjrt.version>
-        <apache.collections4.version>4.5</apache.collections4.version>
+        <apache.collections4.version>4.4</apache.collections4.version>
         <prometheus.version>1.15.3</prometheus.version>
         <liquibase.version>4.26.0</liquibase.version>
         <!-- plugin version properties -->
