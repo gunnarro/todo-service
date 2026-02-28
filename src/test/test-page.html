@@ -5,223 +5,101 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Test page</title>
 
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
-    <style>
-.flex-container {
-     display: flex;
-}
-.row {
-  flex-direction: row;
-  flex-wrap: wrap;
-  width: 100%;
-}
-.column-1 {
-  flex-direction: column;
-  flex-basis: 100%;
-  flex: 1
-  flex-grow: 0;
-}
-.column-2 {
-  flex-direction: column;
-  flex-basis: 100%;
-  flex: 2
-}
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" ></script>
 
 
-
-        .input-field {
-        margin: 2px;
-        padding: 2px;
-        }
-
-        .input-borderless {
-        border: 0;
-        margin: 2px;
-        }
-
-        .input-top-label {
-        font-size: .9em;
-        padding-left:4px;
-        padding-right: 4px;
-         color: gray;
-        }
-
-        .text-end {
-            text-align: end;
-        }
-
-        input:disabled {
-            background-color: lightgray;
-        }
-    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- load jQuery and tablesorter scripts -->
+    <script type="text/javascript" src="/path/to/jquery-latest.js"></script>
+    <script type="text/javascript" src="/path/to/jquery.tablesorter.js"></script>
 </head>
 <body>
 
 
-<div class="flex-container">
-    <!-- row 1 -->
-    <div class="row">
-        <div class="column-1">
-            <fieldset class="input-field">
-                <legend class="input-top-label">Varenummer</legend>
-                <input class="input-borderless" type="text">
-            </fieldset>
+<div class="container">
+
+    <script>
+        $(function() {
+          // call the tablesorter plugin
+          $("myTable").tablesorter({
+            theme : 'blue',
+
+            // change the default sorting order from 'asc' to 'desc'
+            sortInitialOrder: "desc"
+          });
+        });
+
+    </script>
+
+
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+        <li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
+        <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
+        <li><a data-toggle="tab" href="#menu3">Menu 3</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="home" class="tab-pane fade in active">
+            <h3>HOME</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
         </div>
-        <div class="column-1">
-            <fieldset class="input-field">
-                <legend class="input-top-label">Pakning</legend>
-                <input class="input-borderless" type="text" disabled="disabled">
-            </fieldset>
+        <div id="menu1" class="tab-pane fade">
+            <h3>Menu 1</h3>
+            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
         </div>
-        <div class="column-1">
-            <fieldset class="input-field">
-                <legend class="input-top-label">Kolli</legend>
-                <input class="input-borderless" type="text" type="text" disabled="disabled">
-            </fieldset>
+        <div id="menu2" class="tab-pane fade">
+            <h3>Menu 2</h3>
+            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
         </div>
-        <div class="column-1">
-            <fieldset class="input-field disabled">
-                <legend class="input-top-label">Pall</legend>
-                <input class="input-borderless text-end" type="text" type="text" disabled="disabled" value="3">
-            </fieldset>
-        </div>
-        <div class="column-1">x
-        </div>
-        <div class="column-1">x
-        </div>
-        <div class="column-1">x
-        </div>
-    </div>
-    <div class="row">
-        <!-- row 2 -->
-        <div class="column-1">
-            <fieldset class="input-field disabled">
-                <legend class="input-top-label">Varenummer</legend>
-                <input class="input-borderless text-end" type="text" type="text" value="323232" disabled="disabled">
-            </fieldset>
-        </div>
-        <div class="column-1">
-            <fieldset class="input-field disabled">
-                <legend class="input-top-label">Type</legend>
-                <input class="input-borderless text-end" type="text" type="text" value="ALM" disabled="disabled">
-            </fieldset>
-        </div>
-        <div class="column-1">
-            <fieldset class="input-field disabled">
-                <legend class="input-top-label">Krav</legend>
-                <input class="input-borderless text-end" type="text" type="text" value="ALM" disabled="disabled">
-            </fieldset>
-        </div>
-        <div class="column-1">
-            <fieldset class="input-field disabled">
-                <legend class="input-top-label">Antall</legend>
-                <input class="input-borderless text-end" type="text" type="text" value="35">
-            </fieldset>
-        </div>
-        <div class="column-1">
-            <fieldset class="input-field disabled">
-                <legend class="input-top-label">Gip</legend>
-                <input class="input-borderless text-end" type="text" type="text" value="323232">
-            </fieldset>
-        </div>
-        <div class="column-1">
-            <fieldset class="input-field disabled">
-                <legend class="input-top-label">Pris</legend>
-                <input class="input-borderless text-end" type="text" type="text" value="323232">
-            </fieldset>
-        </div>
-        <div class="column-1">
-            <fieldset class="input-field disabled">
-                <legend class="input-top-label">Batch</legend>
-                <input class="input-borderless text-end" type="text" type="text" value="323232">
-            </fieldset>
-        </div>
-        <div class="column-1">
-            <fieldset class="input-field disabled">
-                <legend class="input-top-label">Batch ant</legend>
-                <input class="input-borderless text-end" type="text" type="text" value="323232">
-            </fieldset>
-        </div>
-        <div class="column-1">
-            <fieldset class="input-field disabled">
-                <legend class="input-top-label">Holdbar</legend>
-                <input class="input-borderless text-end" type=date" type="text">
-            </fieldset>
-        </div>
-        <div class="column-1">
-            <button type="button">Legg til</button>
+        <div id="menu3" class="tab-pane fade">
+            <h3>Menu 3</h3>
+            <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
         </div>
     </div>
-    <!-- row 3 -->
-    <div class="row">
-        <div class="column-1">
-            <fieldset class="input-field disabled">
-                <legend class="input-top-label">FK antall</legend>
-                <input class="input-borderless text-end" type="text" type="text" value="3">
-            </
-            fieldset>
-        </div>
-        <div class="column-1">
-            <fieldset class="input-field disabled">
-                <legend class="input-top-label">65</legend>
-                <input class="input-borderless text-end" type="text" type="text" value="3">
-            </fieldset>
-        </div>
-        <div class="column-1">
-            <fieldset class="input-field disabled">
-                <legend class="input-top-label">405</legend>
-                <input class="input-borderless text-end" type="text" type="text" value="3">
-            </fieldset>
-        </div>
-        <div class="column-1">
-            <fieldset class="input-field disabled">
-                <legend class="input-top-label">202</legend>
-                <input class="input-borderless text-end" type="text" type="text" value="3">
-            </fieldset>
-        </div>
-        <div class="column-1">
-            <fieldset class="input-field disabled">
-                <legend class="input-top-label">203</legend>
-                <input class="input-borderless text-end" type="text" type="text" value="3">
-            </fieldset>
-        </div>
-        <div class="column-1">
-            <fieldset class="input-field disabled">
-                <legend class="input-top-label">427</legend>
-                <input class="input-borderless text-end" type="text" type="text" value="3">
-            </fieldset>
-        </div>
-        <div class="column-1">
-            <fieldset class="input-field disabled">
-                <legend class="input-top-label">FK antall</legend>
-                <input class="input-borderless text-end" type="text" type="text" value="3">
-            </fieldset>
-        </div>
-        <div class="column-1">
-            <fieldset class="input-field disabled">
-                <legend class="input-top-label">FK antall</legend>
-                <input class="input-borderless text-end" type="text" type="text" value="3">
-            </fieldset>
-        </div>
-        <div class="column-1">
-            <fieldset class="input-field disabled">
-                <legend class="input-top-label">FK antall</legend>
-                <input class="input-borderless text-end" type="text" type="text" value="3">
-            </fieldset>
-        </div>
-        <div class="column-1">
-            <fieldset class="input-field disabled">
-                <legend class="input-top-label">FK antall</legend>
-                <input class="input-borderless text-end" type="text" type="text" value="3">
-            </fieldset>
-        </div>
-        <div class="column-1">
-            <fieldset class="input-field disabled">
-                <legend class="input-top-label">FK antall</legend>
-                <input class="input-borderless text-end" type="text" type="text" value="3">
-            </fieldset>
-        </div>
-    </div>
+</div>
+
+
+
+<table id="myTable" class="table table-striped tablesorter">
+        <thead>
+        <tr>
+            <th scope="col">Kunde</th>
+            <th scope="col">OrdreNr</th>
+            <th scope="col">Stage</th>
+            <th scope="col">Status</th>
+            <th scope="col">Bruker</th>
+            <th scope="col">#</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">MDG</th>
+            <td>2001</td>
+            <td>PLUKK</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <th scope="row">HGH</th>
+            <td>2010</td>
+            <td>PLUKK</td>
+            <td>pågår</td>
+            <td>guro</td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+
+
 </div>
 </body>
 </html>
