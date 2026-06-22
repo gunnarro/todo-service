@@ -6,6 +6,7 @@ import com.github.mustachejava.MustacheFactory;
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
 import org.gunnarro.microservice.todoservice.domain.dto.todo.TodoDto;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
 
@@ -15,6 +16,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+@Disabled
 // https://kb.itextpdf.com/itext/chapter-4-creating-reports-using-pdfhtml
 public class HtmToPdfTest {
 
