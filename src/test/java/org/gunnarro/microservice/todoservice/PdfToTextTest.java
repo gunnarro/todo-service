@@ -30,8 +30,8 @@ public class PdfToTextTest {
             PDFTextStripper pdfStripper = new PDFTextStripper();
 
             // Optional configurations:
-            // pdfStripper.setStartPage(1); // Set starting page
-            // pdfStripper.setEndPage(5);   // Set ending page
+             pdfStripper.setStartPage(1); // Set starting page
+             pdfStripper.setEndPage(1);   // Set ending page
 
             // Extract text from the loaded document
             String extractedText = pdfStripper.getText(document);
@@ -54,28 +54,31 @@ public class PdfToTextTest {
         while (matcher.find()) {
             String vareNrLinje = matcher.group();
             System.out.println(vareNrLinje);
-            String vareNr = finn("\\d{4,10}+", vareNrLinje);
-            String antall = finn(" \\d{1,4}+ ", vareNrLinje);
-            String pris = finn("\\d+ \\d+\\,\\d{2}+", vareNrLinje);
+            String vareNr = finn("\\d{4,10}+", vareNrLinje, true);
+            String antall = finn(" \\d{1,4}+ ", vareNrLinje, true);
+            String pris = finn("\\d+ \\d+\\,\\d{2}+", vareNrLinje, true);
             if (pris == null) {
-                pris = finn("\\d+\\,\\d{2}+", vareNrLinje);
+                pris = finn("\\d+\\,\\d{2}+", vareNrLinje, true);
             }
 
-            StringJoiner sj = new StringJoiner(";");
-            sj.add("vareNr : " + vareNr);
-            sj.add("antall : " + antall);
-            sj.add("pris : " + pris);
+            StringJoiner json = new StringJoiner(";");
+            json.add("vareNr : " + vareNr);
+            json.add("antall : " + antall);
+            json.add("pris : " + pris);
 
-            System.out.println(sj);
+            System.out.println(json);
         }
     }
 
-    private String finn(String regex, String text) {
+    private String finn(String regex, String text, boolean findFirst) {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(text);
         String s = null;
         while (matcher.find()) {
-            s = matcher.group();
+            if (findFirst) {
+                s = matcher.group();
+                return s;
+            }
         }
         return s;
     }
